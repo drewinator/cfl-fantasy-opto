@@ -21,6 +21,15 @@
                 <div id="savedIndicator" class="saved-indicator hidden">💾 Lineup saved</div>
             </div>
 
+            <!-- Engine selection -->
+            <div class="engine-selection">
+                <label for="engineSelect">Optimization Engine:</label>
+                <select id="engineSelect" class="engine-dropdown">
+                    <option value="pulp">PuLP (Linear Programming)</option>
+                    <option value="pydfs">PyDFS (Fantasy Optimizer)</option>
+                </select>
+            </div>
+
             <!-- Action buttons -->
             <div class="button-group">
                 <button id="optimizeButton" class="optimize-btn">

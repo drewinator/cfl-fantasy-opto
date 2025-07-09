@@ -10,6 +10,7 @@ from datetime import datetime
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from custom_cfl_optimizer import CustomCFLOptimizer
+from cfl_pydfs_optimizer import CFLPydfsOptimizer
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -18,8 +19,9 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for Chrome extension
 
-# Global optimizer instance
-optimizer = CustomCFLOptimizer()
+# Global optimizer instances
+pulp_optimizer = CustomCFLOptimizer()
+pydfs_optimizer = CFLPydfsOptimizer()
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -43,7 +45,16 @@ def optimize_lineup():
                 'error': 'No data provided'
             }), 400
         
-        logger.info(f"Received optimization request with data keys: {list(data.keys())}")
+        # Get engine parameter (default to pulp)
+        engine = request.args.get('engine', 'pulp')
+        
+        logger.info(f"Received optimization request with engine: {engine}, data keys: {list(data.keys())}")
+        
+        # Select optimizer based on engine parameter
+        if engine == 'pydfs':
+            optimizer = pydfs_optimizer
+        else:
+            optimizer = pulp_optimizer
         
         # Extract players and configuration
         players_data = data.get('players', [])
@@ -57,57 +68,72 @@ def optimize_lineup():
                 'error': 'No player or team data provided'
             }), 400
         
-        # Load data into optimizer
-        if players_data:
-            ownership_data = data.get('player_ownership', {})
-            gameweeks_data = data.get('gameweeks', [])
-            current_team_data = data.get('current_team', {})
-            
-            # Debug logging
-            logger.info(f"Gameweeks data received: {len(gameweeks_data)} items")
-            logger.info(f"Current team data received: {bool(current_team_data)}")
-            if len(gameweeks_data) > 0:
-                logger.info(f"First gameweek: {gameweeks_data[0].get('name', 'Unknown')}")
-            
-            optimizer.load_players_from_json(players_data, ownership_data, gameweeks_data, current_team_data)
-        
-        if teams_data:
-            team_ownership_data = data.get('team_ownership', {})
-            optimizer.load_teams_from_json(teams_data, team_ownership_data)
-        
-        # Get optimization parameters
-        max_players_from_team = settings.get('max_players_from_team', 3)
-        use_captain = settings.get('use_captain', True)
-        num_lineups = settings.get('num_lineups', 1)
-        
-        # Generate lineup(s)
-        if num_lineups > 1:
-            lineups = optimizer.generate_multiple_lineups(
-                count=num_lineups,
-                max_players_from_team=max_players_from_team,
-                use_captain=use_captain
-            )
-            # Format lineups for API response
-            formatted_lineups = [optimizer.format_lineup_for_api(lineup) for lineup in lineups]
-            result = {
-                'success': True,
-                'lineups': formatted_lineups,
-                'player_stats': optimizer.get_player_stats(),
-                'optimization_time': datetime.now().isoformat()
-            }
-        else:
-            lineup = optimizer.generate_lineup(
-                max_players_from_team=max_players_from_team,
-                use_captain=use_captain
-            )
-            # Format lineup for API response
-            formatted_lineup = optimizer.format_lineup_for_api(lineup)
+        # Handle different optimizer interfaces
+        if engine == 'pydfs':
+            # PyDFS optimizer uses optimize_from_request method
+            formatted_lineup = optimizer.optimize_from_request(data)
             result = {
                 'success': True,
                 'lineup': formatted_lineup,
                 'player_stats': optimizer.get_player_stats(),
-                'optimization_time': datetime.now().isoformat()
+                'optimization_time': datetime.now().isoformat(),
+                'engine': 'pydfs'
             }
+        else:
+            # PuLP optimizer uses existing interface
+            # Load data into optimizer
+            if players_data:
+                ownership_data = data.get('player_ownership', {})
+                gameweeks_data = data.get('gameweeks', [])
+                current_team_data = data.get('current_team', {})
+                
+                # Debug logging
+                logger.info(f"Gameweeks data received: {len(gameweeks_data)} items")
+                logger.info(f"Current team data received: {bool(current_team_data)}")
+                if len(gameweeks_data) > 0:
+                    logger.info(f"First gameweek: {gameweeks_data[0].get('name', 'Unknown')}")
+                
+                optimizer.load_players_from_json(players_data, ownership_data, gameweeks_data, current_team_data)
+            
+            if teams_data:
+                team_ownership_data = data.get('team_ownership', {})
+                optimizer.load_teams_from_json(teams_data, team_ownership_data)
+            
+            # Get optimization parameters
+            max_players_from_team = settings.get('max_players_from_team', 3)
+            use_captain = settings.get('use_captain', True)
+            num_lineups = settings.get('num_lineups', 1)
+            
+            # Generate lineup(s)
+            if num_lineups > 1:
+                lineups = optimizer.generate_multiple_lineups(
+                    count=num_lineups,
+                    max_players_from_team=max_players_from_team,
+                    use_captain=use_captain
+                )
+                # Format lineups for API response
+                formatted_lineups = [optimizer.format_lineup_for_api(lineup) for lineup in lineups]
+                result = {
+                    'success': True,
+                    'lineups': formatted_lineups,
+                    'player_stats': optimizer.get_player_stats(),
+                    'optimization_time': datetime.now().isoformat(),
+                    'engine': 'pulp'
+                }
+            else:
+                lineup = optimizer.generate_lineup(
+                    max_players_from_team=max_players_from_team,
+                    use_captain=use_captain
+                )
+                # Format lineup for API response
+                formatted_lineup = optimizer.format_lineup_for_api(lineup)
+                result = {
+                    'success': True,
+                    'lineup': formatted_lineup,
+                    'player_stats': optimizer.get_player_stats(),
+                    'optimization_time': datetime.now().isoformat(),
+                    'engine': 'pulp'
+                }
         
         logger.info("Optimization completed successfully")
         return jsonify(result)
@@ -182,6 +208,15 @@ def optimize_multiple_lineups():
 def test_with_local_data():
     """Test endpoint using local JSON files"""
     try:
+        # Get engine parameter (default to pulp)
+        engine = request.args.get('engine', 'pulp')
+        
+        # Select optimizer based on engine parameter
+        if engine == 'pydfs':
+            optimizer = pydfs_optimizer
+        else:
+            optimizer = pulp_optimizer
+        
         # Load local JSON files
         base_path = os.path.dirname(os.path.dirname(__file__))
         json_path = os.path.join(base_path, 'json_files')
@@ -205,25 +240,46 @@ def test_with_local_data():
         with open(team_ownership_file, 'r') as f:
             team_ownership = json.load(f)
         
-        # Load data into optimizer
-        optimizer.load_players_from_json(players_data, player_ownership)
-        optimizer.load_teams_from_json(teams_data, team_ownership)
+        # Handle different optimizer interfaces
+        if engine == 'pydfs':
+            # PyDFS optimizer uses optimize_from_request method
+            test_data = {
+                'players': players_data,
+                'teams': teams_data,
+                'player_ownership': player_ownership,
+                'team_ownership': team_ownership
+            }
+            formatted_lineup = optimizer.optimize_from_request(test_data)
+            result = {
+                'success': True,
+                'lineup': formatted_lineup,
+                'player_stats': optimizer.get_player_stats(),
+                'data_source': 'local_json_files',
+                'optimization_time': datetime.now().isoformat(),
+                'engine': 'pydfs'
+            }
+        else:
+            # PuLP optimizer uses existing interface
+            # Load data into optimizer
+            optimizer.load_players_from_json(players_data, player_ownership)
+            optimizer.load_teams_from_json(teams_data, team_ownership)
+            
+            # Generate lineup with captain logic
+            lineup = optimizer.generate_lineup(max_players_from_team=3, use_captain=True)
+            
+            # Format lineup for API response
+            formatted_lineup = optimizer.format_lineup_for_api(lineup)
+            
+            result = {
+                'success': True,
+                'lineup': formatted_lineup,
+                'player_stats': optimizer.get_player_stats(),
+                'data_source': 'local_json_files',
+                'optimization_time': datetime.now().isoformat(),
+                'engine': 'pulp'
+            }
         
-        # Generate lineup with captain logic
-        lineup = optimizer.generate_lineup(max_players_from_team=3, use_captain=True)
-        
-        # Format lineup for API response
-        formatted_lineup = optimizer.format_lineup_for_api(lineup)
-        
-        result = {
-            'success': True,
-            'lineup': formatted_lineup,
-            'player_stats': optimizer.get_player_stats(),
-            'data_source': 'local_json_files',
-            'optimization_time': datetime.now().isoformat()
-        }
-        
-        logger.info("Test optimization with local data completed")
+        logger.info(f"Test optimization with local data completed using {engine} engine")
         return jsonify(result)
         
     except FileNotFoundError as e:
@@ -243,10 +299,20 @@ def test_with_local_data():
 def get_player_stats():
     """Get current player pool statistics"""
     try:
+        # Get engine parameter (default to pulp)
+        engine = request.args.get('engine', 'pulp')
+        
+        # Select optimizer based on engine parameter
+        if engine == 'pydfs':
+            optimizer = pydfs_optimizer
+        else:
+            optimizer = pulp_optimizer
+            
         stats = optimizer.get_player_stats()
         return jsonify({
             'success': True,
-            'stats': stats
+            'stats': stats,
+            'engine': engine
         })
     except Exception as e:
         logger.error(f"Failed to get player stats: {e}")

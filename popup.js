@@ -105,6 +105,13 @@ async function handleOptimizeClick() {
 // Send player data to optimizer backend
 async function optimizeLineup(playerData) {
     try {
+        // Get selected engine from dropdown
+        const engineSelect = document.getElementById('engineSelect');
+        const selectedEngine = engineSelect ? engineSelect.value : 'pulp';
+        
+        // Update status to show which engine is being used
+        updateStatus(`Optimizing with ${selectedEngine.toUpperCase()} engine...`);
+        
         // Format data for the optimizer API
         const apiRequest = {
             players: playerData.players || [],
@@ -128,7 +135,8 @@ async function optimizeLineup(playerData) {
                 max_players_from_team: 3,
                 use_captain: true,
                 num_lineups: 1
-            }
+            },
+            engine: selectedEngine  // Add engine selection
         };
         
         // Send message to background script for optimization
@@ -144,7 +152,7 @@ async function optimizeLineup(playerData) {
 
             if (response.success) {
                 saveLineupToStorage(response.lineup);
-                showResults(response.lineup);
+                showResults(response.lineup, false, null, selectedEngine);
             } else {
                 console.error('[CFL Optimizer] Optimization failed:', response.error);
                 showError(response.error || 'Optimization failed. Please try again.');
@@ -199,7 +207,7 @@ function showPlayerDataInfo(playerData) {
 }
 
 // Show optimization results
-function showResults(lineup, isRestored = false, timestamp = null) {
+function showResults(lineup, isRestored = false, timestamp = null, engine = null) {
     
     if (!lineup || !lineup.players) {
         showError('Invalid lineup data received');
@@ -216,7 +224,8 @@ function showResults(lineup, isRestored = false, timestamp = null) {
         statusText.textContent = `Saved lineup (${timeAgo})`;
         showSavedIndicator();
     } else {
-        statusText.textContent = 'Optimization complete!';
+        const engineText = engine ? ` (${engine.toUpperCase()} engine)` : '';
+        statusText.textContent = `Optimization complete!${engineText}`;
     }
     
     // Clear all slots first

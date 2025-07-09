@@ -526,3 +526,37 @@ footer {
 .optimize-btn {
     flex-grow: 1;
 }
+
+/* Engine selection dropdown */
+.engine-selection {
+    margin-bottom: 16px;
+    padding: 12px 20px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+
+.engine-selection label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.engine-dropdown {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.engine-dropdown:focus {
+    border-color: #c41e3a;
+    box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.1);
+}

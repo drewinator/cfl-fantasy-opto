@@ -61,7 +61,12 @@ async function sendOptimizationRequest(data) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
         
-        const response = await fetch(OPTIMIZER_API_URL, {
+        // Build URL with engine parameter
+        const engine = data.engine || 'pulp';
+        const url = `${OPTIMIZER_API_URL}?engine=${engine}`;
+        console.log(`[CFL Optimizer] Using optimization engine: ${engine}`);
+        
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
