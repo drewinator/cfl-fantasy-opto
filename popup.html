@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800, initial-scale=1.0, user-scalable=no">
+    <title>CFL Fantasy Optimizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CFL Fantasy Optimizer</h1>
+            <p class="subtitle">Optimize your lineup for maximum points</p>
+        </header>
+
+        <main>
+            <!-- Status indicator -->
+            <div id="status" class="status-indicator">
+                <span id="statusText">Ready to optimize</span>
+                <div id="loader" class="loader hidden"></div>
+                <div id="savedIndicator" class="saved-indicator hidden">💾 Lineup saved</div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="button-group">
+                <button id="optimizeButton" class="optimize-btn">
+                    Get Optimal Lineup
+                </button>
+                <button id="clearButton" class="clear-btn hidden">
+                    Clear Lineup
+                </button>
+            </div>
+
+            <!-- Player data info -->
+            <div id="playerDataInfo" class="info-section hidden">
+                <h3>Player Data</h3>
+                <p id="playerCount">Found <span id="playerCountValue">0</span> players</p>
+                <p id="dataSource">Source: <span id="dataSourceValue">Not detected</span></p>
+            </div>
+
+            <!-- Results section -->
+            <div id="resultsSection" class="results-section hidden">
+                <h3>Optimal Lineup</h3>
+                <div id="lineupResults">
+                    <!-- Lineup will be populated here -->
+                    <div class="lineup-grid">
+                        <div class="position-slot" data-position="QB">
+                            <div class="position-label">QB</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-slot" data-position="WR1">
+                            <div class="position-label">WR1</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-slot" data-position="WR2">
+                            <div class="position-label">WR2</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-slot" data-position="RB1">
+                            <div class="position-label">RB1</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-slot" data-position="RB2">
+                            <div class="position-label">RB2</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-slot" data-position="FLEX">
+                            <div class="position-label">FLEX</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="position-slot" data-position="DEF">
+                            <div class="position-label">DEF</div>
+                            <div class="player-photo">
+                                <span class="player-initials">-</span>
+                            </div>
+                            <div class="player-info">
+                                <div class="player-name">-</div>
+                                <div class="player-details">
+                                    <span class="player-salary">$0</span>
+                                    <span class="player-points">0 pts</span>
+                                    <span class="player-ownership">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lineup summary -->
+                    <div class="lineup-summary">
+                        <div class="summary-item">
+                            <span>Total Salary:</span>
+                            <span id="totalSalary">$0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Projected Points:</span>
+                            <span id="projectedPoints">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Remaining Cap:</span>
+                            <span id="remainingCap">$0</span>
+                        </div>
+                        <div class="summary-item captain-bonus hidden" id="captainBonusInfo">
+                            Captain Bonus: +0 pts
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error section -->
+            <div id="errorSection" class="error-section hidden">
+                <h3>Error</h3>
+                <p id="errorMessage"></p>
+                <button id="retryButton" class="retry-btn">Try Again</button>
+            </div>
+        </main>
+
+        <footer>
+            <p class="version">v1.0.0</p>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

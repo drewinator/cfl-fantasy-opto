@@ -1,0 +1,22 @@
+{
+    "success": {
+        "team": {
+            "id": 1305,
+            "name": "Wpg_Sports_Guy",
+            "startGW": 1,
+            "salaryCap": 70000,
+            "value": 68500,
+            "points": 569,
+            "defenseSquad": 4,
+            "captain": 165,
+            "quarterback": 216,
+            "firstWideReceivers": 86,
+            "secondWideReceivers": 412,
+            "firstRunningBacks": 165,
+            "secondRunningBacks": 158,
+            "flex": 255,
+            "isCompleted": true
+        }
+    },
+    "errors": []
+}
