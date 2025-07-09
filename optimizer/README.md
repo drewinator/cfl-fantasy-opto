@@ -25,7 +25,7 @@ This directory contains the Python backend for the CFL Fantasy Optimizer Chrome 
 
 3. **Start the API Server**:
    ```bash
-   python api_server.py
+   python3 optimizer/api_server.py
    ```
 
 The server will start on `http://localhost:3000` by default.
