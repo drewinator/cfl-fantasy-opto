@@ -18,6 +18,47 @@ function initialize() {
     } else {
         startDataCollection();
     }
+    
+    // For React SPAs, also wait for the app to be ready
+    waitForReactApp();
+}
+
+function waitForReactApp() {
+    console.log('[CFL Optimizer] Waiting for React app to load...');
+    
+    // Check if React root exists and has content
+    const checkReactReady = () => {
+        const root = document.querySelector('#root');
+        if (root && root.children.length > 0) {
+            console.log('[CFL Optimizer] React app loaded successfully');
+            return true;
+        }
+        return false;
+    };
+    
+    // If already ready, return immediately
+    if (checkReactReady()) {
+        return;
+    }
+    
+    // Set up observer to watch for React app loading
+    const observer = new MutationObserver((mutations) => {
+        if (checkReactReady()) {
+            console.log('[CFL Optimizer] React app detected via MutationObserver');
+            observer.disconnect();
+        }
+    });
+    
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    
+    // Also set up a timeout fallback
+    setTimeout(() => {
+        observer.disconnect();
+        console.log('[CFL Optimizer] React app wait timeout reached');
+    }, 10000); // 10 second timeout
 }
 
 // Start collecting player data
@@ -342,57 +383,626 @@ function createTeamsFromPlayerData(players) {
 
 // Utility to sum projections
 function totalPoints(arr){
-    return arr.reduce((s,p)=>s+(+p.projection||0),0).toFixed(1);
+    return arr.reduce((s,p)=>s+(Number(p.projected_points)||Number(p.projection)||0),0).toFixed(1);
 }
 
 // Inject optimizer lineup panel into page
 function injectOptimizerPanel(list){
+    console.log('[CFL Optimizer] Injecting optimizer panel');
+    
+    // Check for injection target
+    const targetFound = document.querySelector('#team') || document.querySelector('[class*="team"]');
+    if (!targetFound) {
+        console.warn('[CFL Optimizer] No suitable injection target found');
+    }
+    
     const old=document.querySelector('#cfl-optimizer-panel');
-    if(old) old.remove();
+    if(old) {
+        console.log('[CFL Optimizer] Removing existing panel');
+        old.remove();
+    }
 
     const panel=document.createElement('div');
     panel.id='cfl-optimizer-panel';
     panel.innerHTML=`
     <style>
-      #cfl-optimizer-panel{position:relative;width:100%;background:#111;color:#fff;padding:12px 16px;font-family:Arial,Helvetica,sans-serif;box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:9999;}
-      #cfl-optimizer-panel h3{margin:0 0 8px;font-size:18px;display:flex;justify-content:space-between;align-items:center;}
-      #cfl-optimizer-panel .toggle{cursor:pointer;font-size:14px;margin-left:8px;}
-      .cfl-opt-row{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:4px;}
-      .cfl-opt-row .add-btn{margin-left:auto;cursor:pointer;background:#c5242b;border:none;border-radius:3px;color:#fff;font-size:12px;padding:2px 6px;}
+      #cfl-optimizer-panel {
+        position: relative;
+        width: 100%;
+        background: #1a1a1a;
+        border-radius: 8px;
+        margin: 16px 0 0 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      
+      #cfl-optimizer-panel * {
+        box-sizing: border-box;
+      }
+      
+      .cfl-opt-header {
+        background: #c5242b;
+        color: white;
+        padding: 14px 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+      }
+      
+      .cfl-opt-header .toggle {
+        cursor: pointer;
+        font-size: 16px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: rgba(255,255,255,0.2);
+        transition: background 0.2s;
+      }
+      
+      .cfl-opt-header .toggle:hover {
+        background: rgba(255,255,255,0.3);
+      }
+      
+      .cfl-opt-content {
+        padding: 0;
+        margin: 0;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        overflow: hidden;
+      }
+      
+      .cfl-player-card {
+        display: flex;
+        align-items: center;
+        padding: 10px 18px;
+        border-bottom: 1px solid #333;
+        background: #2a2a2a;
+        transition: background 0.2s;
+      }
+      
+      .cfl-player-card:hover {
+        background: #333;
+      }
+      
+      .cfl-player-card:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+      
+      .player-position {
+        background: #c5242b;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 12px;
+        min-width: 35px;
+        text-align: center;
+        margin-right: 12px;
+      }
+      
+      .player-info {
+        flex: 1;
+        color: white;
+      }
+      
+      .player-name {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 2px;
+      }
+      
+      .player-details {
+        font-size: 12px;
+        color: #bbb;
+        display: flex;
+        gap: 12px;
+      }
+      
+      .ownership-badge {
+        background: #4a5568;
+        color: #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 500;
+      }
+      
+      .captain-badge {
+        background: #ffd700;
+        color: #000;
+        padding: 2px 6px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 700;
+        margin-left: 8px;
+      }
+      
+      .add-btn {
+        background: #c5242b;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 12px;
+        transition: background 0.2s;
+        margin-left: 12px;
+      }
+      
+      .add-btn:hover {
+        background: #a01e24;
+      }
     </style>
-    <h3><span>⭐\u00A0Optimized\u00A0Lineup</span><span>${totalPoints(list)}\u00A0pts</span><span class="toggle">▲</span></h3>`;
+    
+    <div class="cfl-opt-header">
+      <span>⭐ Optimized Lineup</span>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <span>${totalPoints(list)} pts</span>
+        <span class="toggle">▲</span>
+      </div>
+    </div>
+    
+    <div class="cfl-opt-content">`;
 
     list.forEach(p=>{
-        const row=document.createElement('div');
-        row.className='cfl-opt-row';
-        const cap=p.isCaptain?' <strong>[CPT]</strong>':'';
-        row.innerHTML=`<strong>${p.position}</strong><span>${p.name}</span><span>$${(p.salary/1000).toFixed(1)}k</span><span>${p.projection}</span>${cap}<button class="add-btn">➕</button>`;
-        panel.appendChild(row);
+        const card = document.createElement('div');
+        card.className = 'cfl-player-card';
+        const captainBadge = p.is_captain ? '<span class="captain-badge">CPT</span>' : '';
+        const points = p.projected_points || p.projection || 0;
+        
+        // Get ownership data - try multiple sources
+        let ownership = 0;
+        if (p.ownership !== undefined && p.ownership !== null) {
+            ownership = p.ownership;
+        } else if (p.id && playerData.player_ownership && playerData.player_ownership[p.id]) {
+            ownership = playerData.player_ownership[p.id].percents || 0;
+        } else if (p.feedId && playerData.player_ownership && playerData.player_ownership[p.feedId]) {
+            ownership = playerData.player_ownership[p.feedId].percents || 0;
+        }
+        
+        const ownershipText = ownership > 0 ? `${ownership.toFixed(1)}%` : 'N/A';
+        
+        card.innerHTML = `
+            <div class="player-position">${p.position}</div>
+            <div class="player-info">
+                <div class="player-name">
+                    ${p.name}${captainBadge}
+                </div>
+                <div class="player-details">
+                    <span>$${(p.salary/1000).toFixed(1)}k</span>
+                    <span>${points} pts</span>
+                    <span class="ownership-badge">${ownershipText}</span>
+                </div>
+            </div>
+            <button class="add-btn">➕</button>
+        `;
+        
+        // Add the card to the content area
+        const content = panel.querySelector('.cfl-opt-content');
+        content.appendChild(card);
     });
 
     panel.querySelector('.toggle').onclick=()=>{
-        const rows=[...panel.querySelectorAll('.cfl-opt-row')];
-        const collapsed=rows[0].style.display==='none';
-        rows.forEach(r=>r.style.display=collapsed?'flex':'none');
-        panel.querySelector('.toggle').textContent=collapsed?'▲':'▼';
+        const content = panel.querySelector('.cfl-opt-content');
+        const cards = [...panel.querySelectorAll('.cfl-player-card')];
+        const collapsed = content.style.display === 'none';
+        
+        content.style.display = collapsed ? 'block' : 'none';
+        panel.querySelector('.toggle').textContent = collapsed ? '▲' : '▼';
     };
 
-    const rosterCol=document.querySelector('#team');
-    if(!rosterCol) return console.warn('Roster column not found!');
-    rosterCol.parentNode.insertBefore(panel, rosterCol);
-    rosterCol.style.marginTop=panel.offsetHeight+'px';
+    // Try to find the best injection point (target roster area specifically)
+    const possibleSelectors = [
+        // Specific roster area selectors
+        '.tutorial-pick-team-step', // Found in debug output with team classes
+        '[class*="tutorial-pick-team"]',
+        '[class*="team"][class*="step"]',
+        '.sc-jnOGJG', // Styled component class from debug output
+        '[class*="pre-game"]',
+        
+        // General team/roster selectors
+        '#team',
+        '.team-section', 
+        '.roster-section',
+        '.team-container',
+        '.fantasy-team',
+        '[data-section="team"]',
+        'div[class*="team"]',
+        
+        // Material-UI containers
+        '.MuiContainer-root',
+        '.MuiBox-root',
+        
+        // Fallbacks
+        '.main-content',
+        'main',
+        '.container',
+        'div[class*="container"]',
+        'div[class*="layout"]',
+        'div[class*="grid"]',
+        '#root' // Last resort
+    ];
+    
+    let targetElement = null;
+    let selectedSelector = null;
+    
+    for (const selector of possibleSelectors) {
+        const element = document.querySelector(selector);
+        if (element) {
+            targetElement = element;
+            selectedSelector = selector;
+            console.log(`[CFL Optimizer] Found element with selector: ${selector}`);
+            break;
+        }
+    }
+    
+    if (!targetElement) {
+        console.warn('[CFL Optimizer] Could not find suitable injection point, falling back to body');
+        targetElement = document.body;
+        selectedSelector = 'body';
+    }
+    
+    try {
+        if (selectedSelector === '#root') {
+            // For React root, try to find a better injection point first
+            const betterTargets = [
+                '.tutorial-pick-team-step',
+                '[class*="tutorial-pick-team"]',
+                '.sc-jnOGJG',
+                'div[class*="team"]'
+            ];
+            
+            let foundBetter = false;
+            for (const selector of betterTargets) {
+                const betterTarget = document.querySelector(selector);
+                if (betterTarget) {
+                    targetElement = betterTarget;
+                    selectedSelector = selector;
+                    foundBetter = true;
+                    console.log(`[CFL Optimizer] Found better injection point: ${selector}`);
+                    break;
+                }
+            }
+            
+            if (!foundBetter) {
+                // Fallback to fixed positioning only if no better option
+                panel.style.position = 'fixed';
+                panel.style.top = '0';
+                panel.style.left = '0';
+                panel.style.right = '0';
+                panel.style.zIndex = '99999';
+                panel.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
+                document.body.appendChild(panel);
+                console.log('[CFL Optimizer] Panel injected as fixed header (fallback)');
+                return;
+            }
+        }
+        
+        // Inline injection strategy for roster area
+        if (targetElement.parentNode) {
+            targetElement.parentNode.insertBefore(panel, targetElement);
+            // Add margin to push content down naturally
+            targetElement.style.marginTop = (panel.offsetHeight + 16) + 'px';
+            console.log(`[CFL Optimizer] Panel injected inline before ${selectedSelector}`);
+        } else {
+            // Fallback to prepending to the target element
+            targetElement.prepend(panel);
+            console.log(`[CFL Optimizer] Panel prepended to ${selectedSelector}`);
+        }
+        
+        // Add success notification
+        console.log('[CFL Optimizer] Panel successfully injected and displayed');
+        
+    } catch (error) {
+        console.error('[CFL Optimizer] Error injecting panel:', error);
+        // Fallback: append to body as fixed element
+        panel.style.position = 'fixed';
+        panel.style.top = '0';
+        panel.style.left = '0';
+        panel.style.right = '0';
+        panel.style.zIndex = '99999';
+        document.body.appendChild(panel);
+        console.log('[CFL Optimizer] Panel injected as fallback fixed element');
+    }
 }
 
 // Listen for messages from popup/background
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log('[CFL Optimizer] Message received:', request);
+    
     if(request.action==='getPlayerData'){
+        console.log('[CFL Optimizer] Player data request received');
         if(isDataLoaded && playerData?.players?.length>0){
+            console.log('[CFL Optimizer] Sending player data:', playerData.players.length, 'players');
             sendResponse({success:true,data:playerData});
         }else{
+            console.log('[CFL Optimizer] No player data available');
             sendResponse({success:false,error:'No player data found. Please make sure you are on the CFL fantasy page and refresh the page.'});
         }
     }else if(request.action==='lineupGenerated' && request.success){
-        injectOptimizerPanel(request.lineup);
+        console.log('[CFL Optimizer] Lineup generated message received');
+        if (request.lineup && Array.isArray(request.lineup) && request.lineup.length > 0) {
+            console.log('[CFL Optimizer] Valid lineup data, injecting panel');
+            injectOptimizerPanel(request.lineup);
+        } else {
+            console.warn('[CFL Optimizer] Invalid lineup data received:', request.lineup);
+        }
     }
     return true;
 });
+
+// Inject optimize controls directly on the page
+function injectOptimizeControls() {
+    
+    // Check if controls already exist
+    if (document.querySelector('#cfl-optimizer-controls')) {
+        console.log('[CFL Optimizer] Controls already exist');
+        return;
+    }
+    
+    const controls = document.createElement('div');
+    controls.id = 'cfl-optimizer-controls';
+    controls.innerHTML = `
+        <style>
+            #cfl-optimizer-controls {
+                position: fixed;
+                top: 120px;
+                right: 20px;
+                background: #1a1a1a;
+                border: 2px solid #c5242b;
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                min-width: 280px;
+            }
+            
+            .cfl-controls-header {
+                color: #c5242b;
+                font-weight: 600;
+                font-size: 16px;
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .cfl-engine-selector {
+                margin-bottom: 12px;
+            }
+            
+            .cfl-engine-selector label {
+                display: block;
+                color: #fff;
+                font-size: 12px;
+                margin-bottom: 4px;
+                font-weight: 500;
+            }
+            
+            .cfl-engine-selector select {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid #444;
+                border-radius: 4px;
+                background: #2a2a2a;
+                color: #fff;
+                font-size: 14px;
+            }
+            
+            .cfl-optimize-btn {
+                width: 100%;
+                background: #c5242b;
+                color: white;
+                border: none;
+                padding: 12px 16px;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+            
+            .cfl-optimize-btn:hover:not(:disabled) {
+                background: #a01e24;
+                transform: translateY(-1px);
+            }
+            
+            .cfl-optimize-btn:disabled {
+                background: #666;
+                cursor: not-allowed;
+                transform: none;
+            }
+            
+            .cfl-status {
+                margin-top: 8px;
+                font-size: 12px;
+                text-align: center;
+                min-height: 16px;
+            }
+            
+            .cfl-status.loading { color: #ffd700; }
+            .cfl-status.success { color: #4caf50; }
+            .cfl-status.error { color: #f44336; }
+            
+            .spinner {
+                width: 14px;
+                height: 14px;
+                border: 2px solid transparent;
+                border-top: 2px solid currentColor;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+        
+        <div class="cfl-controls-header">
+            ⚡ CFL Optimizer
+        </div>
+        
+        <div class="cfl-engine-selector">
+            <label for="cfl-engine-select">Optimization Engine:</label>
+            <select id="cfl-engine-select">
+                <option value="pulp">PuLP (Custom)</option>
+                <option value="pydfs">PyDFS (Library)</option>
+            </select>
+        </div>
+        
+        <button class="cfl-optimize-btn" id="cfl-optimize-btn">
+            <span>🚀 Optimize Lineup</span>
+        </button>
+        
+        <div class="cfl-status" id="cfl-status"></div>
+    `;
+    
+    // Inject into page
+    document.body.appendChild(controls);
+    
+    // Add event listeners
+    setupControlEventListeners();
+    
+    console.log('[CFL Optimizer] Controls injected successfully');
+}
+
+// Setup event listeners for the controls
+function setupControlEventListeners() {
+    const optimizeBtn = document.getElementById('cfl-optimize-btn');
+    const statusDiv = document.getElementById('cfl-status');
+    
+    optimizeBtn.addEventListener('click', async () => {
+        console.log('[CFL Optimizer] Optimize button clicked');
+        
+        // Get selected engine
+        const engineSelect = document.getElementById('cfl-engine-select');
+        const selectedEngine = engineSelect.value;
+        
+        // Update UI to loading state
+        optimizeBtn.disabled = true;
+        optimizeBtn.innerHTML = '<div class="spinner"></div><span>Optimizing...</span>';
+        statusDiv.textContent = 'Gathering player data...';
+        statusDiv.className = 'cfl-status loading';
+        
+        try {
+            // Start optimization process
+            await performDirectOptimization(selectedEngine);
+            
+            // Success state
+            optimizeBtn.disabled = false;
+            optimizeBtn.innerHTML = '<span>✅ Optimization Complete</span>';
+            statusDiv.textContent = 'Lineup optimized and displayed!';
+            statusDiv.className = 'cfl-status success';
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                optimizeBtn.innerHTML = '<span>🚀 Optimize Lineup</span>';
+                statusDiv.textContent = '';
+                statusDiv.className = 'cfl-status';
+            }, 3000);
+            
+        } catch (error) {
+            console.error('[CFL Optimizer] Optimization failed:', error);
+            
+            // Error state
+            optimizeBtn.disabled = false;
+            optimizeBtn.innerHTML = '<span>❌ Optimization Failed</span>';
+            statusDiv.textContent = error.message || 'Optimization failed';
+            statusDiv.className = 'cfl-status error';
+            
+            // Reset button after 5 seconds
+            setTimeout(() => {
+                optimizeBtn.innerHTML = '<span>🚀 Optimize Lineup</span>';
+                statusDiv.textContent = '';
+                statusDiv.className = 'cfl-status';
+            }, 5000);
+        }
+    });
+}
+
+// Perform optimization directly from content script
+async function performDirectOptimization(selectedEngine) {
+    console.log('[CFL Optimizer] Starting direct optimization with engine:', selectedEngine);
+    
+    // Check if player data is available
+    if (!isDataLoaded || !playerData?.players?.length) {
+        throw new Error('Player data not available. Please refresh the page.');
+    }
+    
+    // Format data for the optimizer API (same as popup.js)
+    const apiRequest = {
+        players: playerData.players || [],
+        teams: playerData.teams || [],
+        gameweeks: playerData.gameweeks || [],
+        current_team: playerData.current_team || {},
+        player_ownership: playerData.player_ownership || {},
+        team_ownership: playerData.team_ownership || {},
+        league_config: {
+            salary_cap: 70000,
+            roster_size: 7,
+            positions: {
+                QB: 1,
+                WR: 2,
+                RB: 2,
+                FLEX: 1,
+                DEF: 1
+            }
+        },
+        optimization_settings: {
+            max_players_from_team: 3,
+            use_captain: true,
+            num_lineups: 1
+        },
+        engine: selectedEngine
+    };
+    
+    console.log('[CFL Optimizer] Sending optimization request to background script...');
+    
+    // Send optimization request to background script
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({
+            action: 'optimizeLineup',
+            data: apiRequest
+        }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error('[CFL Optimizer] Error communicating with background script:', chrome.runtime.lastError);
+                reject(new Error('Unable to connect to optimizer service'));
+                return;
+            }
+            
+            if (response.success) {
+                console.log('[CFL Optimizer] Optimization successful, injecting panel...');
+                
+                // Extract lineup data
+                const lineup = response.lineup.players || response.lineup;
+                
+                // Inject the optimized lineup panel
+                injectOptimizerPanel(lineup);
+                
+                resolve(response);
+            } else {
+                console.error('[CFL Optimizer] Optimization failed:', response.error);
+                reject(new Error(response.error || 'Optimization failed'));
+            }
+        });
+    });
+}
+
+// Inject optimize controls when page is ready
+setTimeout(() => {
+    injectOptimizeControls();
+}, 2000); // Give React app time to load
+
+console.log('[CFL Optimizer] Content script ready');

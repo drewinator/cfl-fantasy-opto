@@ -6,6 +6,7 @@ Flask server that provides optimization endpoints for the Chrome extension
 import json
 import os
 import logging
+import requests
 from datetime import datetime
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -22,6 +23,220 @@ CORS(app)  # Enable CORS for Chrome extension
 # Global optimizer instances
 pulp_optimizer = CustomCFLOptimizer()
 pydfs_optimizer = CFLPydfsOptimizer()
+
+def fetch_cfl_data():
+    """
+    Fetch live data from CFL Fantasy API endpoints
+    Replicates the data fetching logic from content.js
+    """
+    logger.info("Fetching live CFL data...")
+    
+    cfl_api_endpoints = [
+        'https://gamezone.cfl.ca/json/fantasy/players.json',
+        'https://gamezone.cfl.ca/json/fantasy/playersSelection.json',
+        'https://gamezone.cfl.ca/json/fantasy/squads.json',
+        'https://gamezone.cfl.ca/json/fantasy/squadsSelection.json',
+        'https://gamezone.cfl.ca/json/fantasy/gameweeks.json'
+    ]
+    
+    all_players = []
+    all_teams = []
+    gameweeks_data = []
+    current_team_data = {}
+    ownership_data = {}
+    team_ownership_data = {}
+    
+    for url in cfl_api_endpoints:
+        try:
+            logger.info(f"Fetching data from {url}")
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            
+            # Extract data based on endpoint type
+            if 'players.json' in url:
+                players = extract_players_from_cfl_api(data)
+                if players:
+                    all_players = players
+                    logger.info(f"Loaded {len(players)} players")
+                    
+            elif 'playersSelection.json' in url:
+                ownership_data = extract_ownership_from_players_selection(data)
+                logger.info(f"Loaded ownership data for {len(ownership_data)} players")
+                
+            elif 'squads.json' in url:
+                teams = extract_teams_from_cfl_squads_api(data)
+                if teams:
+                    all_teams = teams
+                    logger.info(f"Loaded {len(teams)} teams")
+                    
+            elif 'squadsSelection.json' in url:
+                team_ownership_data = extract_team_ownership_from_squads_selection(data)
+                logger.info(f"Loaded team ownership data for {len(team_ownership_data)} teams")
+                
+            elif 'gameweeks.json' in url:
+                gameweeks_data = data if isinstance(data, list) else []
+                logger.info(f"Loaded {len(gameweeks_data)} gameweeks")
+                
+        except Exception as error:
+            logger.warning(f"Failed to fetch {url}: {error}")
+            continue
+    
+    # If we got players but no teams, create teams from player data
+    if all_players and not all_teams:
+        all_teams = create_teams_from_player_data(all_players)
+        logger.info(f"Created {len(all_teams)} teams from player data")
+    
+    # Structure data for optimizer
+    structured_data = {
+        'players': all_players,
+        'teams': all_teams,
+        'gameweeks': gameweeks_data,
+        'current_team': current_team_data,
+        'player_ownership': ownership_data,
+        'team_ownership': team_ownership_data,
+        'source': 'CFL Fantasy API',
+        'metadata': {
+            'source': 'api_server',
+            'timestamp': datetime.now().isoformat(),
+            'player_count': len(all_players),
+            'team_count': len(all_teams),
+            'gameweek_count': len(gameweeks_data)
+        }
+    }
+    
+    logger.info(f"Successfully fetched CFL data: {len(all_players)} players, {len(all_teams)} teams")
+    return structured_data
+
+def extract_players_from_cfl_api(data):
+    """Extract players from CFL players.json API - mirrors content.js logic"""
+    players = []
+    try:
+        # Handle direct list format
+        if isinstance(data, list):
+            players_data = data
+        else:
+            # Handle object format with nested data
+            players_data = data.get('players') or data.get('data') or data
+        
+        if isinstance(players_data, list):
+            for player in players_data:
+                if player and isinstance(player, dict) and player.get('firstName') and player.get('lastName'):
+                    players.append(player)
+        elif isinstance(players_data, dict):
+            for player in players_data.values():
+                if isinstance(player, dict) and player.get('firstName') and player.get('lastName'):
+                    players.append(player)
+                    
+        logger.info(f"Extracted {len(players)} players from API data")
+    except Exception as error:
+        logger.error(f"Error extracting players from CFL API: {error}")
+        logger.error(f"Data type: {type(data)}, Data sample: {str(data)[:200]}")
+    
+    return players
+
+def extract_ownership_from_players_selection(data):
+    """Extract ownership data from CFL playersSelection.json API"""
+    ownership_data = {}
+    try:
+        if isinstance(data, dict):
+            for player_id, player_ownership in data.items():
+                if player_ownership and isinstance(player_ownership, dict):
+                    ownership_data[player_id] = {
+                        'percents': player_ownership.get('percents', 0),
+                        'number': player_ownership.get('number', 0)
+                    }
+    except Exception as error:
+        logger.error(f"Error extracting ownership data: {error}")
+    
+    return ownership_data
+
+def extract_teams_from_cfl_squads_api(data):
+    """Extract teams from CFL squads.json API"""
+    teams = []
+    try:
+        # Handle direct list format
+        if isinstance(data, list):
+            squads_data = data
+        else:
+            # Handle object format with nested data
+            squads_data = data.get('squads') or data.get('data') or data
+        
+        if isinstance(squads_data, list):
+            for squad in squads_data:
+                normalized_team = normalize_cfl_team(squad)
+                if normalized_team:
+                    teams.append(normalized_team)
+                    
+        logger.info(f"Extracted {len(teams)} teams from API data")
+    except Exception as error:
+        logger.error(f"Error extracting teams from CFL squads API: {error}")
+        logger.error(f"Data type: {type(data)}, Data sample: {str(data)[:200]}")
+    
+    return teams
+
+def extract_team_ownership_from_squads_selection(data):
+    """Extract team ownership data from CFL squadsSelection.json API"""
+    team_ownership_data = {}
+    try:
+        if isinstance(data, dict):
+            for team_id, team_ownership in data.items():
+                if team_ownership and isinstance(team_ownership, dict):
+                    team_ownership_data[team_id] = {
+                        'percents': team_ownership.get('percents', 0),
+                        'number': team_ownership.get('number', 0)
+                    }
+    except Exception as error:
+        logger.error(f"Error extracting team ownership data: {error}")
+    
+    return team_ownership_data
+
+def normalize_cfl_team(raw_team):
+    """Normalize CFL team data to standard format"""
+    if not raw_team or not isinstance(raw_team, dict):
+        return None
+    
+    try:
+        return {
+            'id': raw_team.get('id') or raw_team.get('teamId', ''),
+            'name': raw_team.get('name') or raw_team.get('teamName', ''),
+            'abbreviation': raw_team.get('abbreviation') or raw_team.get('abbr') or raw_team.get('short', ''),
+            'cost': int(raw_team.get('cost') or raw_team.get('price') or raw_team.get('salary') or 0),
+            'projectedScores': float(raw_team.get('projectedScores') or raw_team.get('points') or raw_team.get('projection') or 0),
+            'city': raw_team.get('city', ''),
+            'logoUrl': raw_team.get('logoUrl', ''),
+            'primaryColor': raw_team.get('primaryColor', ''),
+            'secondaryColor': raw_team.get('secondaryColor', '')
+        }
+    except Exception as error:
+        logger.error(f"Error normalizing CFL team: {error}")
+        return None
+
+def create_teams_from_player_data(players):
+    """Create defense teams from player data when team API is not available"""
+    teams = []
+    team_abbreviations = set()
+    
+    # Extract unique teams from player data
+    for player in players:
+        squad = player.get('squad', {})
+        team_name = squad.get('name') or squad.get('abbreviation', '')
+        if team_name:
+            team_abbreviations.add(team_name.strip())
+    
+    # Create defense teams for each unique team
+    team_id = 1
+    for abbr in team_abbreviations:
+        teams.append({
+            'id': str(team_id),
+            'name': f"{abbr} Defense",
+            'abbreviation': abbr,
+            'cost': 5000,  # Default cost
+            'projectedScores': 8.0  # Default projection
+        })
+        team_id += 1
+    
+    return teams
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -366,6 +581,135 @@ def internal_error(error):
         'success': False,
         'error': 'Internal server error'
     }), 500
+
+@app.route('/optimize-mobile', methods=['POST'])
+def optimize_mobile():
+    """
+    Mobile optimization endpoint that fetches live CFL data and optimizes
+    Designed for mobile browsers that can't directly access CFL APIs due to CORS
+    """
+    try:
+        # Get request data
+        request_data = request.get_json() or {}
+        engine = request_data.get('engine', 'pulp')
+        settings = request_data.get('optimization_settings', {})
+        
+        logger.info(f"Mobile optimization request with engine: {engine}")
+        
+        # Fetch live CFL data
+        try:
+            cfl_data = fetch_cfl_data()
+        except Exception as error:
+            logger.error(f"Failed to fetch CFL data: {error}")
+            return jsonify({
+                'success': False,
+                'error': f'Unable to fetch live CFL data: {str(error)}'
+            }), 500
+        
+        if not cfl_data.get('players'):
+            return jsonify({
+                'success': False,
+                'error': 'No player data available from CFL APIs'
+            }), 500
+        
+        # Select optimizer based on engine
+        if engine == 'pydfs':
+            optimizer = pydfs_optimizer
+        else:
+            optimizer = pulp_optimizer
+        
+        # Prepare data for optimization
+        optimization_data = {
+            'players': cfl_data['players'],
+            'teams': cfl_data['teams'],
+            'gameweeks': cfl_data['gameweeks'],
+            'current_team': cfl_data['current_team'],
+            'player_ownership': cfl_data['player_ownership'],
+            'team_ownership': cfl_data['team_ownership'],
+            'league_config': {
+                'salary_cap': 70000,
+                'roster_size': 7,
+                'positions': {
+                    'QB': 1,
+                    'WR': 2,
+                    'RB': 2,
+                    'FLEX': 1,
+                    'DEF': 1
+                }
+            },
+            'optimization_settings': {
+                'max_players_from_team': settings.get('max_players_from_team', 3),
+                'use_captain': settings.get('use_captain', True),
+                'num_lineups': settings.get('num_lineups', 1)
+            },
+            'engine': engine
+        }
+        
+        # Run optimization based on engine
+        if engine == 'pydfs':
+            # PyDFS optimizer
+            formatted_lineup = optimizer.optimize_from_request(optimization_data)
+            result = {
+                'success': True,
+                'lineup': formatted_lineup,
+                'player_stats': optimizer.get_player_stats(),
+                'optimization_time': datetime.now().isoformat(),
+                'engine': 'pydfs',
+                'data_source': 'live_cfl_api'
+            }
+        else:
+            # PuLP optimizer
+            # Load data into optimizer
+            if cfl_data['players']:
+                optimizer.load_players_from_json(
+                    cfl_data['players'], 
+                    cfl_data['player_ownership'], 
+                    cfl_data['gameweeks'], 
+                    cfl_data['current_team']
+                )
+            
+            if cfl_data['teams']:
+                optimizer.load_teams_from_json(
+                    cfl_data['teams'], 
+                    cfl_data['team_ownership']
+                )
+            
+            # Generate lineup
+            max_players_from_team = settings.get('max_players_from_team', 3)
+            use_captain = settings.get('use_captain', True)
+            
+            lineup = optimizer.generate_lineup(
+                max_players_from_team=max_players_from_team,
+                use_captain=use_captain
+            )
+            
+            if not lineup:
+                return jsonify({
+                    'success': False,
+                    'error': 'No optimal lineup found'
+                }), 400
+            
+            # Format lineup for API response
+            formatted_lineup = optimizer.format_lineup_for_api(lineup)
+            
+            result = {
+                'success': True,
+                'lineup': formatted_lineup,
+                'player_stats': optimizer.get_player_stats(),
+                'optimization_time': datetime.now().isoformat(),
+                'engine': 'pulp',
+                'data_source': 'live_cfl_api'
+            }
+        
+        logger.info(f"Mobile optimization completed successfully with {engine} engine")
+        return jsonify(result)
+        
+    except Exception as error:
+        logger.error(f"Mobile optimization error: {error}")
+        return jsonify({
+            'success': False,
+            'error': str(error)
+        }), 500
 
 def main():
     """Run the Flask development server"""

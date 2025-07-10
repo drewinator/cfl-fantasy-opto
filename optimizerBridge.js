@@ -19,17 +19,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             .then(result => {
                 console.log('[CFL Optimizer] Optimization completed successfully');
 
-                // forward lineup to active tab for injection
-                chrome.tabs.query({active:true,currentWindow:true}, tabs=>{
-                    if(tabs && tabs[0]){
-                        chrome.tabs.sendMessage(tabs[0].id,{
-                            action:'lineupGenerated',
-                            success:true,
-                            lineup: result.players || result
-                        });
-                    }
-                });
-
                 sendResponse({
                     success: true,
                     lineup: result

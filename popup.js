@@ -155,13 +155,23 @@ async function optimizeLineup(playerData) {
                 showResults(response.lineup, false, null, selectedEngine);
 
                 // forward lineup to content script to inject into page
+                console.log('[CFL Optimizer] Forwarding lineup to content script:', response.lineup);
                 chrome.tabs.query({active:true,currentWindow:true}, tabs=>{
                     if(tabs && tabs[0]){
+                        console.log('[CFL Optimizer] Sending message to tab:', tabs[0].id);
                         chrome.tabs.sendMessage(tabs[0].id,{
                             action:'lineupGenerated',
                             success:true,
                             lineup: response.lineup.players || response.lineup
+                        }, (response) => {
+                            if (chrome.runtime.lastError) {
+                                console.error('[CFL Optimizer] Error sending lineup to content script:', chrome.runtime.lastError);
+                            } else {
+                                console.log('[CFL Optimizer] Lineup message sent successfully');
+                            }
                         });
+                    } else {
+                        console.error('[CFL Optimizer] No active tab found');
                     }
                 });
             } else {

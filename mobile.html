@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFL Fantasy Optimizer - Mobile</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .header h1 {
+            color: #c5242b;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        .controls {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 2px solid #c5242b;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 16px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .optimize-btn {
+            width: 100%;
+            background: #c5242b;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 54px;
+        }
+        
+        .optimize-btn:hover:not(:disabled) {
+            background: #a01e24;
+        }
+        
+        .optimize-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        
+        .status.loading { color: #ffd700; }
+        .status.success { color: #4caf50; }
+        .status.error { color: #f44336; }
+        
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .lineup-panel {
+            background: #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 24px;
+            display: none;
+        }
+        
+        .lineup-header {
+            background: #c5242b;
+            color: white;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .player-card {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #444;
+            background: #2a2a2a;
+        }
+        
+        .player-card:last-child {
+            border-bottom: none;
+        }
+        
+        .player-position {
+            background: #c5242b;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            min-width: 40px;
+            text-align: center;
+            margin-right: 12px;
+        }
+        
+        .player-info {
+            flex: 1;
+        }
+        
+        .player-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: white;
+        }
+        
+        .player-details {
+            font-size: 12px;
+            color: #bbb;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .captain-badge {
+            background: #ffd700;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+        
+        .ownership-badge {
+            background: #4a5568;
+            color: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #888;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ CFL Fantasy Optimizer</h1>
+        <p>Mobile Edition - Live data optimization on the go</p>
+    </div>
+    
+    <div class="controls">
+        <div class="form-group">
+            <label for="engine-select">Optimization Engine:</label>
+            <select id="engine-select">
+                <option value="pulp">PuLP (Custom Algorithm)</option>
+                <option value="pydfs">PyDFS (Library)</option>
+            </select>
+        </div>
+        
+        <button class="optimize-btn" id="optimize-btn">
+            🚀 Optimize Lineup
+        </button>
+        
+        <div class="status" id="status"></div>
+    </div>
+    
+    <div class="lineup-panel" id="lineup-panel">
+        <div class="lineup-header">
+            <span>⭐ Optimized Lineup</span>
+            <span id="total-points">0 pts</span>
+        </div>
+        <div id="lineup-content"></div>
+    </div>
+    
+    <div class="footer">
+        <p>Powered by CFL Fantasy Optimizer</p>
+        <p>Built for mobile access when Chrome extensions aren't available</p>
+    </div>
+    
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:3000';
+        
+        // DOM elements
+        const optimizeBtn = document.getElementById('optimize-btn');
+        const engineSelect = document.getElementById('engine-select');
+        const statusDiv = document.getElementById('status');
+        const lineupPanel = document.getElementById('lineup-panel');
+        const lineupContent = document.getElementById('lineup-content');
+        const totalPointsSpan = document.getElementById('total-points');
+        
+        // Event listeners
+        optimizeBtn.addEventListener('click', optimizeLineup);
+        
+        async function optimizeLineup() {
+            try {
+                // Update UI to loading state
+                optimizeBtn.disabled = true;
+                optimizeBtn.innerHTML = '<div class="spinner"></div> Optimizing...';
+                statusDiv.textContent = 'Fetching live CFL data and optimizing...';
+                statusDiv.className = 'status loading';
+                lineupPanel.style.display = 'none';
+                
+                // Get selected engine
+                const selectedEngine = engineSelect.value;
+                
+                // Make API request using mobile endpoint with live CFL data
+                const response = await fetch(`${API_BASE_URL}/optimize-mobile`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        engine: selectedEngine,
+                        optimization_settings: {
+                            max_players_from_team: 3,
+                            use_captain: true,
+                            num_lineups: 1
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success || data.lineup) {
+                    // Success state
+                    optimizeBtn.disabled = false;
+                    optimizeBtn.innerHTML = '✅ Optimization Complete';
+                    statusDiv.textContent = 'Lineup optimized successfully!';
+                    statusDiv.className = 'status success';
+                    
+                    // Display lineup
+                    displayLineup(data.lineup);
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        optimizeBtn.innerHTML = '🚀 Optimize Lineup';
+                        statusDiv.textContent = '';
+                        statusDiv.className = 'status';
+                    }, 3000);
+                    
+                } else {
+                    throw new Error(data.error || 'Optimization failed');
+                }
+                
+            } catch (error) {
+                console.error('Optimization failed:', error);
+                
+                // Error state
+                optimizeBtn.disabled = false;
+                optimizeBtn.innerHTML = '❌ Optimization Failed';
+                statusDiv.textContent = error.message || 'Optimization failed';
+                statusDiv.className = 'status error';
+                
+                // Reset button after 5 seconds
+                setTimeout(() => {
+                    optimizeBtn.innerHTML = '🚀 Optimize Lineup';
+                    statusDiv.textContent = '';
+                    statusDiv.className = 'status';
+                }, 5000);
+            }
+        }
+        
+        function displayLineup(lineup) {
+            const players = lineup.players || lineup;
+            const totalPoints = players.reduce((sum, p) => sum + (p.projected_points || p.projection || 0), 0);
+            
+            // Update total points
+            totalPointsSpan.textContent = `${totalPoints.toFixed(1)} pts`;
+            
+            // Clear existing content
+            lineupContent.innerHTML = '';
+            
+            // Add player cards
+            players.forEach(player => {
+                const card = document.createElement('div');
+                card.className = 'player-card';
+                
+                const captainBadge = player.is_captain ? '<span class="captain-badge">CPT</span>' : '';
+                const points = player.projected_points || player.projection || 0;
+                const ownership = player.ownership ? `${player.ownership.toFixed(1)}%` : 'N/A';
+                
+                card.innerHTML = `
+                    <div class="player-position">${player.position}</div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            ${player.name}${captainBadge}
+                        </div>
+                        <div class="player-details">
+                            <span>$${(player.salary/1000).toFixed(1)}k</span>
+                            <span>${points} pts</span>
+                            <span class="ownership-badge">${ownership}</span>
+                        </div>
+                    </div>
+                `;
+                
+                lineupContent.appendChild(card);
+            });
+            
+            // Show lineup panel
+            lineupPanel.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

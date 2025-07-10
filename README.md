@@ -1,32 +1,68 @@
 # CFL Fantasy Optimizer
 
-A Chrome extension and Python backend system that optimizes Canadian Football League (CFL) fantasy lineups using advanced linear programming algorithms with captain logic.
+A comprehensive optimization tool for CFL Fantasy football that provides both **Chrome extension** and **mobile web interfaces**. Uses advanced linear programming algorithms to generate optimal lineups with captain logic and constraint handling.
 
 ## 🚀 Features
 
-- **Smart Optimization**: Uses linear programming to find optimal lineups within salary cap constraints
-- **Captain Logic**: Automatically tests all eligible players as captains with 2x point multipliers
-- **Real-time Data**: Fetches live player data, salaries, and projections from CFL's fantasy platform
-- **Ownership Integration**: Incorporates player ownership percentages for strategic diversity
-- **Chrome Extension**: Seamless integration with gamezone.cfl.ca/fantasy pages
-- **Multiple Lineups**: Generate diverse lineup options for tournaments
-- **Production Ready**: Clean, optimized codebase with comprehensive error handling
+### 🎯 Chrome Extension
+- **Inline optimization controls** directly on CFL fantasy page - no popup needed!
+- **Real-time lineup display** with professional card-based design
+- **Dual optimization engines**: PuLP (custom) and PyDFS (library)
+- **Live data extraction** from CFL fantasy APIs
+- **Captain optimization** with 2x point multipliers
+- **Ownership percentages** for all players
+- **Collapse/expand panels** for clean interface
+- **Auto-injection** - controls appear automatically on CFL pages
 
-## 📋 CFL Fantasy Rules
+### 📱 Mobile Web Interface
+- **Live CFL data optimization** from any mobile device
+- **Touch-optimized UI** with responsive design
+- **Same optimization engines** as Chrome extension
+- **Professional lineup display** with ownership data
+- **No Chrome extension required** - works in any mobile browser
+- **Server-side data fetching** - bypasses CORS limitations
 
-The optimizer implements official CFL fantasy constraints:
-- **Roster Size**: 7 players total
-- **Positions**: 1 QB + 2 WR + 2 RB + 1 FLEX (WR/RB/TE) + 1 DEF
-- **Salary Cap**: $70,000
-- **Captain Bonus**: One player gets 2x points multiplier
-- **Team Limits**: Maximum 3 players from same team
+### ⚡ Optimization Features
+- **Advanced constraints**: Salary cap, position requirements, team limits
+- **Captain logic**: Automatically tests all viable captain options
+- **Multiple engines**: Choose between custom PuLP or PyDFS algorithms
+- **Real-time data**: Always uses current CFL player data and projections
+- **Ownership analysis**: Includes player ownership percentages
+- **Live API integration**: Fetches fresh data from CFL endpoints
 
-## 🛠️ Installation
+## 📁 Project Structure
+
+```
+cfl_fantasy_opto/
+├── README.md                    # This file
+├── CLAUDE.md                   # Development guidelines
+├── manifest.json               # Chrome extension manifest
+├── popup.html                  # Extension popup interface
+├── popup.js                    # Extension popup logic
+├── content.js                  # Main content script (injected into CFL pages)
+├── optimizerBridge.js         # Background service worker
+├── styles.css                  # Extension UI styles
+├── mobile.html                 # Mobile web interface
+├── icon16.png, icon48.png, icon128.png  # Extension icons
+├── json_files/                 # Sample CFL data for development
+│   ├── players.json
+│   ├── playersselection.json
+│   ├── sqauds.json
+│   └── ...
+└── optimizer/                  # Python backend
+    ├── api_server.py          # Flask API server
+    ├── custom_cfl_optimizer.py # PuLP-based optimizer
+    ├── cfl_pydfs_optimizer.py # PyDFS-based optimizer
+    ├── requirements.txt       # Python dependencies
+    └── test_*.py             # Test scripts
+```
+
+## 🛠 Installation & Setup
 
 ### Prerequisites
-- Python 3.7+
-- Google Chrome browser
-- Git
+- Python 3.8+
+- Chrome browser
+- Internet connection for live CFL data
 
 ### 1. Clone Repository
 ```bash
@@ -34,52 +70,75 @@ git clone https://github.com/drewinator/cfl-fantasy-opto.git
 cd cfl-fantasy-opto
 ```
 
-### 2. Setup Python Backend
+### 2. Install Python Dependencies
 ```bash
 cd optimizer
 pip install -r requirements.txt
 ```
 
-### 3. Test the Optimizer
-```bash
-python test_custom_optimizer.py
-```
+### 3. Install Chrome Extension
 
-### 4. Start API Server
+#### Development Mode:
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable "Developer mode" (toggle in top right)
+3. Click "Load unpacked" 
+4. Select the project root directory (`cfl_fantasy_opto/`)
+5. Extension should now appear in your browser
+
+#### Production Mode:
+Extension is production-ready and can be packaged for Chrome Web Store distribution.
+
+## 🚀 Usage
+
+### Starting the Backend Server
 ```bash
+cd optimizer
 python api_server.py
 ```
 Server will start on `http://localhost:3000`
 
-### 5. Load Chrome Extension
-1. Open Chrome and navigate to `chrome://extensions/`
-2. Enable "Developer mode" (top right toggle)
-3. Click "Load unpacked"
-4. Select the project root directory (`cfl-fantasy-opto`)
-5. Extension should appear in your toolbar
-
-## 📱 Usage
-
 ### Using the Chrome Extension
-1. Navigate to [CFL Fantasy](https://gamezone.cfl.ca/fantasy/)
-2. Click the CFL Optimizer extension icon
-3. Click "Optimize Lineup" button
-4. View optimized lineup with captain selection
-5. Lineup automatically saves for 24 hours
 
-### API Usage
-The backend provides REST endpoints for direct integration:
+#### Method 1: Inline Controls (Recommended)
+1. Navigate to `https://gamezone.cfl.ca/fantasy/team`
+2. **Inline controls appear automatically** in top-right corner
+3. Select optimization engine (PuLP or PyDFS)
+4. Click "🚀 Optimize Lineup"
+5. **Optimized lineup appears inline** on the page with professional card design
 
-#### Generate Optimal Lineup
-```bash
-POST http://localhost:3000/optimize
-Content-Type: application/json
+#### Method 2: Extension Popup
+1. Click the extension icon in Chrome toolbar
+2. Select optimization engine
+3. Click "Optimize"
+4. View results in popup and inline panel
 
+### Using the Mobile Web Interface
+
+#### Local Testing:
+1. Ensure API server is running (`python api_server.py`)
+2. Open `mobile.html` in any browser
+3. Select optimization engine
+4. Click "🚀 Optimize Lineup"
+5. View optimized lineup with live CFL data
+
+#### Mobile Device:
+1. Deploy mobile.html to any web server
+2. Access from mobile browser
+3. Enjoy full optimization capabilities on-the-go
+
+## 🔧 API Endpoints
+
+### Core Endpoints
+- `POST /optimize` - Optimize lineup with provided data
+- `POST /optimize-mobile` - **Mobile optimization with live CFL data fetching**
+- `POST /optimize-multiple` - Generate multiple diverse lineups
+- `POST /test-data` - Test optimization with local JSON data
+- `GET /health` - Health check
+
+### Request Format
+```json
 {
-  "players": [...],
-  "teams": [...],
-  "player_ownership": {...},
-  "team_ownership": {...},
+  "engine": "pulp",
   "optimization_settings": {
     "max_players_from_team": 3,
     "use_captain": true,
@@ -88,108 +147,316 @@ Content-Type: application/json
 }
 ```
 
-#### Generate Multiple Lineups
+### Response Format
+```json
+{
+  "success": true,
+  "lineup": {
+    "players": [...],
+    "total_salary": 69500,
+    "projected_points": 127.3,
+    "remaining_cap": 500
+  },
+  "engine": "pulp",
+  "data_source": "live_cfl_api"
+}
+```
+
+## ⚙️ Configuration
+
+### CFL Fantasy Rules
+- **Roster Size**: 7 players (1 QB, 2 WR, 2 RB, 1 FLEX, 1 DEF)
+- **Salary Cap**: $70,000
+- **Team Limit**: Maximum 3 players from same team
+- **Captain Logic**: 2x point multiplier for one player
+
+### Engine Options
+- **PuLP (Custom)**: Custom linear programming implementation with advanced captain logic
+- **PyDFS (Library)**: Industry-standard DFS optimization library
+
+## 🔍 How It Works
+
+### Data Flow
+1. **Chrome Extension**: Extracts live data from CFL fantasy page
+2. **Mobile Interface**: Server fetches live data directly from CFL APIs
+3. **Optimization**: Advanced algorithms find optimal lineup combinations
+4. **Captain Testing**: Brute force tests all viable captain options
+5. **Results**: Professional display with ownership and projections
+
+### Live Data Sources
+- `https://gamezone.cfl.ca/json/fantasy/players.json`
+- `https://gamezone.cfl.ca/json/fantasy/playersSelection.json`
+- `https://gamezone.cfl.ca/json/fantasy/squads.json`
+- `https://gamezone.cfl.ca/json/fantasy/squadsSelection.json`
+- `https://gamezone.cfl.ca/json/fantasy/gameweeks.json`
+
+### Optimization Algorithm
+1. **Linear Programming**: Uses constraints to find mathematically optimal solution
+2. **Captain Logic**: Tests each eligible player as captain (2x points)
+3. **Constraint Handling**: Ensures salary cap, positions, and team limits
+4. **Ownership Integration**: Displays real ownership percentages
+
+## 📱 Mobile Deployment Guide
+
+### Quick Deploy Options
+
+#### Option 1: Simple HTTP Server
 ```bash
-POST http://localhost:3000/optimize-multiple
+# Serve mobile.html locally
+python -m http.server 8000
+# Access at http://localhost:8000/mobile.html
 ```
 
-#### Health Check
+#### Option 2: Heroku (Recommended)
 ```bash
-GET http://localhost:3000/test
+# Install Heroku CLI
+# Create Procfile:
+echo "web: gunicorn --chdir optimizer --bind 0.0.0.0:\$PORT api_server:app" > Procfile
+
+# Deploy
+heroku create your-cfl-optimizer
+git push heroku main
 ```
 
-## 🏗️ Architecture
+#### Option 3: Netlify (Static + API)
+1. Deploy mobile.html to Netlify
+2. Deploy API server to Heroku/Railway
+3. Update `API_BASE_URL` in mobile.html
 
-### Chrome Extension
-- **popup.js**: Main UI logic and optimization controls
-- **content.js**: Data extraction from CFL fantasy pages
-- **optimizerBridge.js**: Background service worker for API communication
-- **manifest.json**: Extension configuration and permissions
-
-### Python Backend
-- **custom_cfl_optimizer.py**: Primary optimizer using PuLP linear programming
-- **cfl_optimizer.py**: Alternative optimizer using pydfs-lineup-optimizer
-- **api_server.py**: Flask REST API server with CORS support
-
-### Data Processing
-- **Direct API Fetching**: Retrieves data from CFL's JSON endpoints
-- **Real-time Sync**: Automatically updates player data and ownership percentages
-- **Bye Week Handling**: Excludes players on bye weeks unless in current lineup
-- **Lock Status**: Respects player lock status from CFL platform
-
-## 🧮 Optimization Algorithm
-
-### Captain Selection Process
-1. **Candidate Identification**: All non-defense players eligible for captain
-2. **Brute Force Testing**: Tests each candidate with 2x point multiplier
-3. **Linear Programming**: Runs full optimization for each captain scenario
-4. **Best Selection**: Chooses combination with highest total projected points
-
-### Constraints
-- Salary cap: ≤ $70,000
-- Position requirements: Exact counts for each position
-- Team diversity: ≤ 3 players from same team
-- Flex optimization: Automatically fills FLEX with optimal WR/RB/TE
-
-### Performance
-- **Speed**: Typically optimizes in under 10 seconds
-- **Accuracy**: Finds mathematically optimal solutions within constraints
-- **Scalability**: Handles 350+ player pools efficiently
-
-## 📊 Expected Results
-
-### Typical Improvements
-- **Base Lineup**: ~107 projected points
-- **With Captain**: ~129 projected points
-- **Point Gain**: +22 points average improvement
-- **Salary Efficiency**: Maximizes points per dollar spent
-
-## 🔧 Development
-
-### Project Structure
-```
-cfl-fantasy-opto/
-├── manifest.json          # Chrome extension manifest
-├── popup.html/js          # Extension UI
-├── content.js             # Data extraction
-├── optimizerBridge.js     # API communication
-├── styles.css             # UI styling
-├── optimizer/             # Python backend
-│   ├── api_server.py      # Flask API
-│   ├── custom_cfl_optimizer.py  # Main optimizer
-│   ├── cfl_optimizer.py   # Alternative optimizer
-│   └── requirements.txt   # Python dependencies
-├── json_files/            # Sample data
-└── README.md              # This file
-```
-
-### Running Tests
+#### Option 4: Railway
 ```bash
-# Test custom optimizer
-python optimizer/test_custom_optimizer.py
+# Install Railway CLI
+npm install -g @railway/cli
 
-# Test basic functionality
-python optimizer/test_optimizer.py
+# Deploy
+railway login
+railway init
+railway up
 ```
 
-### Debug Mode
-Enable Chrome DevTools for extension debugging:
-1. Right-click extension icon → "Inspect popup"
-2. Check console for detailed logs
-3. Network tab shows API communication
+## 🚀 Production Deployment
 
-## 🚀 Production Features
+### Environment Setup
+```bash
+export PORT=3000
+export DEBUG=false
+export FLASK_ENV=production
+```
 
-### Code Quality
-- **Clean Codebase**: ~400+ lines of development code removed
-- **Error Handling**: Comprehensive exception handling and user feedback
-- **Logging**: Essential error logging without debug noise
-- **Performance**: Optimized for production use
+### Production Server
+```bash
+# Install production WSGI server
+pip install gunicorn
 
-### Security
-- **CORS Enabled**: Secure cross-origin requests
-- **Input Validation**: Validates all API inputs
-- **No Secrets**: No API keys or sensitive data stored
+# Run production server
+gunicorn --bind 0.0.0.0:3000 optimizer.api_server:app
+```
+
+### Docker Deployment
+Create `Dockerfile`:
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+COPY optimizer/requirements.txt .
+RUN pip install -r requirements.txt
+COPY optimizer/ ./optimizer/
+COPY mobile.html .
+EXPOSE 3000
+CMD ["gunicorn", "--bind", "0.0.0.0:3000", "optimizer.api_server:app"]
+```
+
+Deploy:
+```bash
+docker build -t cfl-optimizer .
+docker run -p 3000:3000 cfl-optimizer
+```
+
+## 📋 Startup Instructions (Self-Sufficient)
+
+### For Personal Server Deployment
+
+#### 1. Server Requirements
+- Ubuntu 20.04+ / CentOS 8+ / Any Linux distro
+- Python 3.8+
+- 1GB RAM minimum
+- Port 3000 open for HTTP traffic
+
+#### 2. Installation Script
+```bash
+#!/bin/bash
+# save as deploy.sh and run: chmod +x deploy.sh && ./deploy.sh
+
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Python and pip
+sudo apt install python3 python3-pip git nginx -y
+
+# Clone repository
+git clone https://github.com/drewinator/cfl-fantasy-opto.git
+cd cfl-fantasy-opto
+
+# Install dependencies
+cd optimizer
+pip3 install -r requirements.txt
+pip3 install gunicorn
+
+# Test the server
+python3 api_server.py &
+PID=$!
+sleep 5
+curl http://localhost:3000/health
+kill $PID
+
+echo "✅ Installation complete!"
+```
+
+#### 3. Production Startup
+```bash
+# Start production server
+cd cfl-fantasy-opto/optimizer
+gunicorn --bind 0.0.0.0:3000 --workers 4 --timeout 120 api_server:app
+
+# Or run in background
+nohup gunicorn --bind 0.0.0.0:3000 --workers 4 api_server:app > server.log 2>&1 &
+```
+
+#### 4. Systemd Service (Auto-start)
+Create `/etc/systemd/system/cfl-optimizer.service`:
+```ini
+[Unit]
+Description=CFL Fantasy Optimizer
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/cfl-fantasy-opto/optimizer
+ExecStart=/usr/local/bin/gunicorn --bind 0.0.0.0:3000 --workers 4 api_server:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable cfl-optimizer
+sudo systemctl start cfl-optimizer
+sudo systemctl status cfl-optimizer
+```
+
+#### 5. Nginx Reverse Proxy (Optional)
+Create `/etc/nginx/sites-available/cfl-optimizer`:
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+    
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+    
+    location /mobile.html {
+        root /home/ubuntu/cfl-fantasy-opto;
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+Enable:
+```bash
+sudo ln -s /etc/nginx/sites-available/cfl-optimizer /etc/nginx/sites-enabled/
+sudo systemctl restart nginx
+```
+
+## 🔒 Security & Maintenance
+
+### Security Checklist
+- [ ] Firewall configured (allow ports 22, 80, 443)
+- [ ] Regular system updates
+- [ ] Rate limiting configured if public
+- [ ] HTTPS enabled for production
+- [ ] Logs monitored for errors
+
+### Monitoring
+```bash
+# Check server status
+systemctl status cfl-optimizer
+
+# View logs
+journalctl -u cfl-optimizer -f
+
+# Monitor API health
+curl http://localhost:3000/health
+```
+
+### Updates
+```bash
+# Update code
+cd cfl-fantasy-opto
+git pull origin main
+
+# Restart service
+sudo systemctl restart cfl-optimizer
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+#### "No player data found"
+- Ensure you're on `gamezone.cfl.ca/fantasy/*` page
+- Refresh the page and wait for data to load
+- Check console for error messages
+
+#### "Unable to connect to optimizer service"
+- Verify API server is running: `systemctl status cfl-optimizer`
+- Check port 3000 is open: `netstat -tlnp | grep 3000`
+- Test API health: `curl http://localhost:3000/health`
+
+#### Mobile interface not working
+- Confirm API server is accessible
+- Check browser console for CORS errors
+- Verify mobile.html is served over HTTP/HTTPS
+
+#### Server won't start
+- Check Python version: `python3 --version`
+- Verify dependencies: `pip3 list | grep -E 'flask|requests|pulp'`
+- Check port availability: `lsof -i :3000`
+
+### Debug Commands
+```bash
+# Test API server directly
+cd optimizer
+python3 api_server.py
+
+# Test optimization with sample data
+python3 test_custom_optimizer.py
+
+# Check server logs
+tail -f server.log
+
+# Monitor system resources
+htop
+```
+
+## 📈 Performance
+
+### Typical Performance
+- **Data Fetching**: 1-2 seconds for live CFL data
+- **Optimization**: 2-5 seconds for single lineup
+- **Captain Testing**: 5-10 seconds (tests ~140 players)
+- **Total Process**: 8-15 seconds end-to-end
+
+### Optimization Stats
+- **Player Pool**: 350+ active CFL players
+- **Team Count**: 9 CFL teams
+- **Constraints**: 7+ simultaneous constraints
+- **Captain Options**: ~140 eligible players tested
 
 ## 🤝 Contributing
 
@@ -205,15 +472,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- CFL Fantasy platform for providing the data APIs
-- PuLP library for linear programming optimization
-- pydfs-lineup-optimizer for alternative optimization methods
+- CFL for providing fantasy data APIs
+- PuLP library for linear programming capabilities
+- PyDFS Lineup Optimizer for DFS algorithms
+- Chrome Extension APIs for seamless integration
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/drewinator/cfl-fantasy-opto/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/drewinator/cfl-fantasy-opto/discussions)
+For issues, questions, or feature requests:
+1. Check the [Issues](https://github.com/drewinator/cfl-fantasy-opto/issues) page
+2. Review the troubleshooting section above
+3. Create a new issue with detailed description
 
 ---
 
-**Made with ⚡ by [drewinator](https://github.com/drewinator)**
+**Built with ⚡ for CFL Fantasy enthusiasts by [drewinator](https://github.com/drewinator)**
