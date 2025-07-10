@@ -340,22 +340,59 @@ function createTeamsFromPlayerData(players) {
     return teams;
 }
 
-// Listen for messages from popup
+// Utility to sum projections
+function totalPoints(arr){
+    return arr.reduce((s,p)=>s+(+p.projection||0),0).toFixed(1);
+}
+
+// Inject optimizer lineup panel into page
+function injectOptimizerPanel(list){
+    const old=document.querySelector('#cfl-optimizer-panel');
+    if(old) old.remove();
+
+    const panel=document.createElement('div');
+    panel.id='cfl-optimizer-panel';
+    panel.innerHTML=`
+    <style>
+      #cfl-optimizer-panel{position:relative;width:100%;background:#111;color:#fff;padding:12px 16px;font-family:Arial,Helvetica,sans-serif;box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:9999;}
+      #cfl-optimizer-panel h3{margin:0 0 8px;font-size:18px;display:flex;justify-content:space-between;align-items:center;}
+      #cfl-optimizer-panel .toggle{cursor:pointer;font-size:14px;margin-left:8px;}
+      .cfl-opt-row{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:4px;}
+      .cfl-opt-row .add-btn{margin-left:auto;cursor:pointer;background:#c5242b;border:none;border-radius:3px;color:#fff;font-size:12px;padding:2px 6px;}
+    </style>
+    <h3><span>⭐\u00A0Optimized\u00A0Lineup</span><span>${totalPoints(list)}\u00A0pts</span><span class="toggle">▲</span></h3>`;
+
+    list.forEach(p=>{
+        const row=document.createElement('div');
+        row.className='cfl-opt-row';
+        const cap=p.isCaptain?' <strong>[CPT]</strong>':'';
+        row.innerHTML=`<strong>${p.position}</strong><span>${p.name}</span><span>$${(p.salary/1000).toFixed(1)}k</span><span>${p.projection}</span>${cap}<button class="add-btn">➕</button>`;
+        panel.appendChild(row);
+    });
+
+    panel.querySelector('.toggle').onclick=()=>{
+        const rows=[...panel.querySelectorAll('.cfl-opt-row')];
+        const collapsed=rows[0].style.display==='none';
+        rows.forEach(r=>r.style.display=collapsed?'flex':'none');
+        panel.querySelector('.toggle').textContent=collapsed?'▲':'▼';
+    };
+
+    const rosterCol=document.querySelector('#team');
+    if(!rosterCol) return console.warn('Roster column not found!');
+    rosterCol.parentNode.insertBefore(panel, rosterCol);
+    rosterCol.style.marginTop=panel.offsetHeight+'px';
+}
+
+// Listen for messages from popup/background
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'getPlayerData') {
-        
-        if (isDataLoaded && playerData?.players?.length > 0) {
-            sendResponse({
-                success: true,
-                data: playerData
-            });
-        } else {
-            sendResponse({
-                success: false,
-                error: 'No player data found. Please make sure you are on the CFL fantasy page and refresh the page.'
-            });
+    if(request.action==='getPlayerData'){
+        if(isDataLoaded && playerData?.players?.length>0){
+            sendResponse({success:true,data:playerData});
+        }else{
+            sendResponse({success:false,error:'No player data found. Please make sure you are on the CFL fantasy page and refresh the page.'});
         }
+    }else if(request.action==='lineupGenerated' && request.success){
+        injectOptimizerPanel(request.lineup);
     }
-    
-    return true; // Keep message channel open for async response
+    return true;
 });

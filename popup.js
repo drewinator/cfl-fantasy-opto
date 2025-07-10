@@ -153,6 +153,17 @@ async function optimizeLineup(playerData) {
             if (response.success) {
                 saveLineupToStorage(response.lineup);
                 showResults(response.lineup, false, null, selectedEngine);
+
+                // forward lineup to content script to inject into page
+                chrome.tabs.query({active:true,currentWindow:true}, tabs=>{
+                    if(tabs && tabs[0]){
+                        chrome.tabs.sendMessage(tabs[0].id,{
+                            action:'lineupGenerated',
+                            success:true,
+                            lineup: response.lineup.players || response.lineup
+                        });
+                    }
+                });
             } else {
                 console.error('[CFL Optimizer] Optimization failed:', response.error);
                 showError(response.error || 'Optimization failed. Please try again.');
