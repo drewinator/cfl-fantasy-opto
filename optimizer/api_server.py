@@ -14,9 +14,6 @@ from custom_cfl_optimizer import CustomCFLOptimizer
 from cfl_pydfs_optimizer import CFLPydfsOptimizer
 
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))   # Render sets $PORT
-    app.run(host="0.0.0.0", port=port)
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -730,4 +727,6 @@ def main():
     )
 
 if __name__ == "__main__":
-    main()
+    port = int(os.environ.get("PORT", 8080))  # Render sets $PORT
+    logger.info(f"Starting CFL Fantasy Optimizer API server on port {port}")
+    app.run(host="0.0.0.0", port=port)

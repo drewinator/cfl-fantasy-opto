@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: cfl-fantasy-optimizer
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python optimizer/api_server.py"
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        generateValue: true
+      - key: DEBUG
+        value: "false"
+      - key: PYTHONPATH
+        value: "/opt/render/project/src"
+    healthCheckPath: /health
