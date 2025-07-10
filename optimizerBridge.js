@@ -4,7 +4,7 @@
 console.log('[CFL Optimizer] Background script (optimizer bridge) loaded');
 
 // Configuration
-const OPTIMIZER_API_URL = 'http://localhost:3000/optimize';
+const OPTIMIZER_API_URL = 'https://cfl-fantasy-opto.onrender.com/optimize';
 const REQUEST_TIMEOUT = 30000; // 30 seconds
 
 // Listen for messages from popup
