@@ -8,7 +8,7 @@ import os
 import logging
 import requests
 from datetime import datetime
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from custom_cfl_optimizer import CustomCFLOptimizer
 from cfl_pydfs_optimizer import CFLPydfsOptimizer
@@ -238,6 +238,11 @@ def create_teams_from_player_data(players):
         team_id += 1
     
     return teams
+
+@app.route('/')
+def index():
+    """Serve the mobile web interface"""
+    return send_from_directory(os.path.dirname(os.path.dirname(__file__)), 'mobile.html')
 
 @app.route('/health', methods=['GET'])
 def health_check():
