@@ -2,6 +2,6 @@ pydfs-lineup-optimizer==3.6.1
 flask==2.3.3
 flask-cors==4.0.0
 requests==2.31.0
-pandas==2.1.1
-numpy==1.24.3
-pulp==2.7.0
+pandas==2.2.0
+numpy==1.26.0
+pulp==2.4
