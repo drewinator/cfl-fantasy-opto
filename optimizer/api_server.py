@@ -633,6 +633,118 @@ def get_projections():
             'error': str(e)
         }), 500
 
+@app.route('/projection-comparison', methods=['GET'])
+def get_projection_comparison():
+    """Get side-by-side comparison of site vs our projections"""
+    try:
+        # Try to get data from local JSON files first
+        base_path = os.path.dirname(os.path.dirname(__file__))
+        json_path = os.path.join(base_path, 'json_files')
+        players_file = os.path.join(json_path, 'players.json')
+        
+        with open(players_file, 'r') as f:
+            players_data = json.load(f)
+        
+        # Also load teams for defense projections
+        teams_file = os.path.join(json_path, 'sqauds.json')
+        teams_data = []
+        try:
+            with open(teams_file, 'r') as f:
+                teams_data = json.load(f)
+        except FileNotFoundError:
+            logger.warning("Teams file not found for comparison")
+        
+        # Build our projection maps
+        player_projections = build_projection_map(players_data)
+        team_projections = build_team_projection_map(teams_data) if teams_data else {}
+        
+        # Build comparison data
+        comparison_data = []
+        
+        # Add player comparisons
+        for player in players_data:
+            player_id = player.get('id') or player.get('feedId')
+            if not player_id:
+                continue
+                
+            stats = player.get('stats', {})
+            site_projection = stats.get('projectedScores', 0)
+            our_projection = player_projections.get(player_id, site_projection)
+            
+            name = f"{player.get('firstName', '')} {player.get('lastName', '')}".strip()
+            team = player.get('squad', {}).get('abbreviation', '')
+            position = player.get('position', '')
+            
+            difference = our_projection - site_projection
+            percent_change = ((difference / site_projection) * 100) if site_projection > 0 else 0
+            
+            comparison_data.append({
+                'id': player_id,
+                'name': name,
+                'team': team,
+                'position': position,
+                'type': 'player',
+                'site_projection': round(site_projection, 2),
+                'our_projection': round(our_projection, 2),
+                'difference': round(difference, 2),
+                'percent_change': round(percent_change, 1)
+            })
+        
+        # Add team comparisons
+        for team in teams_data:
+            team_id = team.get('id')
+            if not team_id:
+                continue
+                
+            site_projection = team.get('projectedScores', 0)
+            our_projection = team_projections.get(team_id, site_projection)
+            
+            name = team.get('name', '')
+            abbreviation = team.get('abbreviation', '')
+            
+            difference = our_projection - site_projection
+            percent_change = ((difference / site_projection) * 100) if site_projection > 0 else 0
+            
+            comparison_data.append({
+                'id': team_id,
+                'name': name,
+                'team': abbreviation,
+                'position': 'DEF',
+                'type': 'team',
+                'site_projection': round(site_projection, 2),
+                'our_projection': round(our_projection, 2),
+                'difference': round(difference, 2),
+                'percent_change': round(percent_change, 1)
+            })
+        
+        # Sort by largest differences first
+        comparison_data.sort(key=lambda x: abs(x['difference']), reverse=True)
+        
+        return jsonify({
+            'success': True,
+            'comparisons': comparison_data,
+            'summary': {
+                'total_players': len([c for c in comparison_data if c['type'] == 'player']),
+                'total_teams': len([c for c in comparison_data if c['type'] == 'team']),
+                'avg_difference': round(sum(c['difference'] for c in comparison_data) / len(comparison_data), 2) if comparison_data else 0,
+                'largest_increase': max(comparison_data, key=lambda x: x['difference'])['name'] if comparison_data else None,
+                'largest_decrease': min(comparison_data, key=lambda x: x['difference'])['name'] if comparison_data else None
+            },
+            'timestamp': datetime.now().isoformat()
+        })
+        
+    except FileNotFoundError:
+        return jsonify({
+            'success': False,
+            'error': 'Player data files not found'
+        }), 404
+    except Exception as e:
+        logger.error(f"Failed to generate projection comparison: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @app.route('/player-stats', methods=['GET'])
 def get_player_stats():
     """Get current player pool statistics"""
@@ -863,6 +975,158 @@ def optimize_mobile():
         
     except Exception as error:
         logger.error(f"Mobile optimization error: {error}")
+        return jsonify({
+            'success': False,
+            'error': str(error)
+        }), 500
+
+@app.route('/mobile-players', methods=['GET'])
+def get_mobile_players():
+    """
+    Mobile player browser endpoint that returns all players and teams 
+    with comprehensive data including projections and ownership
+    """
+    try:
+        logger.info("Mobile players request received")
+        
+        # Fetch live CFL data
+        try:
+            cfl_data = fetch_cfl_data()
+        except Exception as error:
+            logger.error(f"Failed to fetch CFL data: {error}")
+            return jsonify({
+                'success': False,
+                'error': f'Unable to fetch live CFL data: {str(error)}'
+            }), 500
+        
+        if not cfl_data.get('players'):
+            return jsonify({
+                'success': False,
+                'error': 'No player data available from CFL APIs'
+            }), 500
+        
+        # Build projection maps for both players and teams
+        player_projection_map = build_projection_map(cfl_data['players'])
+        team_projection_map = build_team_projection_map(cfl_data.get('teams', []))
+        
+        # Process players data
+        processed_players = []
+        for player in cfl_data['players']:
+            player_id = player.get('id') or player.get('feedId')
+            if not player_id:
+                continue
+                
+            # Get ownership data
+            ownership_data = cfl_data.get('player_ownership', {}).get(str(player_id), {})
+            ownership_percent = ownership_data.get('percents', 0)
+            
+            # Get projections
+            stats = player.get('stats', {})
+            site_projection = stats.get('projectedScores', 0)
+            our_projection = player_projection_map.get(player_id, site_projection)
+            
+            # Map position names
+            position_map = {
+                'quarterback': 'QB',
+                'wide_receiver': 'WR', 
+                'running_back': 'RB',
+                'tight_end': 'TE',
+                'kicker': 'K',
+                'defence': 'DEF'
+            }
+            
+            position = position_map.get(player.get('position', ''), player.get('position', ''))
+            
+            processed_player = {
+                'id': player_id,
+                'name': f"{player.get('firstName', '')} {player.get('lastName', '')}".strip(),
+                'firstName': player.get('firstName', ''),
+                'lastName': player.get('lastName', ''),
+                'position': position,
+                'team': player.get('squad', {}).get('abbr', ''),
+                'teamName': player.get('squad', {}).get('name', ''),
+                'salary': player.get('cost', 0),
+                'points': player.get('points', 0),
+                'status': player.get('status', 'unavailable'),
+                'isLocked': player.get('isLocked', False),
+                'site_projection': round(float(site_projection), 2),
+                'our_projection': round(float(our_projection), 2),
+                'projection_difference': round(float(our_projection) - float(site_projection), 2),
+                'avg_points': stats.get('avgPoints', 0),
+                'ownership': round(float(ownership_percent), 2),
+                'salary_change': stats.get('weekSalaryChange', 0),
+                'video_available': bool(player.get('videoURL')),
+                'news_available': bool(player.get('newsTitle', {}).get('en', '')),
+                'injured': bool(player.get('injuredText', {}).get('en', ''))
+            }
+            
+            processed_players.append(processed_player)
+        
+        # Process teams data
+        processed_teams = []
+        for team in cfl_data.get('teams', []):
+            team_id = team.get('id')
+            if not team_id:
+                continue
+                
+            # Get ownership data
+            team_ownership_data = cfl_data.get('team_ownership', {}).get(str(team_id), {})
+            ownership_percent = team_ownership_data.get('percents', 0)
+            
+            # Get projections - teams store projectedScores at root level
+            site_projection = team.get('projectedScores', 0)
+            our_projection = team_projection_map.get(team_id, site_projection)
+            
+            processed_team = {
+                'id': team_id,
+                'name': team.get('name', ''),
+                'abbreviation': team.get('abbreviation', ''),
+                'position': 'DEF',
+                'team': team.get('abbreviation', ''),
+                'teamName': team.get('name', ''),
+                'salary': team.get('cost', 0),
+                'status': 'available',  # Teams are generally always available
+                'site_projection': round(float(site_projection), 2),
+                'our_projection': round(float(our_projection), 2),
+                'projection_difference': round(float(our_projection) - float(site_projection), 2),
+                'ownership': round(float(ownership_percent), 2),
+                'video_available': bool(team.get('videoURL', {}).get('en', '')),
+                'news_available': bool(team.get('newsTitle', {}).get('en', ''))
+            }
+            
+            processed_teams.append(processed_team)
+        
+        # Sort players by position then by name
+        position_order = {'QB': 1, 'WR': 2, 'RB': 3, 'TE': 4, 'K': 5, 'DEF': 6}
+        processed_players.sort(key=lambda x: (position_order.get(x['position'], 99), x['name']))
+        processed_teams.sort(key=lambda x: x['name'])
+        
+        # Combine statistics
+        total_available_players = len([p for p in processed_players if p['status'] == 'available'])
+        total_unavailable_players = len([p for p in processed_players if p['status'] == 'unavailable'])
+        
+        result = {
+            'success': True,
+            'players': processed_players,
+            'teams': processed_teams,
+            'summary': {
+                'total_players': len(processed_players),
+                'total_teams': len(processed_teams),
+                'available_players': total_available_players,
+                'unavailable_players': total_unavailable_players,
+                'total_items': len(processed_players) + len(processed_teams)
+            },
+            'positions': ['QB', 'WR', 'RB', 'TE', 'K', 'DEF'],
+            'teams_list': list(set([p['team'] for p in processed_players if p['team']])),
+            'timestamp': datetime.now().isoformat(),
+            'data_source': 'live_cfl_api'
+        }
+        
+        logger.info(f"Mobile players endpoint completed: {len(processed_players)} players, {len(processed_teams)} teams")
+        return jsonify(result)
+        
+    except Exception as error:
+        logger.error(f"Mobile players endpoint error: {error}")
         return jsonify({
             'success': False,
             'error': str(error)

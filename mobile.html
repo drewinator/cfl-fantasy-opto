@@ -208,6 +208,293 @@
             color: #888;
             font-size: 12px;
         }
+
+        /* Browse Players Button */
+        .browse-btn {
+            width: 100%;
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 54px;
+            margin-top: 12px;
+        }
+
+        .browse-btn:hover:not(:disabled) {
+            background: #1976d2;
+        }
+
+        .browse-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        /* Player Browser Panel */
+        .player-browser-panel {
+            background: #2a2a2a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 24px;
+            border: 2px solid #c5242b;
+        }
+
+        .browser-header {
+            background: #c5242b;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .browser-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-browser-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .close-browser-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Browser Controls */
+        .browser-controls {
+            padding: 16px 20px;
+            background: #333;
+            border-bottom: 1px solid #444;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #c5242b;
+        }
+
+        .results-count {
+            font-size: 12px;
+            color: #bbb;
+            white-space: nowrap;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 10px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background: #1a1a1a;
+            color: white;
+            font-size: 12px;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #c5242b;
+        }
+
+        /* Player Table */
+        .player-table-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            background: #2a2a2a;
+        }
+
+        .player-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .player-table th {
+            background: #444;
+            color: white;
+            padding: 8px 4px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #555;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .player-table th.sortable:hover {
+            background: #555;
+        }
+
+        .player-table th .sort-icon {
+            font-size: 10px;
+            color: #888;
+            margin-left: 2px;
+        }
+
+        .player-table th.sort-asc .sort-icon {
+            color: #c5242b;
+        }
+
+        .player-table th.sort-desc .sort-icon {
+            color: #c5242b;
+        }
+
+        .player-table td {
+            padding: 6px 4px;
+            border-bottom: 1px solid #333;
+            vertical-align: middle;
+        }
+
+        .player-table tr:hover {
+            background: #333;
+        }
+
+        .player-table tr.unavailable {
+            opacity: 0.6;
+        }
+
+        .player-table .player-name {
+            font-weight: 500;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .player-table .position {
+            font-weight: 600;
+            color: #ffd700;
+            text-align: center;
+            min-width: 30px;
+        }
+
+        .player-table .team {
+            font-weight: 500;
+            color: #bbb;
+            text-align: center;
+            min-width: 35px;
+        }
+
+        .player-table .salary {
+            text-align: right;
+            color: #4caf50;
+            font-weight: 500;
+        }
+
+        .player-table .projection {
+            text-align: right;
+            color: #2196f3;
+            font-weight: 500;
+        }
+
+        .player-table .ownership {
+            text-align: right;
+            color: #ff9800;
+            font-weight: 500;
+        }
+
+        .player-table .status {
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .player-table .status.available {
+            color: #4caf50;
+        }
+
+        .player-table .status.unavailable {
+            color: #f44336;
+        }
+
+        /* Projection Difference Colors */
+        .proj-diff-positive {
+            color: #4caf50;
+        }
+
+        .proj-diff-negative {
+            color: #f44336;
+        }
+
+        .proj-diff-zero {
+            color: #bbb;
+        }
+
+        /* Browser Loading */
+        .browser-loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #bbb;
+        }
+
+        .browser-loading .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #444;
+            border-top: 2px solid #c5242b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        /* Responsive adjustments for player table */
+        @media (max-width: 480px) {
+            .player-table {
+                font-size: 10px;
+            }
+            
+            .player-table th,
+            .player-table td {
+                padding: 4px 2px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+            }
+            
+            .filter-select {
+                min-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -237,7 +524,76 @@
             🚀 Optimize Lineup
         </button>
         
+        <button class="browse-btn" id="browse-btn">
+            📋 Browse All Players
+        </button>
+        
         <div class="status" id="status"></div>
+    </div>
+    
+    <!-- Player Browser Section -->
+    <div class="player-browser-panel" id="player-browser-panel" style="display: none;">
+        <div class="browser-header">
+            <h2>🔍 CFL Player Browser</h2>
+            <button class="close-browser-btn" id="close-browser-btn">✕</button>
+        </div>
+        
+        <!-- Search and Filters -->
+        <div class="browser-controls">
+            <div class="search-row">
+                <input type="text" id="player-search" class="search-input" placeholder="Search players...">
+                <div class="results-count" id="results-count">Loading...</div>
+            </div>
+            
+            <div class="filter-row">
+                <select id="position-filter" class="filter-select">
+                    <option value="all">All Positions</option>
+                    <option value="QB">QB</option>
+                    <option value="WR">WR</option>
+                    <option value="RB">RB</option>
+                    <option value="TE">TE</option>
+                    <option value="K">K</option>
+                    <option value="DEF">DEF</option>
+                </select>
+                
+                <select id="team-filter" class="filter-select">
+                    <option value="all">All Teams</option>
+                </select>
+                
+                <select id="status-filter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="unavailable">Unavailable</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Player Table -->
+        <div class="player-table-container">
+            <table class="player-table" id="player-table">
+                <thead>
+                    <tr>
+                        <th data-sort="name" class="sortable">Player <span class="sort-icon">↕</span></th>
+                        <th data-sort="position" class="sortable">Pos <span class="sort-icon">↕</span></th>
+                        <th data-sort="team" class="sortable">Team <span class="sort-icon">↕</span></th>
+                        <th data-sort="salary" class="sortable">Salary <span class="sort-icon">↕</span></th>
+                        <th data-sort="site_projection" class="sortable">Site <span class="sort-icon">↕</span></th>
+                        <th data-sort="our_projection" class="sortable">Our <span class="sort-icon">↕</span></th>
+                        <th data-sort="ownership" class="sortable">Own% <span class="sort-icon">↕</span></th>
+                        <th data-sort="status" class="sortable">Status <span class="sort-icon">↕</span></th>
+                    </tr>
+                </thead>
+                <tbody id="player-table-body">
+                    <!-- Player rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Loading State -->
+        <div class="browser-loading" id="browser-loading">
+            <div class="spinner"></div>
+            <p>Loading player data...</p>
+        </div>
     </div>
     
     <div class="lineup-panel" id="lineup-panel">
@@ -346,7 +702,16 @@
         
         function displayLineup(lineup) {
             const players = lineup.players || lineup;
-            const totalPoints = players.reduce((sum, p) => sum + (p.projected_points || p.projection || 0), 0);
+            
+            // Calculate total points with captain 2x multiplier
+            const totalPoints = players.reduce((sum, p) => {
+                let playerPoints = p.projected_points || p.projection || 0;
+                // Apply captain multiplier if this player is captain
+                if (p.is_captain) {
+                    playerPoints *= 2;
+                }
+                return sum + playerPoints;
+            }, 0);
             
             // Update total points
             totalPointsSpan.textContent = `${totalPoints.toFixed(1)} pts`;
@@ -382,6 +747,253 @@
             
             // Show lineup panel
             lineupPanel.style.display = 'block';
+        }
+
+        // === Player Browser Functionality ===
+        
+        // Player browser variables
+        let allPlayersData = [];
+        let allTeamsData = [];
+        let filteredData = [];
+        let currentSort = { column: 'name', direction: 'asc' };
+        
+        // DOM elements for player browser
+        const browseBtn = document.getElementById('browse-btn');
+        const playerBrowserPanel = document.getElementById('player-browser-panel');
+        const closeBrowserBtn = document.getElementById('close-browser-btn');
+        const playerSearch = document.getElementById('player-search');
+        const positionFilter = document.getElementById('position-filter');
+        const teamFilter = document.getElementById('team-filter');
+        const statusFilter = document.getElementById('status-filter');
+        const playerTableBody = document.getElementById('player-table-body');
+        const resultsCount = document.getElementById('results-count');
+        const browserLoading = document.getElementById('browser-loading');
+        
+        // Event listeners for player browser
+        browseBtn.addEventListener('click', openPlayerBrowser);
+        closeBrowserBtn.addEventListener('click', closePlayerBrowser);
+        playerSearch.addEventListener('input', filterPlayers);
+        positionFilter.addEventListener('change', filterPlayers);
+        teamFilter.addEventListener('change', filterPlayers);
+        statusFilter.addEventListener('change', filterPlayers);
+        
+        // Add sorting event listeners
+        document.querySelectorAll('.sortable').forEach(header => {
+            header.addEventListener('click', () => {
+                const column = header.getAttribute('data-sort');
+                sortTable(column);
+            });
+        });
+        
+        async function openPlayerBrowser() {
+            try {
+                // Show browser panel and loading state
+                playerBrowserPanel.style.display = 'block';
+                browserLoading.style.display = 'block';
+                document.querySelector('.player-table-container').style.display = 'none';
+                
+                // Disable browse button
+                browseBtn.disabled = true;
+                browseBtn.textContent = '⏳ Loading...';
+                
+                // Fetch player data
+                const response = await fetch(`${API_BASE_URL}/mobile-players`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Store data
+                    allPlayersData = data.players;
+                    allTeamsData = data.teams;
+                    
+                    // Populate team filter
+                    populateTeamFilter(data.teams_list);
+                    
+                    // Initial display
+                    filteredData = [...allPlayersData, ...allTeamsData];
+                    displayPlayers(filteredData);
+                    updateResultsCount();
+                    
+                    // Hide loading, show table
+                    browserLoading.style.display = 'none';
+                    document.querySelector('.player-table-container').style.display = 'block';
+                    
+                } else {
+                    throw new Error(data.error || 'Failed to fetch player data');
+                }
+                
+            } catch (error) {
+                console.error('Failed to load player browser:', error);
+                alert(`Failed to load player data: ${error.message}`);
+                closePlayerBrowser();
+            } finally {
+                // Re-enable browse button
+                browseBtn.disabled = false;
+                browseBtn.textContent = '📋 Browse All Players';
+            }
+        }
+        
+        function closePlayerBrowser() {
+            playerBrowserPanel.style.display = 'none';
+            // Reset filters
+            playerSearch.value = '';
+            positionFilter.value = 'all';
+            teamFilter.value = 'all';
+            statusFilter.value = 'all';
+        }
+        
+        function populateTeamFilter(teams) {
+            // Clear existing options except 'All Teams'
+            teamFilter.innerHTML = '<option value="all">All Teams</option>';
+            
+            // Add team options
+            teams.sort().forEach(team => {
+                const option = document.createElement('option');
+                option.value = team;
+                option.textContent = team;
+                teamFilter.appendChild(option);
+            });
+        }
+        
+        function filterPlayers() {
+            const searchTerm = playerSearch.value.toLowerCase().trim();
+            const positionValue = positionFilter.value;
+            const teamValue = teamFilter.value;
+            const statusValue = statusFilter.value;
+            
+            // Combine players and teams
+            const allData = [...allPlayersData, ...allTeamsData];
+            
+            filteredData = allData.filter(item => {
+                // Search filter
+                const matchesSearch = searchTerm === '' || 
+                    item.name.toLowerCase().includes(searchTerm) ||
+                    (item.team && item.team.toLowerCase().includes(searchTerm));
+                
+                // Position filter
+                const matchesPosition = positionValue === 'all' || item.position === positionValue;
+                
+                // Team filter
+                const matchesTeam = teamValue === 'all' || item.team === teamValue;
+                
+                // Status filter (only applies to players, teams are always available)
+                const matchesStatus = statusValue === 'all' || 
+                    (item.status && item.status === statusValue) ||
+                    (item.position === 'DEF' && statusValue === 'available');
+                
+                return matchesSearch && matchesPosition && matchesTeam && matchesStatus;
+            });
+            
+            // Apply current sort
+            applySorting();
+            displayPlayers(filteredData);
+            updateResultsCount();
+        }
+        
+        function sortTable(column) {
+            // Update sort state
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+            
+            // Update sort indicators
+            document.querySelectorAll('.sortable').forEach(header => {
+                header.classList.remove('sort-asc', 'sort-desc');
+                if (header.getAttribute('data-sort') === column) {
+                    header.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+                }
+            });
+            
+            // Apply sorting and redisplay
+            applySorting();
+            displayPlayers(filteredData);
+        }
+        
+        function applySorting() {
+            filteredData.sort((a, b) => {
+                let aVal = a[currentSort.column];
+                let bVal = b[currentSort.column];
+                
+                // Handle different data types
+                if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                } else if (typeof aVal === 'number') {
+                    // Numbers can be compared directly
+                } else {
+                    // Convert to string for comparison
+                    aVal = String(aVal).toLowerCase();
+                    bVal = String(bVal).toLowerCase();
+                }
+                
+                let result = 0;
+                if (aVal < bVal) {
+                    result = -1;
+                } else if (aVal > bVal) {
+                    result = 1;
+                }
+                
+                return currentSort.direction === 'asc' ? result : -result;
+            });
+        }
+        
+        function displayPlayers(players) {
+            playerTableBody.innerHTML = '';
+            
+            players.forEach(player => {
+                const row = document.createElement('tr');
+                row.className = player.status === 'unavailable' ? 'unavailable' : '';
+                
+                // Format salary
+                const salaryFormatted = player.salary > 0 ? 
+                    `$${(player.salary / 1000).toFixed(1)}k` : 
+                    '$0';
+                
+                // Format projections
+                const siteProj = player.site_projection || 0;
+                const ourProj = player.our_projection || 0;
+                
+                // Projection difference styling
+                let projDiffClass = 'proj-diff-zero';
+                if (player.projection_difference > 0) {
+                    projDiffClass = 'proj-diff-positive';
+                } else if (player.projection_difference < 0) {
+                    projDiffClass = 'proj-diff-negative';
+                }
+                
+                // Status styling
+                const statusClass = player.status === 'available' ? 'available' : 'unavailable';
+                const statusText = player.status === 'available' ? '✓' : '✗';
+                
+                row.innerHTML = `
+                    <td class="player-name" title="${player.name}">${player.name}</td>
+                    <td class="position">${player.position}</td>
+                    <td class="team">${player.team}</td>
+                    <td class="salary">${salaryFormatted}</td>
+                    <td class="projection">${siteProj.toFixed(1)}</td>
+                    <td class="projection ${projDiffClass}">${ourProj.toFixed(1)}</td>
+                    <td class="ownership">${player.ownership}%</td>
+                    <td class="status ${statusClass}">${statusText}</td>
+                `;
+                
+                playerTableBody.appendChild(row);
+            });
+        }
+        
+        function updateResultsCount() {
+            const totalPlayers = allPlayersData.length;
+            const totalTeams = allTeamsData.length;
+            const totalItems = totalPlayers + totalTeams;
+            const filteredItems = filteredData.length;
+            
+            resultsCount.textContent = `Showing ${filteredItems} of ${totalItems} (${totalPlayers} players, ${totalTeams} teams)`;
         }
     </script>
 </body>

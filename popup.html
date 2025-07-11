@@ -47,6 +47,9 @@
                 <button id="clearButton" class="clear-btn hidden">
                     Clear Lineup
                 </button>
+                <button id="compareProjectionsButton" class="compare-btn">
+                    📊 Compare Projections
+                </button>
             </div>
 
             <!-- Player data info -->
@@ -181,6 +184,34 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Projection comparison section -->
+            <div id="comparisonSection" class="comparison-section hidden">
+                <h3>Projection Comparison (Site vs Our)</h3>
+                <div class="comparison-summary">
+                    <div class="summary-stats">
+                        <span id="comparisonStats">Loading comparison...</span>
+                    </div>
+                </div>
+                <div class="comparison-table-container">
+                    <table id="comparisonTable" class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Pos</th>
+                                <th>Site</th>
+                                <th>Our</th>
+                                <th>Diff</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody">
+                            <!-- Comparison data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <button id="closeComparisonButton" class="close-comparison-btn">Close</button>
             </div>
 
             <!-- Error section -->

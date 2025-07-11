@@ -489,9 +489,16 @@ async function setCachedProjections(projections, timestamp) {
     });
 }
 
-// Utility to sum projections
+// Utility to sum projections with captain 2x multiplier
 function totalPoints(arr){
-    return arr.reduce((s,p)=>s+(Number(p.projected_points)||Number(p.projection)||0),0).toFixed(1);
+    return arr.reduce((sum, p) => {
+        let playerPoints = Number(p.projected_points) || Number(p.projection) || 0;
+        // Apply captain multiplier if this player is captain
+        if (p.is_captain) {
+            playerPoints *= 2;
+        }
+        return sum + playerPoints;
+    }, 0).toFixed(1);
 }
 
 // Inject optimizer lineup panel into page

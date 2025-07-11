@@ -12,6 +12,9 @@ let errorSection;
 let retryButton;
 let clearButton;
 let projSourceSelect;
+let compareProjectionsButton;
+let comparisonSection;
+let closeComparisonButton;
 
 // Initialize popup when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,12 +29,17 @@ document.addEventListener('DOMContentLoaded', function() {
     retryButton = document.getElementById('retryButton');
     clearButton = document.getElementById('clearButton');
     projSourceSelect = document.getElementById('projSource');
+    compareProjectionsButton = document.getElementById('compareProjectionsButton');
+    comparisonSection = document.getElementById('comparisonSection');
+    closeComparisonButton = document.getElementById('closeComparisonButton');
     
     // Add event listeners
     optimizeButton.addEventListener('click', handleOptimizeClick);
     retryButton.addEventListener('click', handleRetryClick);
     clearButton.addEventListener('click', handleClearClick);
     projSourceSelect.addEventListener('change', handleProjectionSourceChange);
+    compareProjectionsButton.addEventListener('click', handleCompareProjectionsClick);
+    closeComparisonButton.addEventListener('click', handleCloseComparisonClick);
     
     // Check if we're on the CFL fantasy page
     checkCurrentPage();
@@ -649,4 +657,96 @@ function formatOwnership(ownershipPercent) {
     }
     
     return `${ownershipPercent.toFixed(1)}%`;
+}
+
+// Handle compare projections button click
+async function handleCompareProjectionsClick() {
+    try {
+        // Show loading state
+        compareProjectionsButton.disabled = true;
+        compareProjectionsButton.textContent = '⏳ Loading...';
+        
+        // Hide other sections
+        resultsSection.classList.add('hidden');
+        errorSection.classList.add('hidden');
+        
+        // Get API configuration
+        const apiConfig = await getApiConfig();
+        const apiUrl = `${apiConfig.BASE_URL}/projection-comparison`;
+        
+        // Fetch comparison data
+        const response = await fetch(apiUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showComparisonResults(data);
+        } else {
+            throw new Error(data.error || 'Failed to fetch comparison data');
+        }
+        
+    } catch (error) {
+        console.error('[CFL Optimizer] Error fetching projection comparison:', error);
+        showError(`Failed to load projection comparison: ${error.message}`);
+    } finally {
+        // Reset button
+        compareProjectionsButton.disabled = false;
+        compareProjectionsButton.textContent = '📊 Compare Projections';
+    }
+}
+
+// Show comparison results
+function showComparisonResults(data) {
+    const { comparisons, summary } = data;
+    
+    // Update summary stats
+    const summaryText = `${summary.total_players} players, ${summary.total_teams} teams • Avg difference: ${summary.avg_difference} pts`;
+    document.getElementById('comparisonStats').textContent = summaryText;
+    
+    // Clear and populate table
+    const tableBody = document.getElementById('comparisonTableBody');
+    tableBody.innerHTML = '';
+    
+    // Show top 50 differences to keep table manageable
+    const topComparisons = comparisons.slice(0, 50);
+    
+    topComparisons.forEach(comparison => {
+        const row = document.createElement('tr');
+        
+        // Determine difference styling
+        let diffClass = 'difference-zero';
+        if (comparison.difference > 0) {
+            diffClass = 'difference-positive';
+        } else if (comparison.difference < 0) {
+            diffClass = 'difference-negative';
+        }
+        
+        // Format percentage change
+        const percentText = comparison.percent_change > 0 ? 
+            `+${comparison.percent_change}%` : 
+            `${comparison.percent_change}%`;
+        
+        row.innerHTML = `
+            <td class="player-name" title="${comparison.name}">${comparison.name}</td>
+            <td class="position">${comparison.position}</td>
+            <td class="projection-value">${comparison.site_projection}</td>
+            <td class="projection-value">${comparison.our_projection}</td>
+            <td class="projection-value ${diffClass}">${comparison.difference > 0 ? '+' : ''}${comparison.difference}</td>
+            <td class="projection-value ${diffClass}">${percentText}</td>
+        `;
+        
+        tableBody.appendChild(row);
+    });
+    
+    // Show comparison section
+    comparisonSection.classList.remove('hidden');
+}
+
+// Handle close comparison button click
+function handleCloseComparisonClick() {
+    comparisonSection.classList.add('hidden');
 }

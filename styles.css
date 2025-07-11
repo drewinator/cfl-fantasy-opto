@@ -508,6 +508,27 @@ footer {
     transform: translateY(1px);
 }
 
+.compare-btn {
+    background: #2196f3;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.compare-btn:hover {
+    background: #1976d2;
+}
+
+.compare-btn:active {
+    transform: translateY(1px);
+}
+
 .saved-indicator {
     font-size: 12px;
     color: #4caf50;
@@ -593,4 +614,115 @@ footer {
 .projection-dropdown:focus {
     border-color: #c41e3a;
     box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.1);
+}
+
+/* Projection comparison section */
+.comparison-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.comparison-section h3 {
+    background: #f5f5f5;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
+}
+
+.comparison-summary {
+    padding: 12px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-stats {
+    font-size: 13px;
+    color: #666;
+}
+
+.comparison-table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.comparison-table th {
+    background: #f8f9fa;
+    padding: 8px 6px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.comparison-table td {
+    padding: 6px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.comparison-table tr:hover {
+    background: #f8f9fa;
+}
+
+.comparison-table .player-name {
+    font-weight: 500;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.comparison-table .position {
+    text-align: center;
+    font-weight: 600;
+    color: #666;
+}
+
+.comparison-table .projection-value {
+    text-align: right;
+    font-weight: 500;
+}
+
+.comparison-table .difference-positive {
+    color: #4caf50;
+    font-weight: 600;
+}
+
+.comparison-table .difference-negative {
+    color: #f44336;
+    font-weight: 600;
+}
+
+.comparison-table .difference-zero {
+    color: #666;
+}
+
+.close-comparison-btn {
+    background: #757575;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.close-comparison-btn:hover {
+    background: #616161;
 }
