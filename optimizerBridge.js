@@ -1,11 +1,10 @@
 // CFL Fantasy Optimizer - Background Script / Optimizer Bridge
 // Handles communication with the Python backend optimizer service
 
-console.log('[CFL Optimizer] Background script (optimizer bridge) loaded');
+// Import configuration
+importScripts('config.js');
 
-// Configuration
-const OPTIMIZER_API_URL = 'https://cfl-fantasy-opto.onrender.com/optimize';
-const REQUEST_TIMEOUT = 30000; // 30 seconds
+console.log('[CFL Optimizer] Background script (optimizer bridge) loaded');
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -59,21 +58,25 @@ async function sendOptimizationRequest(data) {
     console.log('[CFL Optimizer] Sending optimization request to backend...');
     
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+        // Get API URLs based on environment
+        const apiUrls = await CFL_CONFIG.getApiUrls();
+        console.log('[CFL Optimizer] Using environment:', CFL_CONFIG.getCurrentEnvironment());
         
-        // Build URL with engine parameter
-        const engine = data.engine || 'pulp';
-        const url = `${OPTIMIZER_API_URL}?engine=${engine}`;
-        console.log(`[CFL Optimizer] Using optimization engine: ${engine}`);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), CFL_CONFIG.REQUEST_CONFIG.TIMEOUT);
+        
+        // Build URL with parameters
+        const params = {
+            engine: data.engine || 'pulp',
+            source: data.source || 'our'
+        };
+        
+        const url = CFL_CONFIG.buildUrlWithParams(apiUrls.OPTIMIZE_URL, params);
+        console.log(`[CFL Optimizer] Request URL: ${url}`);
         
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'User-Agent': 'CFL Fantasy Optimizer Extension v1.0.0'
-            },
+            headers: CFL_CONFIG.REQUEST_CONFIG.HEADERS,
             body: JSON.stringify(data),
             signal: controller.signal
         });

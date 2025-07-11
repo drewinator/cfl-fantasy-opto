@@ -7,6 +7,9 @@ console.log('[CFL Optimizer] Content script loaded');
 let playerData = [];
 let isDataLoaded = false;
 let directApiFetchSuccessful = false;
+let projectionsCache = null;
+let projectionsCacheTime = null;
+const PROJECTIONS_CACHE_DURATION = 60 * 60 * 1000; // 60 minutes in milliseconds
 
 // Initialize content script
 initialize();
@@ -129,6 +132,10 @@ async function tryDirectApiFetching() {
         
         console.log(`[CFL Optimizer] Data loaded: ${allPlayers.length} players, ${allTeams.length} teams`);
         directApiFetchSuccessful = true;
+        
+        // Fetch projections and merge with player data
+        await fetchProjectionsAndMerge(allPlayers);
+        
         updatePlayerData(allPlayers, allTeams, gameweeksData, currentTeamData, ownershipData, teamOwnershipData);
     }
 }
@@ -379,6 +386,92 @@ function createTeamsFromPlayerData(players) {
     });
     
     return teams;
+}
+
+// Fetch projections from API with caching
+async function fetchProjectionsAndMerge(players) {
+    try {
+        // Check if we have cached projections that are still fresh
+        const now = Date.now();
+        if (projectionsCache && projectionsCacheTime && (now - projectionsCacheTime) < PROJECTIONS_CACHE_DURATION) {
+            console.log('[CFL Optimizer] Using cached projections');
+            mergeProjectionsIntoPlayers(players, projectionsCache);
+            return;
+        }
+        
+        // Check chrome storage for cached projections
+        const cachedData = await getCachedProjections();
+        if (cachedData && cachedData.projections && (now - cachedData.timestamp) < PROJECTIONS_CACHE_DURATION) {
+            console.log('[CFL Optimizer] Using stored cached projections');
+            projectionsCache = cachedData.projections;
+            projectionsCacheTime = cachedData.timestamp;
+            mergeProjectionsIntoPlayers(players, projectionsCache);
+            return;
+        }
+        
+        // Fetch fresh projections from API
+        console.log('[CFL Optimizer] Fetching fresh projections from API');
+        const apiUrls = await window.CFL_CONFIG.getApiUrls();
+        console.log('[CFL Optimizer] Using environment for projections:', window.CFL_CONFIG.getCurrentEnvironment());
+        
+        const response = await fetch(apiUrls.PROJECTIONS_URL);
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.projections) {
+                projectionsCache = data.projections;
+                projectionsCacheTime = now;
+                
+                // Store in chrome storage
+                await setCachedProjections(data.projections, now);
+                
+                // Merge into players
+                mergeProjectionsIntoPlayers(players, projectionsCache);
+                console.log(`[CFL Optimizer] Fetched and cached projections for ${Object.keys(projectionsCache).length} players`);
+            }
+        } else {
+            console.warn('[CFL Optimizer] Failed to fetch projections, using site projections');
+        }
+        
+    } catch (error) {
+        console.warn('[CFL Optimizer] Error fetching projections:', error);
+    }
+}
+
+// Merge projections into player objects
+function mergeProjectionsIntoPlayers(players, projections) {
+    for (const player of players) {
+        const playerId = player.id || player.feedId;
+        if (playerId && projections[playerId] !== undefined) {
+            player.projectedPoints = projections[playerId];
+            // Also update stats.projectedScores for consistency
+            if (!player.stats) player.stats = {};
+            player.stats.projectedScores = projections[playerId];
+        }
+    }
+}
+
+// Get cached projections from chrome storage
+async function getCachedProjections() {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(['projections_cache'], (result) => {
+            resolve(result.projections_cache || null);
+        });
+    });
+}
+
+// Set cached projections in chrome storage
+async function setCachedProjections(projections, timestamp) {
+    return new Promise((resolve) => {
+        chrome.storage.local.set({
+            'projections_cache': {
+                projections: projections,
+                timestamp: timestamp
+            }
+        }, () => {
+            resolve();
+        });
+    });
 }
 
 // Utility to sum projections

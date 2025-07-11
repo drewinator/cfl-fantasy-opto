@@ -27,6 +27,7 @@ A comprehensive optimization tool for CFL Fantasy football that provides both **
 - **Captain logic**: Automatically tests all viable captain options
 - **Multiple engines**: Choose between custom PuLP or PyDFS algorithms
 - **Real-time data**: Always uses current CFL player data and projections
+- **Custom projections (v0.1)**: Weighted-average model using recent game performance
 - **Ownership analysis**: Includes player ownership percentages
 - **Live API integration**: Fetches fresh data from CFL endpoints
 
@@ -126,6 +127,46 @@ Server will start on `http://localhost:3000`
 2. Access from mobile browser
 3. Enjoy full optimization capabilities on-the-go
 
+## 📊 Custom Projections (v0.1)
+
+The optimizer now includes a **weighted-average projection model** that uses recent game performance to calculate more accurate player projections.
+
+### Formula
+```
+projection = (0.5 × last_game_points) + (0.3 × avg_of_previous_2_games) + (0.2 × season_average)
+```
+
+### How It Works
+- **Last Game (50%)**: Most recent performance carries the highest weight
+- **Previous 2 Games (30%)**: Short-term trend analysis
+- **Season Average (20%)**: Baseline performance level
+- **Fallback**: Players with less than 2 games use site projections
+
+### Usage
+
+#### Chrome Extension
+Use the **"Proj: Our / Site"** toggle in the popup to switch between:
+- **Our**: Custom weighted-average projections
+- **Site**: Original CFL site projections
+
+#### API Integration
+Add `source` parameter to optimization requests:
+```bash
+# Use custom projections (default)
+POST /optimize?source=our
+
+# Use site projections  
+POST /optimize?source=site
+```
+
+#### Caching
+- Projections are cached for 60 minutes in Chrome storage
+- Fresh calculations on each API server restart
+- Automatic fallback to site projections on errors
+
+### Data Requirements
+Custom projections require gameweek history data (`stats.points.gws`) from CFL APIs. The system automatically falls back to site projections for players with insufficient historical data.
+
 ## 🔧 API Endpoints
 
 ### Core Endpoints
@@ -133,6 +174,7 @@ Server will start on `http://localhost:3000`
 - `POST /optimize-mobile` - **Mobile optimization with live CFL data fetching**
 - `POST /optimize-multiple` - Generate multiple diverse lineups
 - `POST /test-data` - Test optimization with local JSON data
+- `GET /projections` - Get weighted-average projections for all players
 - `GET /health` - Health check
 
 ### Request Format

@@ -12,7 +12,7 @@
   
   "host_permissions": [
     "https://gamezone.cfl.ca/*",
-    "https://myoptimizer.com/*",
+    "https://cfl-fantasy-opto.onrender.com/*",
     "http://localhost:3000/*"
   ],
   
@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "matches": ["https://gamezone.cfl.ca/fantasy/*"],
-      "js": ["content.js"],
+      "js": ["config.js", "content.js"],
       "run_at": "document_end"
     }
   ],

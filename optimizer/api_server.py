@@ -12,6 +12,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from custom_cfl_optimizer import CustomCFLOptimizer
 from cfl_pydfs_optimizer import CFLPydfsOptimizer
+from projections import build_projection_map
 
 
 # Configure logging
@@ -269,7 +270,10 @@ def optimize_lineup():
         # Get engine parameter (default to pulp)
         engine = request.args.get('engine', 'pulp')
         
-        logger.info(f"Received optimization request with engine: {engine}, data keys: {list(data.keys())}")
+        # Get projection source parameter (default to our projections)
+        source = request.args.get('source', 'our')
+        
+        logger.info(f"Received optimization request with engine: {engine}, source: {source}, data keys: {list(data.keys())}")
         
         # Select optimizer based on engine parameter
         if engine == 'pydfs':
@@ -282,6 +286,23 @@ def optimize_lineup():
         teams_data = data.get('teams', [])
         config = data.get('league_config', {})
         settings = data.get('optimization_settings', {})
+        
+        # Apply custom projections if source is 'our'
+        if source == 'our' and players_data:
+            try:
+                projection_map = build_projection_map(players_data)
+                # Update player projectedScores with our projections
+                for player in players_data:
+                    player_id = player.get('id') or player.get('feedId')
+                    if player_id and player_id in projection_map:
+                        # Update the projectedScores in stats
+                        if 'stats' not in player:
+                            player['stats'] = {}
+                        player['stats']['projectedScores'] = projection_map[player_id]
+                        
+                logger.info(f"Applied custom projections to {len(projection_map)} players")
+            except Exception as e:
+                logger.warning(f"Failed to apply custom projections, falling back to site projections: {e}")
         
         if not players_data and not teams_data:
             return jsonify({
@@ -511,6 +532,61 @@ def test_with_local_data():
         }), 404
     except Exception as e:
         logger.error(f"Test optimization failed: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/projections', methods=['GET'])
+def get_projections():
+    """Get weighted-average projections for all players"""
+    try:
+        # Try to get data from local JSON files first
+        base_path = os.path.dirname(os.path.dirname(__file__))
+        json_path = os.path.join(base_path, 'json_files')
+        players_file = os.path.join(json_path, 'players.json')
+        
+        with open(players_file, 'r') as f:
+            players_data = json.load(f)
+        
+        # Build projection map
+        projection_map = build_projection_map(players_data)
+        
+        return jsonify({
+            'success': True,
+            'projections': projection_map,
+            'player_count': len(projection_map),
+            'timestamp': datetime.now().isoformat(),
+            'source': 'weighted_average_model'
+        })
+        
+    except FileNotFoundError:
+        # Try fetching live data if local files not available
+        try:
+            cfl_data = fetch_cfl_data()
+            if cfl_data.get('players'):
+                projection_map = build_projection_map(cfl_data['players'])
+                return jsonify({
+                    'success': True,
+                    'projections': projection_map,
+                    'player_count': len(projection_map),
+                    'timestamp': datetime.now().isoformat(),
+                    'source': 'weighted_average_model_live'
+                })
+            else:
+                return jsonify({
+                    'success': False,
+                    'error': 'No player data available'
+                }), 404
+        except Exception as live_error:
+            logger.error(f"Failed to fetch live data for projections: {live_error}")
+            return jsonify({
+                'success': False,
+                'error': 'Unable to fetch player data for projections'
+            }), 500
+            
+    except Exception as e:
+        logger.error(f"Failed to generate projections: {e}")
         return jsonify({
             'success': False,
             'error': str(e)

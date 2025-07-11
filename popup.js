@@ -11,6 +11,7 @@ let resultsSection;
 let errorSection;
 let retryButton;
 let clearButton;
+let projSourceSelect;
 
 // Initialize popup when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -24,11 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
     errorSection = document.getElementById('errorSection');
     retryButton = document.getElementById('retryButton');
     clearButton = document.getElementById('clearButton');
+    projSourceSelect = document.getElementById('projSource');
     
     // Add event listeners
     optimizeButton.addEventListener('click', handleOptimizeClick);
     retryButton.addEventListener('click', handleRetryClick);
     clearButton.addEventListener('click', handleClearClick);
+    projSourceSelect.addEventListener('change', handleProjectionSourceChange);
     
     // Check if we're on the CFL fantasy page
     checkCurrentPage();
@@ -136,7 +139,8 @@ async function optimizeLineup(playerData) {
                 use_captain: true,
                 num_lineups: 1
             },
-            engine: selectedEngine  // Add engine selection
+            engine: selectedEngine,  // Add engine selection
+            source: projSourceSelect.value  // Add projection source selection
         };
         
         // Send message to background script for optimization
@@ -393,6 +397,91 @@ function handleClearClick() {
     
     // Reset status
     statusText.textContent = 'Ready to optimize';
+}
+
+// Handle projection source change
+function handleProjectionSourceChange() {
+    console.log('[CFL Optimizer] Projection source changed to:', projSourceSelect.value);
+    
+    // If we have a current lineup displayed, re-render the projection numbers
+    // without re-calling the optimizer
+    if (!resultsSection.classList.contains('hidden')) {
+        loadLineupFromStorage((lineupData) => {
+            if (lineupData && lineupData.lineup) {
+                updateProjectionDisplayOnly(lineupData.lineup);
+            }
+        });
+    }
+}
+
+// Update only the projection display without re-optimizing
+function updateProjectionDisplayOnly(lineup) {
+    if (!lineup || !lineup.players) return;
+    
+    console.log('[CFL Optimizer] Updating projection display for source:', projSourceSelect.value);
+    
+    // Get the source selection
+    const useOurProjections = projSourceSelect.value === 'our';
+    
+    // Update each player card's projection display
+    lineup.players.forEach((player, index) => {
+        const positionSlot = document.querySelector(`[data-position="${getDisplayPosition(player, index)}"]`);
+        if (positionSlot) {
+            const pointsSpan = positionSlot.querySelector('.player-points');
+            if (pointsSpan) {
+                // Choose which projection to display
+                let projectionToShow = 0;
+                if (useOurProjections && player.projectedPoints !== undefined) {
+                    projectionToShow = player.projectedPoints;
+                } else if (player.stats && player.stats.projectedScores !== undefined) {
+                    projectionToShow = player.stats.projectedScores;
+                } else {
+                    projectionToShow = player.projected_points || 0;
+                }
+                
+                pointsSpan.textContent = `${Number(projectionToShow).toFixed(1)} pts`;
+            }
+        }
+    });
+    
+    // Update total points
+    updateTotalPoints(lineup);
+}
+
+// Helper function to get display position for a player
+function getDisplayPosition(player, index) {
+    const positions = ['QB', 'WR1', 'WR2', 'RB1', 'RB2', 'FLEX', 'DEF'];
+    return positions[index] || `POS${index}`;
+}
+
+// Update total points display
+function updateTotalPoints(lineup) {
+    const useOurProjections = projSourceSelect.value === 'our';
+    let totalPoints = 0;
+    
+    lineup.players.forEach(player => {
+        let playerPoints = 0;
+        if (useOurProjections && player.projectedPoints !== undefined) {
+            playerPoints = player.projectedPoints;
+        } else if (player.stats && player.stats.projectedScores !== undefined) {
+            playerPoints = player.stats.projectedScores;
+        } else {
+            playerPoints = player.projected_points || 0;
+        }
+        
+        // Apply captain multiplier if this player is captain
+        if (player.is_captain) {
+            playerPoints *= 2;
+        }
+        
+        totalPoints += Number(playerPoints);
+    });
+    
+    // Update total points display if it exists
+    const totalPointsElement = document.querySelector('.total-points');
+    if (totalPointsElement) {
+        totalPointsElement.textContent = `${totalPoints.toFixed(1)} pts`;
+    }
 }
 
 // Update status text
