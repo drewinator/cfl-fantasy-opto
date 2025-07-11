@@ -345,13 +345,13 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 11px;
+            table-layout: fixed;
         }
 
         .player-table th {
             background: #444;
             color: white;
-            padding: 8px 4px;
-            text-align: left;
+            padding: 8px 6px;
             font-weight: 600;
             border-bottom: 2px solid #555;
             position: sticky;
@@ -359,6 +359,57 @@
             z-index: 1;
             cursor: pointer;
             user-select: none;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Specific column widths and alignments */
+        .player-table th:nth-child(1),
+        .player-table td:nth-child(1) {
+            width: 28%;
+            text-align: left;
+        }
+
+        .player-table th:nth-child(2),
+        .player-table td:nth-child(2) {
+            width: 8%;
+            text-align: center;
+        }
+
+        .player-table th:nth-child(3),
+        .player-table td:nth-child(3) {
+            width: 9%;
+            text-align: center;
+        }
+
+        .player-table th:nth-child(4),
+        .player-table td:nth-child(4) {
+            width: 12%;
+            text-align: right;
+        }
+
+        .player-table th:nth-child(5),
+        .player-table td:nth-child(5) {
+            width: 11%;
+            text-align: right;
+        }
+
+        .player-table th:nth-child(6),
+        .player-table td:nth-child(6) {
+            width: 11%;
+            text-align: right;
+        }
+
+        .player-table th:nth-child(7),
+        .player-table td:nth-child(7) {
+            width: 13%;
+            text-align: right;
+        }
+
+        .player-table th:nth-child(8),
+        .player-table td:nth-child(8) {
+            width: 8%;
+            text-align: center;
         }
 
         .player-table th.sortable:hover {
@@ -380,9 +431,12 @@
         }
 
         .player-table td {
-            padding: 6px 4px;
+            padding: 6px 6px;
             border-bottom: 1px solid #333;
             vertical-align: middle;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .player-table tr:hover {
@@ -393,48 +447,41 @@
             opacity: 0.6;
         }
 
-        .player-table .player-name {
+        /* Column-specific styling */
+        .player-table td:nth-child(1) {
             font-weight: 500;
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .player-table .position {
+        .player-table td:nth-child(2) {
             font-weight: 600;
             color: #ffd700;
-            text-align: center;
-            min-width: 30px;
         }
 
-        .player-table .team {
+        .player-table td:nth-child(3) {
             font-weight: 500;
             color: #bbb;
-            text-align: center;
-            min-width: 35px;
         }
 
-        .player-table .salary {
-            text-align: right;
+        .player-table td:nth-child(4) {
             color: #4caf50;
             font-weight: 500;
         }
 
-        .player-table .projection {
-            text-align: right;
+        .player-table td:nth-child(5) {
             color: #2196f3;
             font-weight: 500;
         }
 
-        .player-table .ownership {
-            text-align: right;
+        .player-table td:nth-child(6) {
+            font-weight: 500;
+        }
+
+        .player-table td:nth-child(7) {
             color: #ff9800;
             font-weight: 500;
         }
 
-        .player-table .status {
-            text-align: center;
+        .player-table td:nth-child(8) {
             font-size: 10px;
         }
 
@@ -484,7 +531,48 @@
             
             .player-table th,
             .player-table td {
-                padding: 4px 2px;
+                padding: 4px 3px;
+            }
+            
+            /* Adjust column widths for smaller screens */
+            .player-table th:nth-child(1),
+            .player-table td:nth-child(1) {
+                width: 30%;
+            }
+
+            .player-table th:nth-child(2),
+            .player-table td:nth-child(2) {
+                width: 7%;
+            }
+
+            .player-table th:nth-child(3),
+            .player-table td:nth-child(3) {
+                width: 8%;
+            }
+
+            .player-table th:nth-child(4),
+            .player-table td:nth-child(4) {
+                width: 11%;
+            }
+
+            .player-table th:nth-child(5),
+            .player-table td:nth-child(5) {
+                width: 10%;
+            }
+
+            .player-table th:nth-child(6),
+            .player-table td:nth-child(6) {
+                width: 10%;
+            }
+
+            .player-table th:nth-child(7),
+            .player-table td:nth-child(7) {
+                width: 12%;
+            }
+
+            .player-table th:nth-child(8),
+            .player-table td:nth-child(8) {
+                width: 12%;
             }
             
             .filter-row {
@@ -973,13 +1061,13 @@
                 const statusText = player.status === 'available' ? '✓' : '✗';
                 
                 row.innerHTML = `
-                    <td class="player-name" title="${player.name}">${player.name}</td>
-                    <td class="position">${player.position}</td>
-                    <td class="team">${player.team}</td>
-                    <td class="salary">${salaryFormatted}</td>
-                    <td class="projection">${siteProj.toFixed(1)}</td>
-                    <td class="projection ${projDiffClass}">${ourProj.toFixed(1)}</td>
-                    <td class="ownership">${player.ownership}%</td>
+                    <td title="${player.name}">${player.name}</td>
+                    <td>${player.position}</td>
+                    <td>${player.team}</td>
+                    <td>${salaryFormatted}</td>
+                    <td>${siteProj.toFixed(1)}</td>
+                    <td class="${projDiffClass}">${ourProj.toFixed(1)}</td>
+                    <td>${player.ownership}%</td>
                     <td class="status ${statusClass}">${statusText}</td>
                 `;
                 
