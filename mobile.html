@@ -225,6 +225,14 @@
             </select>
         </div>
         
+        <div class="form-group">
+            <label for="proj-select">Proj:</label>
+            <select id="proj-select">
+                <option value="our">Our</option>
+                <option value="site">Site</option>
+            </select>
+        </div>
+        
         <button class="optimize-btn" id="optimize-btn">
             🚀 Optimize Lineup
         </button>
@@ -252,6 +260,7 @@
         // DOM elements
         const optimizeBtn = document.getElementById('optimize-btn');
         const engineSelect = document.getElementById('engine-select');
+        const projSelect = document.getElementById('proj-select');
         const statusDiv = document.getElementById('status');
         const lineupPanel = document.getElementById('lineup-panel');
         const lineupContent = document.getElementById('lineup-content');
@@ -269,8 +278,9 @@
                 statusDiv.className = 'status loading';
                 lineupPanel.style.display = 'none';
                 
-                // Get selected engine
+                // Get selected engine and projection source
                 const selectedEngine = engineSelect.value;
+                const selectedSource = projSelect.value;
                 
                 // Make API request using mobile endpoint with live CFL data
                 const response = await fetch(`${API_BASE_URL}/optimize-mobile`, {
@@ -280,6 +290,7 @@
                     },
                     body: JSON.stringify({
                         engine: selectedEngine,
+                        source: selectedSource,
                         optimization_settings: {
                             max_players_from_team: 3,
                             use_captain: true,

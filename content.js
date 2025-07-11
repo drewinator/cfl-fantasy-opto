@@ -904,6 +904,28 @@ function injectOptimizeControls() {
                 font-size: 14px;
             }
             
+            .cfl-projection-selector {
+                margin-bottom: 12px;
+            }
+            
+            .cfl-projection-selector label {
+                display: block;
+                color: #fff;
+                font-size: 12px;
+                margin-bottom: 4px;
+                font-weight: 500;
+            }
+            
+            .cfl-projection-selector select {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid #444;
+                border-radius: 4px;
+                background: #2a2a2a;
+                color: #fff;
+                font-size: 14px;
+            }
+            
             .cfl-optimize-btn {
                 width: 100%;
                 background: #c5242b;
@@ -970,6 +992,14 @@ function injectOptimizeControls() {
             </select>
         </div>
         
+        <div class="cfl-projection-selector">
+            <label for="cfl-proj-select">Proj:</label>
+            <select id="cfl-proj-select">
+                <option value="our">Our</option>
+                <option value="site">Site</option>
+            </select>
+        </div>
+        
         <button class="cfl-optimize-btn" id="cfl-optimize-btn">
             <span>🚀 Optimize Lineup</span>
         </button>
@@ -994,9 +1024,11 @@ function setupControlEventListeners() {
     optimizeBtn.addEventListener('click', async () => {
         console.log('[CFL Optimizer] Optimize button clicked');
         
-        // Get selected engine
+        // Get selected engine and projection source
         const engineSelect = document.getElementById('cfl-engine-select');
+        const projSelect = document.getElementById('cfl-proj-select');
         const selectedEngine = engineSelect.value;
+        const selectedSource = projSelect.value;
         
         // Update UI to loading state
         optimizeBtn.disabled = true;
@@ -1006,7 +1038,7 @@ function setupControlEventListeners() {
         
         try {
             // Start optimization process
-            await performDirectOptimization(selectedEngine);
+            await performDirectOptimization(selectedEngine, selectedSource);
             
             // Success state
             optimizeBtn.disabled = false;
@@ -1041,8 +1073,8 @@ function setupControlEventListeners() {
 }
 
 // Perform optimization directly from content script
-async function performDirectOptimization(selectedEngine) {
-    console.log('[CFL Optimizer] Starting direct optimization with engine:', selectedEngine);
+async function performDirectOptimization(selectedEngine, selectedSource = 'our') {
+    console.log('[CFL Optimizer] Starting direct optimization with engine:', selectedEngine, 'source:', selectedSource);
     
     // Check if player data is available
     if (!isDataLoaded || !playerData?.players?.length) {
@@ -1073,7 +1105,8 @@ async function performDirectOptimization(selectedEngine) {
             use_captain: true,
             num_lineups: 1
         },
-        engine: selectedEngine
+        engine: selectedEngine,
+        source: selectedSource
     };
     
     console.log('[CFL Optimizer] Sending optimization request to background script...');

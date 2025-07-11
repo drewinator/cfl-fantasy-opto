@@ -715,9 +715,10 @@ def optimize_mobile():
         # Get request data
         request_data = request.get_json() or {}
         engine = request_data.get('engine', 'pulp')
+        source = request_data.get('source', 'our')
         settings = request_data.get('optimization_settings', {})
         
-        logger.info(f"Mobile optimization request with engine: {engine}")
+        logger.info(f"Mobile optimization request with engine: {engine}, source: {source}")
         
         # Fetch live CFL data
         try:
@@ -765,8 +766,41 @@ def optimize_mobile():
                 'use_captain': settings.get('use_captain', True),
                 'num_lineups': settings.get('num_lineups', 1)
             },
-            'engine': engine
+            'engine': engine,
+            'source': source
         }
+        
+        # Apply custom projections if source is 'our'
+        if source == 'our':
+            try:
+                # Apply player projections
+                if cfl_data['players']:
+                    player_projection_map = build_projection_map(cfl_data['players'])
+                    # Update player projectedScores with our projections
+                    for player in cfl_data['players']:
+                        player_id = player.get('id') or player.get('feedId')
+                        if player_id and player_id in player_projection_map:
+                            # Update the projectedScores in stats
+                            if 'stats' not in player:
+                                player['stats'] = {}
+                            player['stats']['projectedScores'] = player_projection_map[player_id]
+                    
+                    logger.info(f"Applied custom projections to {len(player_projection_map)} players (mobile)")
+                
+                # Apply team projections
+                if cfl_data['teams']:
+                    team_projection_map = build_team_projection_map(cfl_data['teams'])
+                    # Update team projectedScores with our projections
+                    for team in cfl_data['teams']:
+                        team_id = team.get('id')
+                        if team_id and team_id in team_projection_map:
+                            # For teams, projectedScores is at root level
+                            team['projectedScores'] = team_projection_map[team_id]
+                    
+                    logger.info(f"Applied custom projections to {len(team_projection_map)} teams (mobile)")
+                        
+            except Exception as e:
+                logger.warning(f"Failed to apply custom projections in mobile endpoint, falling back to site projections: {e}")
         
         # Run optimization based on engine
         if engine == 'pydfs':
