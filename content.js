@@ -133,8 +133,8 @@ async function tryDirectApiFetching() {
         console.log(`[CFL Optimizer] Data loaded: ${allPlayers.length} players, ${allTeams.length} teams`);
         directApiFetchSuccessful = true;
         
-        // Fetch projections and merge with player data
-        await fetchProjectionsAndMerge(allPlayers);
+        // Fetch projections and merge with player and team data
+        await fetchProjectionsAndMerge(allPlayers, allTeams);
         
         updatePlayerData(allPlayers, allTeams, gameweeksData, currentTeamData, ownershipData, teamOwnershipData);
     }
@@ -389,13 +389,14 @@ function createTeamsFromPlayerData(players) {
 }
 
 // Fetch projections from API with caching
-async function fetchProjectionsAndMerge(players) {
+async function fetchProjectionsAndMerge(players, teams = []) {
     try {
         // Check if we have cached projections that are still fresh
         const now = Date.now();
         if (projectionsCache && projectionsCacheTime && (now - projectionsCacheTime) < PROJECTIONS_CACHE_DURATION) {
             console.log('[CFL Optimizer] Using cached projections');
             mergeProjectionsIntoPlayers(players, projectionsCache);
+            mergeProjectionsIntoTeams(teams, projectionsCache);
             return;
         }
         
@@ -406,6 +407,7 @@ async function fetchProjectionsAndMerge(players) {
             projectionsCache = cachedData.projections;
             projectionsCacheTime = cachedData.timestamp;
             mergeProjectionsIntoPlayers(players, projectionsCache);
+            mergeProjectionsIntoTeams(teams, projectionsCache);
             return;
         }
         
@@ -425,9 +427,10 @@ async function fetchProjectionsAndMerge(players) {
                 // Store in chrome storage
                 await setCachedProjections(data.projections, now);
                 
-                // Merge into players
+                // Merge into players and teams
                 mergeProjectionsIntoPlayers(players, projectionsCache);
-                console.log(`[CFL Optimizer] Fetched and cached projections for ${Object.keys(projectionsCache).length} players`);
+                mergeProjectionsIntoTeams(teams, projectionsCache);
+                console.log(`[CFL Optimizer] Fetched and cached projections for ${Object.keys(projectionsCache).length} items (players + teams)`);
             }
         } else {
             console.warn('[CFL Optimizer] Failed to fetch projections, using site projections');
@@ -438,7 +441,7 @@ async function fetchProjectionsAndMerge(players) {
     }
 }
 
-// Merge projections into player objects
+// Merge projections into player and team objects
 function mergeProjectionsIntoPlayers(players, projections) {
     for (const player of players) {
         const playerId = player.id || player.feedId;
@@ -447,6 +450,18 @@ function mergeProjectionsIntoPlayers(players, projections) {
             // Also update stats.projectedScores for consistency
             if (!player.stats) player.stats = {};
             player.stats.projectedScores = projections[playerId];
+        }
+    }
+}
+
+// Merge projections into team objects (for defense)
+function mergeProjectionsIntoTeams(teams, projections) {
+    for (const team of teams) {
+        const teamId = team.id;
+        if (teamId && projections[teamId] !== undefined) {
+            team.projectedPoints = projections[teamId];
+            // For teams, projectedScores is at root level
+            team.projectedScores = projections[teamId];
         }
     }
 }

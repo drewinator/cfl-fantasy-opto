@@ -26,49 +26,85 @@ def build_projection_map(players_json: List[Dict[str, Any]]) -> Dict[int, float]
     Returns:
         Dictionary mapping player_id to weighted projection value
     """
+    return _build_projection_map_internal(players_json, "players")
+
+
+def build_team_projection_map(teams_json: List[Dict[str, Any]]) -> Dict[int, float]:
+    """
+    Build a projection map for defense teams using weighted-average formula.
+    
+    Args:
+        teams_json: List of team dictionaries from CFL API
+        
+    Returns:
+        Dictionary mapping team_id to weighted projection value
+    """
+    return _build_projection_map_internal(teams_json, "teams")
+
+
+def _build_projection_map_internal(data_json: List[Dict[str, Any]], data_type: str) -> Dict[int, float]:
+    """
+    Internal function to build projection maps for both players and teams.
+    
+    Args:
+        data_json: List of player or team dictionaries from CFL API
+        data_type: "players" or "teams" for logging purposes
+        
+    Returns:
+        Dictionary mapping id to weighted projection value
+    """
     projection_map = {}
     
-    for player in players_json:
+    for item in data_json:
         try:
-            player_id = player.get('id') or player.get('feedId')
-            if not player_id:
+            item_id = item.get('id') or item.get('feedId')
+            if not item_id:
                 continue
                 
-            # Extract gameweek points data
-            stats = player.get('stats', {})
-            points_data = stats.get('points', {})
+            # Extract gameweek points data - teams have different structure
+            if data_type == "teams":
+                # Teams have points data directly under the team object
+                points_data = item.get('points', {})
+                stats = item  # For teams, stats are at root level
+            else:
+                # Players have points data under stats
+                stats = item.get('stats', {})
+                points_data = stats.get('points', {})
             
             # Handle case where points is an empty array
             if isinstance(points_data, list):
                 # Fall back to site projectedScores
                 site_projection = stats.get('projectedScores', 0)
-                projection_map[player_id] = round(float(site_projection), 2)
+                projection_map[item_id] = round(float(site_projection), 2)
                 continue
                 
             gws_data = points_data.get('gws', {})
             
             if not gws_data or len(gws_data) < 2:
-                # Fall back to site projectedScores for players with < 2 games
+                # Fall back to site projectedScores for items with < 2 games
                 site_projection = stats.get('projectedScores', 0)
-                projection_map[player_id] = round(float(site_projection), 2)
+                projection_map[item_id] = round(float(site_projection), 2)
                 continue
             
             # Calculate weighted projection
             projection = calculate_weighted_projection(gws_data, stats)
-            projection_map[player_id] = round(projection, 2)
+            projection_map[item_id] = round(projection, 2)
             
         except Exception as e:
-            logger.warning(f"Error processing player {player.get('id', 'unknown')}: {e}")
+            logger.warning(f"Error processing {data_type[:-1]} {item.get('id', 'unknown')}: {e}")
             # Fall back to site projection on error
             try:
-                stats = player.get('stats', {})
+                if data_type == "teams":
+                    stats = item
+                else:
+                    stats = item.get('stats', {})
                 site_projection = stats.get('projectedScores', 0)
-                if player_id:
-                    projection_map[player_id] = round(float(site_projection), 2)
+                if item_id:
+                    projection_map[item_id] = round(float(site_projection), 2)
             except:
                 pass
     
-    logger.info(f"Generated projections for {len(projection_map)} players")
+    logger.info(f"Generated projections for {len(projection_map)} {data_type}")
     return projection_map
 
 

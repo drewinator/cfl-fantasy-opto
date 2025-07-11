@@ -12,7 +12,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from custom_cfl_optimizer import CustomCFLOptimizer
 from cfl_pydfs_optimizer import CFLPydfsOptimizer
-from projections import build_projection_map
+from projections import build_projection_map, build_team_projection_map
 
 
 # Configure logging
@@ -288,19 +288,34 @@ def optimize_lineup():
         settings = data.get('optimization_settings', {})
         
         # Apply custom projections if source is 'our'
-        if source == 'our' and players_data:
+        if source == 'our':
             try:
-                projection_map = build_projection_map(players_data)
-                # Update player projectedScores with our projections
-                for player in players_data:
-                    player_id = player.get('id') or player.get('feedId')
-                    if player_id and player_id in projection_map:
-                        # Update the projectedScores in stats
-                        if 'stats' not in player:
-                            player['stats'] = {}
-                        player['stats']['projectedScores'] = projection_map[player_id]
+                # Apply player projections
+                if players_data:
+                    player_projection_map = build_projection_map(players_data)
+                    # Update player projectedScores with our projections
+                    for player in players_data:
+                        player_id = player.get('id') or player.get('feedId')
+                        if player_id and player_id in player_projection_map:
+                            # Update the projectedScores in stats
+                            if 'stats' not in player:
+                                player['stats'] = {}
+                            player['stats']['projectedScores'] = player_projection_map[player_id]
+                    
+                    logger.info(f"Applied custom projections to {len(player_projection_map)} players")
+                
+                # Apply team projections
+                if teams_data:
+                    team_projection_map = build_team_projection_map(teams_data)
+                    # Update team projectedScores with our projections
+                    for team in teams_data:
+                        team_id = team.get('id')
+                        if team_id and team_id in team_projection_map:
+                            # For teams, projectedScores is at root level
+                            team['projectedScores'] = team_projection_map[team_id]
+                    
+                    logger.info(f"Applied custom projections to {len(team_projection_map)} teams")
                         
-                logger.info(f"Applied custom projections to {len(projection_map)} players")
             except Exception as e:
                 logger.warning(f"Failed to apply custom projections, falling back to site projections: {e}")
         
@@ -549,13 +564,30 @@ def get_projections():
         with open(players_file, 'r') as f:
             players_data = json.load(f)
         
-        # Build projection map
-        projection_map = build_projection_map(players_data)
+        # Also load teams for defense projections
+        teams_file = os.path.join(json_path, 'sqauds.json')
+        teams_data = []
+        try:
+            with open(teams_file, 'r') as f:
+                teams_data = json.load(f)
+        except FileNotFoundError:
+            logger.warning("Teams file not found, skipping team projections")
+        
+        # Build projection maps
+        player_projections = build_projection_map(players_data)
+        team_projections = build_team_projection_map(teams_data) if teams_data else {}
+        
+        # Combine projections
+        all_projections = {**player_projections, **team_projections}
         
         return jsonify({
             'success': True,
-            'projections': projection_map,
-            'player_count': len(projection_map),
+            'projections': all_projections,
+            'player_projections': player_projections,
+            'team_projections': team_projections,
+            'player_count': len(player_projections),
+            'team_count': len(team_projections),
+            'total_count': len(all_projections),
             'timestamp': datetime.now().isoformat(),
             'source': 'weighted_average_model'
         })
@@ -565,11 +597,20 @@ def get_projections():
         try:
             cfl_data = fetch_cfl_data()
             if cfl_data.get('players'):
-                projection_map = build_projection_map(cfl_data['players'])
+                player_projections = build_projection_map(cfl_data['players'])
+                team_projections = build_team_projection_map(cfl_data.get('teams', [])) if cfl_data.get('teams') else {}
+                
+                # Combine projections
+                all_projections = {**player_projections, **team_projections}
+                
                 return jsonify({
                     'success': True,
-                    'projections': projection_map,
-                    'player_count': len(projection_map),
+                    'projections': all_projections,
+                    'player_projections': player_projections,
+                    'team_projections': team_projections,
+                    'player_count': len(player_projections),
+                    'team_count': len(team_projections),
+                    'total_count': len(all_projections),
                     'timestamp': datetime.now().isoformat(),
                     'source': 'weighted_average_model_live'
                 })
