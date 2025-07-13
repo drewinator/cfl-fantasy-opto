@@ -1,0 +1,538 @@
+{
+    "69": {
+        "number": 3445,
+        "percents": 17.79
+    },
+    "255": {
+        "number": 5224,
+        "percents": 26.98
+    },
+    "59": {
+        "number": 527,
+        "percents": 2.72
+    },
+    "38": {
+        "number": 3655,
+        "percents": 18.88
+    },
+    "132": {
+        "number": 104,
+        "percents": 0.54
+    },
+    "19": {
+        "number": 293,
+        "percents": 1.51
+    },
+    "427": {
+        "number": 2320,
+        "percents": 11.98
+    },
+    "114": {
+        "number": 1432,
+        "percents": 7.4
+    },
+    "423": {
+        "number": 4152,
+        "percents": 21.44
+    },
+    "31": {
+        "number": 1896,
+        "percents": 9.79
+    },
+    "202": {
+        "number": 1348,
+        "percents": 6.96
+    },
+    "143": {
+        "number": 924,
+        "percents": 4.77
+    },
+    "5": {
+        "number": 990,
+        "percents": 5.11
+    },
+    "64": {
+        "number": 2262,
+        "percents": 11.68
+    },
+    "241": {
+        "number": 171,
+        "percents": 0.88
+    },
+    "62": {
+        "number": 671,
+        "percents": 3.47
+    },
+    "396": {
+        "number": 300,
+        "percents": 1.55
+    },
+    "113": {
+        "number": 1307,
+        "percents": 6.75
+    },
+    "216": {
+        "number": 444,
+        "percents": 2.29
+    },
+    "124": {
+        "number": 777,
+        "percents": 4.01
+    },
+    "158": {
+        "number": 1283,
+        "percents": 6.63
+    },
+    "369": {
+        "number": 2216,
+        "percents": 11.45
+    },
+    "234": {
+        "number": 647,
+        "percents": 3.34
+    },
+    "343": {
+        "number": 1474,
+        "percents": 7.61
+    },
+    "303": {
+        "number": 431,
+        "percents": 2.23
+    },
+    "230": {
+        "number": 558,
+        "percents": 2.88
+    },
+    "374": {
+        "number": 1299,
+        "percents": 6.71
+    },
+    "371": {
+        "number": 893,
+        "percents": 4.61
+    },
+    "160": {
+        "number": 594,
+        "percents": 3.07
+    },
+    "46": {
+        "number": 486,
+        "percents": 2.51
+    },
+    "86": {
+        "number": 667,
+        "percents": 3.44
+    },
+    "319": {
+        "number": 2027,
+        "percents": 10.47
+    },
+    "116": {
+        "number": 148,
+        "percents": 0.76
+    },
+    "192": {
+        "number": 652,
+        "percents": 3.37
+    },
+    "299": {
+        "number": 781,
+        "percents": 4.03
+    },
+    "144": {
+        "number": 1226,
+        "percents": 6.33
+    },
+    "430": {
+        "number": 49,
+        "percents": 0.25
+    },
+    "482": {
+        "number": 122,
+        "percents": 0.63
+    },
+    "194": {
+        "number": 340,
+        "percents": 1.76
+    },
+    "195": {
+        "number": 202,
+        "percents": 1.04
+    },
+    "133": {
+        "number": 53,
+        "percents": 0.27
+    },
+    "120": {
+        "number": 460,
+        "percents": 2.38
+    },
+    "95": {
+        "number": 1082,
+        "percents": 5.59
+    },
+    "185": {
+        "number": 43,
+        "percents": 0.22
+    },
+    "122": {
+        "number": 299,
+        "percents": 1.54
+    },
+    "475": {
+        "number": 43,
+        "percents": 0.22
+    },
+    "6": {
+        "number": 11,
+        "percents": 0.06
+    },
+    "63": {
+        "number": 128,
+        "percents": 0.66
+    },
+    "420": {
+        "number": 94,
+        "percents": 0.49
+    },
+    "174": {
+        "number": 258,
+        "percents": 1.33
+    },
+    "513": {
+        "number": 315,
+        "percents": 1.63
+    },
+    "349": {
+        "number": 93,
+        "percents": 0.48
+    },
+    "138": {
+        "number": 96,
+        "percents": 0.5
+    },
+    "211": {
+        "number": 53,
+        "percents": 0.27
+    },
+    "454": {
+        "number": 63,
+        "percents": 0.33
+    },
+    "326": {
+        "number": 99,
+        "percents": 0.51
+    },
+    "217": {
+        "number": 123,
+        "percents": 0.64
+    },
+    "4": {
+        "number": 32,
+        "percents": 0.17
+    },
+    "486": {
+        "number": 47,
+        "percents": 0.24
+    },
+    "139": {
+        "number": 27,
+        "percents": 0.14
+    },
+    "15": {
+        "number": 43,
+        "percents": 0.22
+    },
+    "105": {
+        "number": 22,
+        "percents": 0.11
+    },
+    "129": {
+        "number": 29,
+        "percents": 0.15
+    },
+    "309": {
+        "number": 16,
+        "percents": 0.08
+    },
+    "524": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "153": {
+        "number": 70,
+        "percents": 0.36
+    },
+    "162": {
+        "number": 95,
+        "percents": 0.49
+    },
+    "165": {
+        "number": 126,
+        "percents": 0.65
+    },
+    "136": {
+        "number": 79,
+        "percents": 0.41
+    },
+    "510": {
+        "number": 35,
+        "percents": 0.18
+    },
+    "520": {
+        "number": 20,
+        "percents": 0.1
+    },
+    "91": {
+        "number": 125,
+        "percents": 0.65
+    },
+    "260": {
+        "number": 20,
+        "percents": 0.1
+    },
+    "223": {
+        "number": 29,
+        "percents": 0.15
+    },
+    "476": {
+        "number": 40,
+        "percents": 0.21
+    },
+    "209": {
+        "number": 125,
+        "percents": 0.65
+    },
+    "34": {
+        "number": 7,
+        "percents": 0.04
+    },
+    "16": {
+        "number": 35,
+        "percents": 0.18
+    },
+    "9": {
+        "number": 27,
+        "percents": 0.14
+    },
+    "522": {
+        "number": 37,
+        "percents": 0.19
+    },
+    "60": {
+        "number": 69,
+        "percents": 0.36
+    },
+    "50": {
+        "number": 47,
+        "percents": 0.24
+    },
+    "412": {
+        "number": 61,
+        "percents": 0.32
+    },
+    "101": {
+        "number": 34,
+        "percents": 0.18
+    },
+    "526": {
+        "number": 26,
+        "percents": 0.13
+    },
+    "58": {
+        "number": 6,
+        "percents": 0.03
+    },
+    "89": {
+        "number": 10,
+        "percents": 0.05
+    },
+    "163": {
+        "number": 7,
+        "percents": 0.04
+    },
+    "295": {
+        "number": 11,
+        "percents": 0.06
+    },
+    "377": {
+        "number": 51,
+        "percents": 0.26
+    },
+    "317": {
+        "number": 46,
+        "percents": 0.24
+    },
+    "93": {
+        "number": 10,
+        "percents": 0.05
+    },
+    "49": {
+        "number": 14,
+        "percents": 0.07
+    },
+    "130": {
+        "number": 17,
+        "percents": 0.09
+    },
+    "166": {
+        "number": 23,
+        "percents": 0.12
+    },
+    "161": {
+        "number": 40,
+        "percents": 0.21
+    },
+    "141": {
+        "number": 15,
+        "percents": 0.08
+    },
+    "547": {
+        "number": 7,
+        "percents": 0.04
+    },
+    "110": {
+        "number": 6,
+        "percents": 0.03
+    },
+    "87": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "186": {
+        "number": 42,
+        "percents": 0.22
+    },
+    "384": {
+        "number": 6,
+        "percents": 0.03
+    },
+    "361": {
+        "number": 16,
+        "percents": 0.08
+    },
+    "13": {
+        "number": 13,
+        "percents": 0.07
+    },
+    "167": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "327": {
+        "number": 3,
+        "percents": 0.02
+    },
+    "562": {
+        "number": 4,
+        "percents": 0.02
+    },
+    "292": {
+        "number": 5,
+        "percents": 0.03
+    },
+    "370": {
+        "number": 7,
+        "percents": 0.04
+    },
+    "100": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "54": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "432": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "83": {
+        "number": 7,
+        "percents": 0.04
+    },
+    "501": {
+        "number": 4,
+        "percents": 0.02
+    },
+    "134": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "356": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "531": {
+        "number": 3,
+        "percents": 0.02
+    },
+    "332": {
+        "number": 4,
+        "percents": 0.02
+    },
+    "492": {
+        "number": 8,
+        "percents": 0.04
+    },
+    "506": {
+        "number": 5,
+        "percents": 0.03
+    },
+    "84": {
+        "number": 5,
+        "percents": 0.03
+    },
+    "28": {
+        "number": 3,
+        "percents": 0.02
+    },
+    "545": {
+        "number": 3,
+        "percents": 0.02
+    },
+    "33": {
+        "number": 3,
+        "percents": 0.02
+    },
+    "480": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "539": {
+        "number": 5,
+        "percents": 0.03
+    },
+    "251": {
+        "number": 5,
+        "percents": 0.03
+    },
+    "511": {
+        "number": 2,
+        "percents": 0.01
+    },
+    "37": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "193": {
+        "number": 3,
+        "percents": 0.02
+    },
+    "111": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "36": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "263": {
+        "number": 1,
+        "percents": 0.01
+    },
+    "280": {
+        "number": 1,
+        "percents": 0.01
+    }
+}

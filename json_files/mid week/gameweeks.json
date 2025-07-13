@@ -1,0 +1,1832 @@
+[
+    {
+        "id": 1,
+        "feedId": 1279411,
+        "name": "Week 1",
+        "status": "complete",
+        "startDate": "2025-06-05T20:00:00-04:00",
+        "endDate": "2025-06-10T11:57:16-04:00",
+        "matches": [
+            {
+                "id": 1,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 31,
+                "awaySquadScore": 26,
+                "status": "complete",
+                "date": "2025-06-05T21:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 2,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 28,
+                "awaySquadScore": 10,
+                "status": "complete",
+                "date": "2025-06-06T19:30:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 3,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 38,
+                "awaySquadScore": 26,
+                "status": "complete",
+                "date": "2025-06-07T19:00:00-04:00",
+                "venue": "McMahon Stadium"
+            },
+            {
+                "id": 4,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 31,
+                "awaySquadScore": 14,
+                "status": "complete",
+                "date": "2025-06-07T22:00:00-04:00",
+                "venue": "BC Place"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "feedId": 1279412,
+        "name": "Week 2",
+        "status": "complete",
+        "startDate": "2025-06-12T20:00:00-04:00",
+        "endDate": "2025-06-17T12:09:17-04:00",
+        "matches": [
+            {
+                "id": 5,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 34,
+                "awaySquadScore": 20,
+                "status": "complete",
+                "date": "2025-06-12T20:30:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 6,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 18,
+                "awaySquadScore": 39,
+                "status": "complete",
+                "date": "2025-06-13T19:30:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 7,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 19,
+                "awaySquadScore": 29,
+                "status": "complete",
+                "date": "2025-06-14T16:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 8,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 23,
+                "awaySquadScore": 28,
+                "status": "complete",
+                "date": "2025-06-14T19:00:00-04:00",
+                "venue": "Tim Hortons Field"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "feedId": 1279413,
+        "name": "Week 3",
+        "status": "complete",
+        "startDate": "2025-06-19T20:00:00-04:00",
+        "endDate": "2025-06-24T12:01:34-04:00",
+        "matches": [
+            {
+                "id": 9,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 28,
+                "awaySquadScore": 38,
+                "status": "complete",
+                "date": "2025-06-19T21:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            },
+            {
+                "id": 10,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 32,
+                "awaySquadScore": 39,
+                "status": "complete",
+                "date": "2025-06-20T19:30:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 11,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 12,
+                "awaySquadScore": 20,
+                "status": "complete",
+                "date": "2025-06-21T16:00:00-04:00",
+                "venue": "McMahon Stadium"
+            },
+            {
+                "id": 12,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 14,
+                "awaySquadScore": 27,
+                "status": "complete",
+                "date": "2025-06-21T19:00:00-04:00",
+                "venue": "BC Place"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "feedId": 1279414,
+        "name": "Week 4",
+        "status": "complete",
+        "startDate": "2025-06-26T20:00:00-04:00",
+        "endDate": "2025-07-01T12:00:47-04:00",
+        "matches": [
+            {
+                "id": 13,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 36,
+                "awaySquadScore": 23,
+                "status": "complete",
+                "date": "2025-06-26T20:30:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 14,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 35,
+                "awaySquadScore": 17,
+                "status": "complete",
+                "date": "2025-06-27T19:30:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 15,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 37,
+                "awaySquadScore": 18,
+                "status": "complete",
+                "date": "2025-06-28T19:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 16,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 16,
+                "awaySquadScore": 29,
+                "status": "complete",
+                "date": "2025-06-29T19:00:00-04:00",
+                "venue": "TD Place Stadium"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "feedId": 1279415,
+        "name": "Week 5",
+        "status": "complete",
+        "startDate": "2025-07-03T20:00:00-04:00",
+        "endDate": "2025-07-08T12:36:05-04:00",
+        "matches": [
+            {
+                "id": 17,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 37,
+                "awaySquadScore": 16,
+                "status": "complete",
+                "date": "2025-07-03T21:00:00-04:00",
+                "venue": "McMahon Stadium"
+            },
+            {
+                "id": 18,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 38,
+                "awaySquadScore": 51,
+                "status": "complete",
+                "date": "2025-07-04T19:30:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 19,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 20,
+                "awaySquadScore": 21,
+                "status": "complete",
+                "date": "2025-07-05T19:00:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 20,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 39,
+                "awaySquadScore": 33,
+                "status": "complete",
+                "date": "2025-07-06T19:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "feedId": 1279416,
+        "name": "Week 6",
+        "status": "playing",
+        "startDate": "2025-07-11T20:00:00-04:00",
+        "endDate": "2025-07-14T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 21,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 10,
+                "awaySquadScore": 24,
+                "status": "complete",
+                "date": "2025-07-12T16:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 22,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 23,
+                "awaySquadScore": 20,
+                "status": "complete",
+                "date": "2025-07-12T19:00:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 23,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-13T19:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "feedId": 1279417,
+        "name": "Week 7",
+        "status": "scheduled",
+        "startDate": "2025-07-16T20:00:00-04:00",
+        "endDate": "2025-07-21T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 24,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-17T19:30:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 25,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-18T20:30:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 26,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-19T19:00:00-04:00",
+                "venue": "BC Place"
+            },
+            {
+                "id": 27,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-20T19:00:00-04:00",
+                "venue": "TD Place Stadium"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "feedId": 1279418,
+        "name": "Week 8",
+        "status": "scheduled",
+        "startDate": "2025-07-24T20:00:00-04:00",
+        "endDate": "2025-07-27T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 28,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-24T21:00:00-04:00",
+                "venue": "McMahon Stadium"
+            },
+            {
+                "id": 29,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-25T21:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 30,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-26T19:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 31,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-27T19:00:00-04:00",
+                "venue": "BC Place"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "feedId": 1279419,
+        "name": "Week 9",
+        "status": "scheduled",
+        "startDate": "2025-07-30T20:00:00-04:00",
+        "endDate": "2025-08-03T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 32,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-07-31T19:30:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 33,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-01T20:30:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 34,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-02T15:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            },
+            {
+                "id": 35,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-02T19:00:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "feedId": 1279420,
+        "name": "Week 10",
+        "status": "scheduled",
+        "startDate": "2025-08-06T20:00:00-04:00",
+        "endDate": "2025-08-10T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 36,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-07T19:30:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 37,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-08T19:30:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 38,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-09T15:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 39,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-09T19:00:00-04:00",
+                "venue": "McMahon Stadium"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "feedId": 1279421,
+        "name": "Week 11",
+        "status": "scheduled",
+        "startDate": "2025-08-14T20:00:00-04:00",
+        "endDate": "2025-08-17T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 40,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-14T20:30:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 41,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-15T21:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            },
+            {
+                "id": 42,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-16T15:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 43,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-16T19:00:00-04:00",
+                "venue": "BC Place"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "feedId": 1279422,
+        "name": "Week 12",
+        "status": "scheduled",
+        "startDate": "2025-08-20T20:00:00-04:00",
+        "endDate": "2025-08-24T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 44,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-21T19:30:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 45,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-22T19:30:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 46,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-23T15:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 47,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-23T19:00:00-04:00",
+                "venue": "McMahon Stadium"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "feedId": 1279430,
+        "name": "Week 13",
+        "status": "scheduled",
+        "startDate": "2025-08-30T20:00:00-04:00",
+        "endDate": "2025-09-02T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 48,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-08-31T19:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 49,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-01T14:30:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 50,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-01T18:00:00-04:00",
+                "venue": "McMahon Stadium"
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "feedId": 1279423,
+        "name": "Week 14",
+        "status": "scheduled",
+        "startDate": "2025-09-04T20:00:00-04:00",
+        "endDate": "2025-09-07T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 51,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-05T19:30:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 52,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-06T13:00:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 53,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-06T16:00:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 54,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-06T19:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "feedId": 1279424,
+        "name": "Week 15",
+        "status": "scheduled",
+        "startDate": "2025-09-11T20:00:00-04:00",
+        "endDate": "2025-09-14T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 55,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-12T19:00:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 56,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-12T22:00:00-04:00",
+                "venue": "BC Place"
+            },
+            {
+                "id": 57,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-13T15:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 58,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-13T19:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "feedId": 1279425,
+        "name": "Week 16",
+        "status": "scheduled",
+        "startDate": "2025-09-18T20:00:00-04:00",
+        "endDate": "2025-09-21T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 59,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-19T19:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 60,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-19T21:30:00-04:00",
+                "venue": "McMahon Stadium"
+            },
+            {
+                "id": 61,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-20T15:00:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 62,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-20T19:00:00-04:00",
+                "venue": "Hamilton Stadium"
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "feedId": 1279426,
+        "name": "Week 17",
+        "status": "scheduled",
+        "startDate": "2025-09-25T20:00:00-04:00",
+        "endDate": "2025-09-28T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 63,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-26T19:00:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            },
+            {
+                "id": 64,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-26T22:00:00-04:00",
+                "venue": "BC Place"
+            },
+            {
+                "id": 65,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-27T15:00:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 66,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-09-27T19:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "feedId": 1279427,
+        "name": "Week 18",
+        "status": "scheduled",
+        "startDate": "2025-10-02T20:00:00-04:00",
+        "endDate": "2025-10-05T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 67,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-03T19:30:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 68,
+                "homeSquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "awaySquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-04T15:00:00-04:00",
+                "venue": "BMO Field"
+            },
+            {
+                "id": 69,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-04T19:00:00-04:00",
+                "venue": "BC Place"
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "feedId": 1279428,
+        "name": "Week 19",
+        "status": "scheduled",
+        "startDate": "2025-10-10T20:00:00-04:00",
+        "endDate": "2025-10-14T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 70,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-10T21:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            },
+            {
+                "id": 71,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-11T15:00:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 72,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-11T19:00:00-04:00",
+                "venue": "Commonwealth Stadium"
+            },
+            {
+                "id": 73,
+                "homeSquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-13T13:00:00-04:00",
+                "venue": "Percival Molson Memorial Stadium"
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "feedId": 1279429,
+        "name": "Week 20",
+        "status": "scheduled",
+        "startDate": "2025-10-17T20:00:00-04:00",
+        "endDate": "2025-10-19T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 74,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-17T20:00:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 75,
+                "homeSquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "awaySquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-17T22:30:00-04:00",
+                "venue": "BC Place"
+            },
+            {
+                "id": 76,
+                "homeSquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-18T15:00:00-04:00",
+                "venue": "TD Place Stadium"
+            },
+            {
+                "id": 77,
+                "homeSquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "awaySquad": {
+                    "id": 2,
+                    "name": "Toronto Argonauts",
+                    "shortName": "Argos",
+                    "abbr": "TOR"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-18T19:00:00-04:00",
+                "venue": "McMahon Stadium"
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "feedId": 1279432,
+        "name": "Week 21",
+        "status": "scheduled",
+        "startDate": "2025-10-23T20:00:00-04:00",
+        "endDate": "2025-10-26T19:59:00-04:00",
+        "matches": [
+            {
+                "id": 78,
+                "homeSquad": {
+                    "id": 3,
+                    "name": "Hamilton Tiger-Cats",
+                    "shortName": "Ticats",
+                    "abbr": "HAM"
+                },
+                "awaySquad": {
+                    "id": 1,
+                    "name": "Ottawa REDBLACKS",
+                    "shortName": "REDBLACKS",
+                    "abbr": "OTT"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-24T19:00:00-04:00",
+                "venue": "Hamilton Stadium"
+            },
+            {
+                "id": 79,
+                "homeSquad": {
+                    "id": 9,
+                    "name": "Edmonton Elks",
+                    "shortName": "EE",
+                    "abbr": "EDM"
+                },
+                "awaySquad": {
+                    "id": 6,
+                    "name": "Calgary Stampeders",
+                    "shortName": "Stamps",
+                    "abbr": "CGY"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-24T21:30:00-04:00",
+                "venue": "Commonwealth Stadium"
+            },
+            {
+                "id": 80,
+                "homeSquad": {
+                    "id": 7,
+                    "name": "Winnipeg Blue Bombers",
+                    "shortName": "Bombers",
+                    "abbr": "WPG"
+                },
+                "awaySquad": {
+                    "id": 4,
+                    "name": "Montreal Alouettes",
+                    "shortName": "Als",
+                    "abbr": "MTL"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-25T15:00:00-04:00",
+                "venue": "Princess Auto Stadium"
+            },
+            {
+                "id": 81,
+                "homeSquad": {
+                    "id": 8,
+                    "name": "Saskatchewan Roughriders",
+                    "shortName": "Riders",
+                    "abbr": "SSK"
+                },
+                "awaySquad": {
+                    "id": 5,
+                    "name": "BC Lions",
+                    "shortName": "Leos",
+                    "abbr": "BC"
+                },
+                "homeSquadScore": 0,
+                "awaySquadScore": 0,
+                "status": "scheduled",
+                "date": "2025-10-25T19:00:00-04:00",
+                "venue": "Mosaic Stadium"
+            }
+        ]
+    }
+]

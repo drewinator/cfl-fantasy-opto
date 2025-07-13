@@ -354,7 +354,7 @@ def optimize_lineup():
             
             if teams_data:
                 team_ownership_data = data.get('team_ownership', {})
-                optimizer.load_teams_from_json(teams_data, team_ownership_data)
+                optimizer.load_teams_from_json(teams_data, team_ownership_data, current_team_data)
             
             # Get optimization parameters
             max_players_from_team = settings.get('max_players_from_team', 3)
@@ -426,7 +426,7 @@ def optimize_multiple_lineups():
         
         if teams_data:
             team_ownership_data = data.get('team_ownership', {})
-            optimizer.load_teams_from_json(teams_data, team_ownership_data)
+            optimizer.load_teams_from_json(teams_data, team_ownership_data, {})
         
         # Get parameters
         count = settings.get('num_lineups', 5)
@@ -519,7 +519,7 @@ def test_with_local_data():
             # PuLP optimizer uses existing interface
             # Load data into optimizer
             optimizer.load_players_from_json(players_data, player_ownership)
-            optimizer.load_teams_from_json(teams_data, team_ownership)
+            optimizer.load_teams_from_json(teams_data, team_ownership, {})
             
             # Generate lineup with captain logic
             lineup = optimizer.generate_lineup(max_players_from_team=3, use_captain=True)
@@ -786,7 +786,7 @@ def load_data():
         
         if teams_data:
             team_ownership_data = data.get('team_ownership', {})
-            optimizer.load_teams_from_json(teams_data, team_ownership_data)
+            optimizer.load_teams_from_json(teams_data, team_ownership_data, {})
         
         stats = optimizer.get_player_stats()
         
@@ -940,7 +940,8 @@ def optimize_mobile():
             if cfl_data['teams']:
                 optimizer.load_teams_from_json(
                     cfl_data['teams'], 
-                    cfl_data['team_ownership']
+                    cfl_data['team_ownership'],
+                    cfl_data['current_team']
                 )
             
             # Generate lineup
