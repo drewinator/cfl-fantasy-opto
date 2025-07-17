@@ -112,7 +112,7 @@ def calculate_weighted_projection(gws_data: Dict[str, float], stats: Dict[str, A
     """
     Calculate weighted projection using recent game performance.
     
-    Formula: 0.5 * last_game + 0.3 * avg_previous_2 + 0.2 * season_avg
+    Formula: 0.3 * last_game + 0.5 * avg_previous_2 + 0.2 * season_avg
     
     Args:
         gws_data: Dictionary of gameweek -> points
@@ -151,8 +151,8 @@ def calculate_weighted_projection(gws_data: Dict[str, float], stats: Dict[str, A
     
     # Apply weighted formula
     weighted_projection = (
-        0.5 * last_game_pts +
-        0.3 * avg_previous_2 +
+        0.3 * last_game_pts +
+        0.5 * avg_previous_2 +
         0.2 * season_avg
     )
     

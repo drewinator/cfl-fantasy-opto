@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "Ottawa REDBLACKS",
-        "nameFr": "ROUGE et NOIR d’Ottawa",
+        "nameFr": "ROUGE et NOIR d\u2019Ottawa",
         "shortName": "REDBLACKS",
         "abbreviation": "OTT",
         "videoURL": {
@@ -26,51 +26,54 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 6200,
+        "cost": 6000,
         "stats": {
             "fr": 4,
-            "pa": 148,
+            "pa": 171,
             "sk": 7,
-            "rec": 118,
-            "rush": 99,
-            "avg_pa": 29.6,
-            "rec_tds": 6,
-            "rec_yds": 1285,
+            "rec": 142,
+            "rush": 109,
+            "avg_pa": 28.5,
+            "rec_tds": 7,
+            "rec_yds": 1568,
             "ret_int": 4,
-            "pass_att": 170,
-            "pass_int": 4,
-            "pass_suc": 118,
-            "pass_tds": 6,
-            "pass_yds": 1285,
-            "rush_tds": 4,
-            "rush_yds": 528,
-            "return_yds": 292,
+            "pass_att": 208,
+            "pass_int": 6,
+            "pass_suc": 142,
+            "pass_tds": 7,
+            "pass_yds": 1568,
+            "rush_tds": 5,
+            "rush_yds": 581,
+            "return_yds": 370,
             "kp_return_tds": 1,
             "playedMatches": [
                 1,
                 6,
                 11,
                 16,
-                20
+                20,
+                22
             ]
         },
-        "weekSalaryChange": 400,
+        "weekSalaryChange": -200,
         "avgPoints": 3.4,
-        "projectedScores": 3.6,
+        "projectedScores": 3.4,
         "points": {
             "gws": {
                 "1": 5,
                 "2": 1,
                 "3": 10,
                 "4": 4,
-                "5": -3
+                "5": -3,
+                "6": 0
             },
             "matches": {
                 "1": 5,
                 "6": 1,
                 "11": 10,
                 "16": 4,
-                "20": -3
+                "20": -3,
+                "22": 0
             }
         },
         "isLocked": true
@@ -102,7 +105,7 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 7800,
+        "cost": 7000,
         "stats": {
             "fr": 1,
             "pa": 163,
@@ -131,7 +134,7 @@
                 18
             ]
         },
-        "weekSalaryChange": 800,
+        "weekSalaryChange": -800,
         "avgPoints": 3.8,
         "projectedScores": 4.1,
         "points": {
@@ -150,7 +153,7 @@
                 "18": -2
             }
         },
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 3,
@@ -179,50 +182,53 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 4300,
+        "cost": 7800,
         "stats": {
             "s": 1,
-            "fr": 1,
-            "pa": 121,
-            "sk": 6,
-            "rec": 102,
-            "rush": 65,
-            "avg_pa": 30.3,
+            "fr": 2,
+            "pa": 141,
+            "sk": 8,
+            "rec": 125,
+            "rush": 84,
+            "avg_pa": 28.2,
             "def_td": 2,
-            "rec_tds": 9,
-            "rec_yds": 1230,
-            "ret_int": 6,
-            "pass_att": 146,
+            "rec_tds": 11,
+            "rec_yds": 1496,
+            "ret_int": 8,
+            "pass_att": 187,
             "pass_int": 1,
-            "pass_suc": 102,
-            "pass_tds": 9,
-            "pass_yds": 1230,
+            "pass_suc": 125,
+            "pass_tds": 11,
+            "pass_yds": 1496,
             "rush_tds": 2,
-            "rush_yds": 258,
-            "return_yds": 298,
+            "rush_yds": 344,
+            "return_yds": 371,
             "kp_return_tds": 2,
             "playedMatches": [
                 3,
                 8,
                 14,
-                18
+                18,
+                22
             ]
         },
-        "weekSalaryChange": -700,
-        "avgPoints": 6.5,
-        "projectedScores": 5.8,
+        "weekSalaryChange": 3500,
+        "avgPoints": 7,
+        "projectedScores": 7,
         "points": {
             "gws": {
                 "1": 4,
                 "2": 2,
                 "4": 21,
-                "5": -1
+                "5": -1,
+                "6": 9
             },
             "matches": {
                 "3": 4,
                 "8": 2,
                 "14": 21,
-                "18": -1
+                "18": -1,
+                "22": 9
             }
         },
         "isLocked": true
@@ -230,7 +236,7 @@
     {
         "id": 4,
         "name": "Montreal Alouettes",
-        "nameFr": "Alouettes de Montréal",
+        "nameFr": "Alouettes de Montr\u00e9al",
         "shortName": "Als",
         "abbreviation": "MTL",
         "videoURL": {
@@ -254,7 +260,7 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 10100,
+        "cost": 10000,
         "stats": {
             "fr": 3,
             "pa": 112,
@@ -282,7 +288,7 @@
                 19
             ]
         },
-        "weekSalaryChange": -900,
+        "weekSalaryChange": -100,
         "avgPoints": 9,
         "projectedScores": 8.8,
         "points": {
@@ -301,7 +307,7 @@
                 "19": 4
             }
         },
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 5,
@@ -330,7 +336,7 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 6100,
+        "cost": 6000,
         "stats": {
             "pa": 132,
             "sk": 10,
@@ -357,7 +363,7 @@
                 19
             ]
         },
-        "weekSalaryChange": -1000,
+        "weekSalaryChange": -100,
         "avgPoints": 3,
         "projectedScores": 3.3,
         "points": {
@@ -376,7 +382,7 @@
                 "19": 3
             }
         },
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 6,
@@ -405,48 +411,52 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 8000,
+        "cost": 8100,
         "stats": {
             "s": 1,
-            "pa": 79,
-            "sk": 3,
-            "rec": 66,
-            "rush": 105,
-            "avg_pa": 19.8,
+            "fr": 2,
+            "pa": 89,
+            "sk": 6,
+            "rec": 94,
+            "rush": 129,
+            "avg_pa": 17.8,
             "def_td": 3,
-            "rec_tds": 2,
-            "rec_yds": 1025,
+            "rec_tds": 5,
+            "rec_yds": 1453,
             "ret_int": 4,
-            "pass_att": 104,
-            "pass_int": 3,
-            "pass_suc": 66,
-            "pass_tds": 2,
-            "pass_yds": 1025,
+            "pass_att": 140,
+            "pass_int": 5,
+            "pass_suc": 94,
+            "pass_tds": 5,
+            "pass_yds": 1453,
             "rush_tds": 7,
-            "rush_yds": 519,
-            "return_yds": 266,
+            "rush_yds": 653,
+            "return_yds": 286,
             "playedMatches": [
                 3,
                 7,
                 11,
-                17
+                17,
+                21
             ]
         },
-        "weekSalaryChange": 0,
-        "avgPoints": 11.33,
-        "projectedScores": 8.8,
+        "weekSalaryChange": 100,
+        "avgPoints": 11.25,
+        "projectedScores": 10.1,
         "points": {
             "gws": {
                 "1": 0,
                 "2": 13,
                 "3": 4,
-                "5": 17
+                "5": 17,
+                "6": 11
             },
             "matches": {
                 "3": 0,
                 "7": 13,
                 "11": 4,
-                "17": 17
+                "17": 17,
+                "21": 11
             }
         },
         "isLocked": true
@@ -478,7 +488,7 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 10000,
+        "cost": 8000,
         "stats": {
             "fr": 5,
             "pa": 94,
@@ -505,7 +515,7 @@
                 17
             ]
         },
-        "weekSalaryChange": -500,
+        "weekSalaryChange": -2000,
         "avgPoints": 6.75,
         "projectedScores": 6.2,
         "points": {
@@ -522,7 +532,7 @@
                 "17": -2
             }
         },
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 8,
@@ -551,58 +561,61 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 9600,
+        "cost": 9000,
         "stats": {
-            "fr": 1,
-            "pa": 99,
-            "sk": 10,
-            "rec": 71,
-            "rush": 98,
-            "avg_pa": 24.8,
+            "fr": 2,
+            "pa": 123,
+            "sk": 11,
+            "rec": 107,
+            "rush": 107,
+            "avg_pa": 24.6,
             "def_td": 2,
-            "rec_tds": 6,
-            "rec_yds": 976,
-            "ret_int": 5,
+            "rec_tds": 7,
+            "rec_yds": 1401,
+            "ret_int": 7,
             "2pt_conv": 1,
-            "pass_att": 103,
+            "pass_att": 147,
             "pass_int": 3,
-            "pass_suc": 71,
-            "pass_tds": 6,
-            "pass_yds": 976,
+            "pass_suc": 107,
+            "pass_tds": 7,
+            "pass_yds": 1401,
             "rush_tds": 6,
-            "rush_yds": 554,
-            "return_yds": 435,
+            "rush_yds": 570,
+            "return_yds": 507,
             "kp_return_tds": 1,
             "playedMatches": [
                 1,
                 8,
                 10,
-                15
+                15,
+                21
             ]
         },
-        "weekSalaryChange": 1000,
-        "avgPoints": 8.5,
-        "projectedScores": 7.9,
+        "weekSalaryChange": -600,
+        "avgPoints": 8.2,
+        "projectedScores": 8.2,
         "points": {
             "gws": {
                 "1": 4,
                 "2": 10,
                 "3": 5,
-                "4": 15
+                "4": 15,
+                "6": 7
             },
             "matches": {
                 "1": 4,
                 "8": 10,
                 "10": 5,
-                "15": 15
+                "15": 15,
+                "21": 7
             }
         },
-        "isLocked": false
+        "isLocked": true
     },
     {
         "id": 9,
         "name": "Edmonton Elks",
-        "nameFr": "Elks d’Edmonton",
+        "nameFr": "Elks d\u2019Edmonton",
         "shortName": "EE",
         "abbreviation": "EDM",
         "videoURL": {
@@ -626,7 +639,7 @@
             "fr": ""
         },
         "newsImage": "",
-        "cost": 9000,
+        "cost": 4000,
         "stats": {
             "fr": 1,
             "pa": 138,
@@ -653,7 +666,7 @@
                 20
             ]
         },
-        "weekSalaryChange": 400,
+        "weekSalaryChange": -5000,
         "avgPoints": -1.5,
         "projectedScores": -0.8,
         "points": {
@@ -670,6 +683,6 @@
                 "20": -1
             }
         },
-        "isLocked": true
+        "isLocked": false
     }
 ]
