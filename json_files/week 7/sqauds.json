@@ -1,0 +1,702 @@
+[
+    {
+        "id": 1,
+        "name": "Ottawa REDBLACKS",
+        "nameFr": "ROUGE et NOIR d’Ottawa",
+        "shortName": "REDBLACKS",
+        "abbreviation": "OTT",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 5500,
+        "stats": {
+            "fr": 4,
+            "pa": 171,
+            "sk": 7,
+            "rec": 142,
+            "rush": 109,
+            "avg_pa": 28.5,
+            "rec_tds": 7,
+            "rec_yds": 1568,
+            "ret_int": 4,
+            "pass_att": 208,
+            "pass_int": 6,
+            "pass_suc": 142,
+            "pass_tds": 7,
+            "pass_yds": 1568,
+            "rush_tds": 5,
+            "rush_yds": 581,
+            "return_yds": 370,
+            "kp_return_tds": 1,
+            "playedMatches": [
+                1,
+                6,
+                11,
+                16,
+                20,
+                22
+            ]
+        },
+        "weekSalaryChange": -500,
+        "avgPoints": 3.4,
+        "projectedScores": 3.4,
+        "points": {
+            "gws": {
+                "1": 5,
+                "2": 1,
+                "3": 10,
+                "4": 4,
+                "5": -3,
+                "6": 0
+            },
+            "matches": {
+                "1": 5,
+                "6": 1,
+                "11": 10,
+                "16": 4,
+                "20": -3,
+                "22": 0
+            }
+        },
+        "isLocked": false
+    },
+    {
+        "id": 2,
+        "name": "Toronto Argonauts",
+        "nameFr": "Argonauts de Toronto",
+        "shortName": "Argos",
+        "abbreviation": "TOR",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 5700,
+        "stats": {
+            "fr": 2,
+            "pa": 189,
+            "sk": 14,
+            "rec": 150,
+            "rush": 75,
+            "avg_pa": 31.5,
+            "def_td": 1,
+            "rec_tds": 9,
+            "rec_yds": 1691,
+            "ret_int": 4,
+            "2pt_conv": 3,
+            "pass_att": 210,
+            "pass_int": 8,
+            "pass_suc": 150,
+            "pass_tds": 9,
+            "pass_yds": 1691,
+            "rush_tds": 4,
+            "rush_yds": 280,
+            "return_yds": 334,
+            "playedMatches": [
+                2,
+                7,
+                10,
+                16,
+                18,
+                24
+            ]
+        },
+        "weekSalaryChange": -1300,
+        "avgPoints": 3.83,
+        "projectedScores": 3.8,
+        "points": {
+            "gws": {
+                "1": 4,
+                "2": 2,
+                "3": -1,
+                "4": 16,
+                "5": -2,
+                "7": 4
+            },
+            "matches": {
+                "2": 4,
+                "7": 2,
+                "10": -1,
+                "16": 16,
+                "18": -2,
+                "24": 4
+            }
+        },
+        "isLocked": true
+    },
+    {
+        "id": 3,
+        "name": "Hamilton Tiger-Cats",
+        "nameFr": "Tiger-Cats de Hamilton",
+        "shortName": "Ticats",
+        "abbreviation": "HAM",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 7200,
+        "stats": {
+            "s": 1,
+            "fr": 2,
+            "pa": 141,
+            "sk": 8,
+            "rec": 125,
+            "rush": 84,
+            "avg_pa": 28.2,
+            "def_td": 2,
+            "rec_tds": 11,
+            "rec_yds": 1496,
+            "ret_int": 8,
+            "pass_att": 187,
+            "pass_int": 1,
+            "pass_suc": 125,
+            "pass_tds": 11,
+            "pass_yds": 1496,
+            "rush_tds": 2,
+            "rush_yds": 344,
+            "return_yds": 371,
+            "kp_return_tds": 2,
+            "playedMatches": [
+                3,
+                8,
+                14,
+                18,
+                22
+            ]
+        },
+        "weekSalaryChange": -600,
+        "avgPoints": 7,
+        "projectedScores": 7,
+        "points": {
+            "gws": {
+                "1": 4,
+                "2": 2,
+                "4": 21,
+                "5": -1,
+                "6": 9
+            },
+            "matches": {
+                "3": 4,
+                "8": 2,
+                "14": 21,
+                "18": -1,
+                "22": 9
+            }
+        },
+        "isLocked": false
+    },
+    {
+        "id": 4,
+        "name": "Montreal Alouettes",
+        "nameFr": "Alouettes de Montréal",
+        "shortName": "Als",
+        "abbreviation": "MTL",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 10000,
+        "stats": {
+            "fr": 4,
+            "pa": 137,
+            "sk": 16,
+            "rec": 134,
+            "rush": 116,
+            "avg_pa": 22.8,
+            "def_td": 2,
+            "rec_tds": 9,
+            "rec_yds": 1592,
+            "ret_int": 8,
+            "pass_att": 196,
+            "pass_int": 5,
+            "pass_suc": 134,
+            "pass_tds": 9,
+            "pass_yds": 1592,
+            "rush_tds": 5,
+            "rush_yds": 608,
+            "return_yds": 370,
+            "playedMatches": [
+                2,
+                6,
+                9,
+                14,
+                19,
+                24
+            ]
+        },
+        "weekSalaryChange": 0,
+        "avgPoints": 8.67,
+        "projectedScores": 7.6,
+        "points": {
+            "gws": {
+                "1": 19,
+                "2": 15,
+                "3": 8,
+                "4": -1,
+                "5": 4,
+                "7": 7
+            },
+            "matches": {
+                "2": 19,
+                "6": 15,
+                "9": 8,
+                "14": -1,
+                "19": 4,
+                "24": 7
+            }
+        },
+        "isLocked": true
+    },
+    {
+        "id": 5,
+        "name": "BC Lions",
+        "nameFr": "Lions de la C.-B",
+        "shortName": "Leos",
+        "abbreviation": "BC",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 6000,
+        "stats": {
+            "s": 1,
+            "pa": 146,
+            "sk": 11,
+            "rec": 138,
+            "rush": 119,
+            "avg_pa": 24.3,
+            "rec_tds": 9,
+            "rec_yds": 1837,
+            "ret_int": 5,
+            "2pt_conv": 2,
+            "pass_att": 216,
+            "pass_int": 9,
+            "pass_suc": 138,
+            "pass_tds": 9,
+            "pass_yds": 1837,
+            "rush_tds": 5,
+            "rush_yds": 657,
+            "return_yds": 309,
+            "playedMatches": [
+                4,
+                5,
+                12,
+                15,
+                19,
+                23
+            ]
+        },
+        "weekSalaryChange": 0,
+        "avgPoints": 3.5,
+        "projectedScores": 3.4,
+        "points": {
+            "gws": {
+                "1": 5,
+                "2": 3,
+                "3": 5,
+                "4": -1,
+                "5": 3,
+                "6": 6
+            },
+            "matches": {
+                "4": 5,
+                "5": 3,
+                "12": 5,
+                "15": -1,
+                "19": 3,
+                "23": 6
+            }
+        },
+        "isLocked": false
+    },
+    {
+        "id": 6,
+        "name": "Calgary Stampeders",
+        "nameFr": "Stampeders de Calgary",
+        "shortName": "Stamps",
+        "abbreviation": "CGY",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 9500,
+        "stats": {
+            "s": 1,
+            "fr": 2,
+            "pa": 89,
+            "sk": 6,
+            "rec": 94,
+            "rush": 129,
+            "avg_pa": 17.8,
+            "def_td": 3,
+            "rec_tds": 5,
+            "rec_yds": 1453,
+            "ret_int": 4,
+            "pass_att": 140,
+            "pass_int": 5,
+            "pass_suc": 94,
+            "pass_tds": 5,
+            "pass_yds": 1453,
+            "rush_tds": 7,
+            "rush_yds": 653,
+            "return_yds": 286,
+            "playedMatches": [
+                3,
+                7,
+                11,
+                17,
+                21
+            ]
+        },
+        "weekSalaryChange": 1400,
+        "avgPoints": 11.25,
+        "projectedScores": 10.1,
+        "points": {
+            "gws": {
+                "1": 0,
+                "2": 13,
+                "3": 4,
+                "5": 17,
+                "6": 11
+            },
+            "matches": {
+                "3": 0,
+                "7": 13,
+                "11": 4,
+                "17": 17,
+                "21": 11
+            }
+        },
+        "isLocked": false
+    },
+    {
+        "id": 7,
+        "name": "Winnipeg Blue Bombers",
+        "nameFr": "Blue Bombers de Winnipeg",
+        "shortName": "Bombers",
+        "abbreviation": "WPG",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 8000,
+        "stats": {
+            "fr": 5,
+            "pa": 94,
+            "sk": 5,
+            "rec": 97,
+            "rush": 91,
+            "avg_pa": 23.5,
+            "def_td": 1,
+            "rec_tds": 9,
+            "rec_yds": 1075,
+            "ret_int": 4,
+            "pass_att": 134,
+            "pass_int": 5,
+            "pass_suc": 97,
+            "pass_tds": 9,
+            "pass_yds": 1075,
+            "rush_tds": 2,
+            "rush_yds": 473,
+            "return_yds": 235,
+            "playedMatches": [
+                5,
+                12,
+                13,
+                17
+            ]
+        },
+        "weekSalaryChange": 0,
+        "avgPoints": 6.75,
+        "projectedScores": 6.1,
+        "points": {
+            "gws": {
+                "2": 8,
+                "3": 16,
+                "4": 5,
+                "5": -2
+            },
+            "matches": {
+                "5": 8,
+                "12": 16,
+                "13": 5,
+                "17": -2
+            }
+        },
+        "isLocked": false
+    },
+    {
+        "id": 8,
+        "name": "Saskatchewan Roughriders",
+        "nameFr": "Roughriders de la Saskatchewan",
+        "shortName": "Riders",
+        "abbreviation": "SSK",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 9100,
+        "stats": {
+            "fr": 2,
+            "pa": 123,
+            "sk": 11,
+            "rec": 107,
+            "rush": 107,
+            "avg_pa": 24.6,
+            "def_td": 2,
+            "rec_tds": 7,
+            "rec_yds": 1401,
+            "ret_int": 7,
+            "2pt_conv": 1,
+            "pass_att": 147,
+            "pass_int": 3,
+            "pass_suc": 107,
+            "pass_tds": 7,
+            "pass_yds": 1401,
+            "rush_tds": 6,
+            "rush_yds": 570,
+            "return_yds": 506,
+            "kp_return_tds": 1,
+            "playedMatches": [
+                1,
+                8,
+                10,
+                15,
+                21
+            ]
+        },
+        "weekSalaryChange": 100,
+        "avgPoints": 8.2,
+        "projectedScores": 8.2,
+        "points": {
+            "gws": {
+                "1": 4,
+                "2": 10,
+                "3": 5,
+                "4": 15,
+                "6": 7
+            },
+            "matches": {
+                "1": 4,
+                "8": 10,
+                "10": 5,
+                "15": 15,
+                "21": 7
+            }
+        },
+        "isLocked": false
+    },
+    {
+        "id": 9,
+        "name": "Edmonton Elks",
+        "nameFr": "Elks d’Edmonton",
+        "shortName": "EE",
+        "abbreviation": "EDM",
+        "videoURL": {
+            "en": "",
+            "fr": ""
+        },
+        "videoTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsURL": {
+            "en": "",
+            "fr": ""
+        },
+        "newsTitle": {
+            "en": "",
+            "fr": ""
+        },
+        "newsText": {
+            "en": "",
+            "fr": ""
+        },
+        "newsImage": "",
+        "cost": 4000,
+        "stats": {
+            "fr": 1,
+            "pa": 168,
+            "sk": 3,
+            "rec": 92,
+            "rush": 92,
+            "avg_pa": 33.6,
+            "rec_tds": 6,
+            "rec_yds": 1101,
+            "ret_int": 1,
+            "2pt_conv": 1,
+            "pass_att": 133,
+            "pass_int": 3,
+            "pass_suc": 92,
+            "pass_tds": 6,
+            "pass_yds": 1091,
+            "rush_tds": 6,
+            "rush_yds": 534,
+            "return_yds": 311,
+            "kp_return_tds": 1,
+            "playedMatches": [
+                4,
+                9,
+                13,
+                20,
+                23
+            ]
+        },
+        "weekSalaryChange": 0,
+        "avgPoints": -0.8,
+        "projectedScores": -0.8,
+        "points": {
+            "gws": {
+                "1": -1,
+                "3": -3,
+                "4": -1,
+                "5": -1,
+                "6": 2
+            },
+            "matches": {
+                "4": -1,
+                "9": -3,
+                "13": -1,
+                "20": -1,
+                "23": 2
+            }
+        },
+        "isLocked": false
+    }
+]
