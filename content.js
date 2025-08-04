@@ -848,6 +848,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         } else {
             console.warn('[CFL Optimizer] Invalid lineup data received:', request.lineup);
         }
+        
+        // Also inject player pool enhancements when lineup is generated
+        setTimeout(() => injectPlayerPoolEnhancements(), 1000);
     }
     return true;
 });
@@ -1152,5 +1155,135 @@ async function performDirectOptimization(selectedEngine, selectedSource = 'our')
 setTimeout(() => {
     injectOptimizeControls();
 }, 2000); // Give React app time to load
+
+// Function to inject Value and projection data into CFL website's player pool
+function injectPlayerPoolEnhancements() {
+    console.log('[CFL Optimizer] Injecting player pool enhancements...');
+    
+    try {
+        // Find all player cards in the player pool
+        const playerCards = document.querySelectorAll('.sc-eifrsQ.joSyIU, .sc-gmgFlS.iJgTPY');
+        
+        if (playerCards.length === 0) {
+            console.log('[CFL Optimizer] No player cards found, trying alternative selectors...');
+            // Try to find player cards with different selectors
+            const altPlayerCards = document.querySelectorAll('[class*="player"], [class*="Player"]');
+            console.log(`[CFL Optimizer] Found ${altPlayerCards.length} potential player elements`);
+            return;
+        }
+        
+        console.log(`[CFL Optimizer] Found ${playerCards.length} player cards`);
+        
+        playerCards.forEach((card, index) => {
+            try {
+                // Skip if already enhanced
+                if (card.querySelector('.cfl-opt-enhancement')) {
+                    return;
+                }
+                
+                // Find player name element
+                const nameButton = card.querySelector('.sc-aXZVg.sc-gEkIjz.fpJXeD.iVSEQR, .sc-aXZVg.sc-kbdlSk.fpJXeD.gPIJJm');
+                if (!nameButton) {
+                    console.log(`[CFL Optimizer] No name button found for card ${index}`);
+                    return;
+                }
+                
+                const playerName = nameButton.textContent.trim();
+                console.log(`[CFL Optimizer] Processing player: ${playerName}`);
+                
+                // Find matching player data
+                const playerInfo = findPlayerInData(playerName);
+                if (!playerInfo) {
+                    console.log(`[CFL Optimizer] No data found for player: ${playerName}`);
+                    return;
+                }
+                
+                // Calculate values
+                const salary = playerInfo.salary || playerInfo.cost || 0;
+                const siteProjection = playerInfo.site_projection || playerInfo.projectedScores || (playerInfo.stats && playerInfo.stats.projectedScores) || 0;
+                const ourProjection = playerInfo.our_projection || siteProjection;
+                const ourValue = salary > 0 ? (ourProjection / salary) * 1000 : 0;
+                
+                // Create enhancement element
+                const enhancement = document.createElement('div');
+                enhancement.className = 'cfl-opt-enhancement';
+                enhancement.style.cssText = `
+                    font-size: 11px;
+                    color: #067EC4;
+                    font-weight: 600;
+                    margin-top: 2px;
+                    text-align: left;
+                `;
+                
+                // Add projection comparison
+                const projComparison = document.createElement('div');
+                projComparison.style.cssText = `margin-bottom: 2px;`;
+                projComparison.textContent = `PROJ: Ours: ${ourProjection.toFixed(1)} Site: ${siteProjection.toFixed(1)}`;
+                
+                // Add value with color coding
+                const valueDisplay = document.createElement('div');
+                let valueColor = '#f44336'; // Red for poor value
+                if (ourValue >= 4.0) {
+                    valueColor = '#4caf50'; // Green for excellent value
+                } else if (ourValue >= 3.0) {
+                    valueColor = '#ff9800'; // Orange for good value
+                }
+                valueDisplay.style.cssText = `color: ${valueColor}; font-weight: 700;`;
+                valueDisplay.textContent = `Value: ${ourValue.toFixed(2)}`;
+                
+                enhancement.appendChild(projComparison);
+                enhancement.appendChild(valueDisplay);
+                
+                // Find insertion point - after the player name/team info
+                const insertionPoint = card.querySelector('.sc-eXsaLi.cTZCdE, .sc-fFlnrN.bejUSE');
+                if (insertionPoint) {
+                    insertionPoint.appendChild(enhancement);
+                    console.log(`[CFL Optimizer] Enhanced player card for: ${playerName}`);
+                } else {
+                    console.log(`[CFL Optimizer] No insertion point found for: ${playerName}`);
+                }
+                
+            } catch (error) {
+                console.error(`[CFL Optimizer] Error enhancing player card ${index}:`, error);
+            }
+        });
+        
+    } catch (error) {
+        console.error('[CFL Optimizer] Error in injectPlayerPoolEnhancements:', error);
+    }
+}
+
+// Helper function to find player data by name
+function findPlayerInData(playerName) {
+    if (!playerData || !playerData.players) {
+        return null;
+    }
+    
+    // Clean the player name for matching
+    const cleanName = playerName.toLowerCase().trim();
+    
+    // Try exact match first
+    let found = playerData.players.find(player => {
+        const fullName = `${player.firstName || ''} ${player.lastName || ''}`.toLowerCase().trim();
+        return fullName === cleanName;
+    });
+    
+    // Try partial match if exact match fails
+    if (!found) {
+        found = playerData.players.find(player => {
+            const fullName = `${player.firstName || ''} ${player.lastName || ''}`.toLowerCase().trim();
+            return fullName.includes(cleanName) || cleanName.includes(fullName);
+        });
+    }
+    
+    // Try team matching for DEF
+    if (!found && (cleanName.includes('defense') || cleanName.includes('lions') || cleanName.includes('argonauts'))) {
+        found = playerData.teams?.find(team => {
+            return team.name.toLowerCase().includes(cleanName) || cleanName.includes(team.name.toLowerCase());
+        });
+    }
+    
+    return found;
+}
 
 console.log('[CFL Optimizer] Content script ready');

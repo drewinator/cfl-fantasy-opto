@@ -273,6 +273,9 @@ function showResults(lineup, isRestored = false, timestamp = null, engine = null
         if (slot.querySelector('.player-ownership')) {
             slot.querySelector('.player-ownership').textContent = '-';
         }
+        if (slot.querySelector('.player-value')) {
+            slot.querySelector('.player-value').textContent = '0.00';
+        }
         slot.classList.remove('captain-slot');
     });
     
@@ -339,6 +342,13 @@ function showResults(lineup, isRestored = false, timestamp = null, engine = null
                 if (slot.querySelector('.player-ownership')) {
                     const ownershipText = formatOwnership(player.ownership || 0);
                     slot.querySelector('.player-ownership').textContent = ownershipText;
+                }
+                
+                // Update Value (points per $1000 of salary)
+                if (slot.querySelector('.player-value')) {
+                    const playerValue = (player.salary && player.salary > 0) ? 
+                        ((player.projected_points || 0) / player.salary) * 1000 : 0;
+                    slot.querySelector('.player-value').textContent = `${playerValue.toFixed(2)}`;
                 }
                 
                 // Add captain styling

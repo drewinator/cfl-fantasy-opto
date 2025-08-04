@@ -363,52 +363,58 @@
             overflow: hidden;
         }
 
-        /* Specific column widths and alignments */
+        /* Specific column widths and alignments - Updated for 9 columns with Value */
         .player-table th:nth-child(1),
         .player-table td:nth-child(1) {
-            width: 28%;
+            width: 24%;
             text-align: left;
         }
 
         .player-table th:nth-child(2),
         .player-table td:nth-child(2) {
-            width: 8%;
+            width: 7%;
             text-align: center;
         }
 
         .player-table th:nth-child(3),
         .player-table td:nth-child(3) {
-            width: 9%;
+            width: 8%;
             text-align: center;
         }
 
         .player-table th:nth-child(4),
         .player-table td:nth-child(4) {
-            width: 12%;
+            width: 10%;
             text-align: right;
         }
 
         .player-table th:nth-child(5),
         .player-table td:nth-child(5) {
-            width: 11%;
+            width: 9%;
             text-align: right;
         }
 
         .player-table th:nth-child(6),
         .player-table td:nth-child(6) {
-            width: 11%;
+            width: 9%;
             text-align: right;
         }
 
         .player-table th:nth-child(7),
         .player-table td:nth-child(7) {
-            width: 13%;
+            width: 10%;
             text-align: right;
         }
 
         .player-table th:nth-child(8),
         .player-table td:nth-child(8) {
-            width: 8%;
+            width: 9%;
+            text-align: right;
+        }
+
+        .player-table th:nth-child(9),
+        .player-table td:nth-child(9) {
+            width: 7%;
             text-align: center;
         }
 
@@ -447,7 +453,7 @@
             opacity: 0.6;
         }
 
-        /* Column-specific styling */
+        /* Column-specific styling - Updated for 9 columns */
         .player-table td:nth-child(1) {
             font-weight: 500;
         }
@@ -477,11 +483,16 @@
         }
 
         .player-table td:nth-child(7) {
+            font-weight: 600;
+            /* Value column - color will be dynamically set */
+        }
+
+        .player-table td:nth-child(8) {
             color: #ff9800;
             font-weight: 500;
         }
 
-        .player-table td:nth-child(8) {
+        .player-table td:nth-child(9) {
             font-size: 10px;
         }
 
@@ -504,6 +515,19 @@
 
         .proj-diff-zero {
             color: #bbb;
+        }
+
+        /* Value Color Coding */
+        .value-excellent {
+            color: #4caf50 !important;  /* Green for excellent value (>4.0) */
+        }
+
+        .value-good {
+            color: #ff9800 !important;  /* Orange for good value (3.0-4.0) */
+        }
+
+        .value-poor {
+            color: #f44336 !important;  /* Red for poor value (<3.0) */
         }
 
         /* Browser Loading */
@@ -534,45 +558,50 @@
                 padding: 4px 3px;
             }
             
-            /* Adjust column widths for smaller screens */
+            /* Adjust column widths for smaller screens - Updated for 9 columns */
             .player-table th:nth-child(1),
             .player-table td:nth-child(1) {
-                width: 30%;
+                width: 26%;
             }
 
             .player-table th:nth-child(2),
             .player-table td:nth-child(2) {
-                width: 7%;
+                width: 6%;
             }
 
             .player-table th:nth-child(3),
             .player-table td:nth-child(3) {
-                width: 8%;
+                width: 7%;
             }
 
             .player-table th:nth-child(4),
             .player-table td:nth-child(4) {
-                width: 11%;
+                width: 9%;
             }
 
             .player-table th:nth-child(5),
             .player-table td:nth-child(5) {
-                width: 10%;
+                width: 8%;
             }
 
             .player-table th:nth-child(6),
             .player-table td:nth-child(6) {
-                width: 10%;
+                width: 8%;
             }
 
             .player-table th:nth-child(7),
             .player-table td:nth-child(7) {
-                width: 12%;
+                width: 9%;
             }
 
             .player-table th:nth-child(8),
             .player-table td:nth-child(8) {
-                width: 12%;
+                width: 8%;
+            }
+
+            .player-table th:nth-child(9),
+            .player-table td:nth-child(9) {
+                width: 6%;
             }
             
             .filter-row {
@@ -667,6 +696,7 @@
                         <th data-sort="salary" class="sortable">Salary <span class="sort-icon">↕</span></th>
                         <th data-sort="site_projection" class="sortable">Site <span class="sort-icon">↕</span></th>
                         <th data-sort="our_projection" class="sortable">Our <span class="sort-icon">↕</span></th>
+                        <th data-sort="our_value" class="sortable">Value <span class="sort-icon">↕</span></th>
                         <th data-sort="ownership" class="sortable">Own% <span class="sort-icon">↕</span></th>
                         <th data-sort="status" class="sortable">Status <span class="sort-icon">↕</span></th>
                     </tr>
@@ -1056,6 +1086,15 @@
                     projDiffClass = 'proj-diff-negative';
                 }
                 
+                // Value formatting and styling
+                const ourValue = player.our_value || 0;
+                let valueClass = 'value-poor';
+                if (ourValue >= 4.0) {
+                    valueClass = 'value-excellent';
+                } else if (ourValue >= 3.0) {
+                    valueClass = 'value-good';
+                }
+                
                 // Status styling
                 const statusClass = player.status === 'available' ? 'available' : 'unavailable';
                 const statusText = player.status === 'available' ? '✓' : '✗';
@@ -1067,6 +1106,7 @@
                     <td>${salaryFormatted}</td>
                     <td>${siteProj.toFixed(1)}</td>
                     <td class="${projDiffClass}">${ourProj.toFixed(1)}</td>
+                    <td class="${valueClass}">${ourValue.toFixed(2)}</td>
                     <td>${player.ownership}%</td>
                     <td class="status ${statusClass}">${statusText}</td>
                 `;

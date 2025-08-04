@@ -468,6 +468,9 @@ def test_with_local_data():
         # Get engine parameter (default to pulp)
         engine = request.args.get('engine', 'pulp')
         
+        # Get projection source parameter (default to our projections)
+        source = request.args.get('source', 'our')
+        
         # Select optimizer based on engine parameter
         if engine == 'pydfs':
             optimizer = pydfs_optimizer
@@ -497,6 +500,38 @@ def test_with_local_data():
         with open(team_ownership_file, 'r') as f:
             team_ownership = json.load(f)
         
+        # Apply custom projections if source is 'our'
+        if source == 'our':
+            try:
+                # Apply player projections
+                if players_data:
+                    player_projection_map = build_projection_map(players_data)
+                    # Update player projectedScores with our projections
+                    for player in players_data:
+                        player_id = player.get('id') or player.get('feedId')
+                        if player_id and player_id in player_projection_map:
+                            # Update the projectedScores in stats
+                            if 'stats' not in player:
+                                player['stats'] = {}
+                            player['stats']['projectedScores'] = player_projection_map[player_id]
+                    
+                    logger.info(f"Applied custom projections to {len(player_projection_map)} players (test-data)")
+                
+                # Apply team projections
+                if teams_data:
+                    team_projection_map = build_team_projection_map(teams_data)
+                    # Update team projectedScores with our projections
+                    for team in teams_data:
+                        team_id = team.get('id')
+                        if team_id and team_id in team_projection_map:
+                            # For teams, projectedScores is at root level
+                            team['projectedScores'] = team_projection_map[team_id]
+                    
+                    logger.info(f"Applied custom projections to {len(team_projection_map)} teams (test-data)")
+                        
+            except Exception as e:
+                logger.warning(f"Failed to apply custom projections in test-data endpoint, falling back to site projections: {e}")
+        
         # Handle different optimizer interfaces
         if engine == 'pydfs':
             # PyDFS optimizer uses optimize_from_request method
@@ -513,7 +548,8 @@ def test_with_local_data():
                 'player_stats': optimizer.get_player_stats(),
                 'data_source': 'local_json_files',
                 'optimization_time': datetime.now().isoformat(),
-                'engine': 'pydfs'
+                'engine': 'pydfs',
+                'projection_source': source
             }
         else:
             # PuLP optimizer uses existing interface
@@ -533,7 +569,8 @@ def test_with_local_data():
                 'player_stats': optimizer.get_player_stats(),
                 'data_source': 'local_json_files',
                 'optimization_time': datetime.now().isoformat(),
-                'engine': 'pulp'
+                'engine': 'pulp',
+                'projection_source': source
             }
         
         logger.info(f"Test optimization with local data completed using {engine} engine")
@@ -1038,6 +1075,15 @@ def get_mobile_players():
             
             position = position_map.get(player.get('position', ''), player.get('position', ''))
             
+            # Calculate DFS Value (points per $1000 of salary)
+            salary = player.get('cost', 0)
+            site_value = 0.0
+            our_value = 0.0
+            
+            if salary > 0:
+                site_value = round((float(site_projection) / salary) * 1000, 2)
+                our_value = round((float(our_projection) / salary) * 1000, 2)
+            
             processed_player = {
                 'id': player_id,
                 'name': f"{player.get('firstName', '')} {player.get('lastName', '')}".strip(),
@@ -1046,13 +1092,16 @@ def get_mobile_players():
                 'position': position,
                 'team': player.get('squad', {}).get('abbr', ''),
                 'teamName': player.get('squad', {}).get('name', ''),
-                'salary': player.get('cost', 0),
+                'salary': salary,
                 'points': player.get('points', 0),
                 'status': player.get('status', 'unavailable'),
                 'isLocked': player.get('isLocked', False),
                 'site_projection': round(float(site_projection), 2),
                 'our_projection': round(float(our_projection), 2),
                 'projection_difference': round(float(our_projection) - float(site_projection), 2),
+                'site_value': site_value,
+                'our_value': our_value,
+                'value_difference': round(our_value - site_value, 2),
                 'avg_points': stats.get('avgPoints', 0),
                 'ownership': round(float(ownership_percent), 2),
                 'salary_change': stats.get('weekSalaryChange', 0),
@@ -1078,6 +1127,15 @@ def get_mobile_players():
             site_projection = team.get('projectedScores', 0)
             our_projection = team_projection_map.get(team_id, site_projection)
             
+            # Calculate DFS Value for teams (points per $1000 of salary)
+            team_salary = team.get('cost', 0)
+            team_site_value = 0.0
+            team_our_value = 0.0
+            
+            if team_salary > 0:
+                team_site_value = round((float(site_projection) / team_salary) * 1000, 2)
+                team_our_value = round((float(our_projection) / team_salary) * 1000, 2)
+            
             processed_team = {
                 'id': team_id,
                 'name': team.get('name', ''),
@@ -1085,11 +1143,14 @@ def get_mobile_players():
                 'position': 'DEF',
                 'team': team.get('abbreviation', ''),
                 'teamName': team.get('name', ''),
-                'salary': team.get('cost', 0),
+                'salary': team_salary,
                 'status': 'available',  # Teams are generally always available
                 'site_projection': round(float(site_projection), 2),
                 'our_projection': round(float(our_projection), 2),
                 'projection_difference': round(float(our_projection) - float(site_projection), 2),
+                'site_value': team_site_value,
+                'our_value': team_our_value,
+                'value_difference': round(team_our_value - team_site_value, 2),
                 'ownership': round(float(ownership_percent), 2),
                 'video_available': bool(team.get('videoURL', {}).get('en', '')),
                 'news_available': bool(team.get('newsTitle', {}).get('en', ''))
